@@ -29,6 +29,7 @@
     "debug": "npm run build && npm run watch-debug"
   },
   "dependencies": {
+    "@blueprintjs/core": "^3.15.1",
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/jwt": "^6.1.0",

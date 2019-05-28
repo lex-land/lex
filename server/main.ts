@@ -39,6 +39,7 @@ async function bootstrap() {
       // store: ,
     }),
   );
+
   // 跨域安全
   app.enableCors({
     origin: [/\.sunmi\.com$/],
