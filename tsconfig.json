@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    // "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "paths": {
+      "@core/*": ["core/*"],
+      "@config/*": ["config/*"],
+      "@helpers/*": ["helpers/*"],
+      "@components/*": ["components/*"],
+      "@layout/*": ["layout/*"]
+    },
+    // "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "incremental": true,
+    "strict": true,
+    // "pretty": true,
+    // "alwaysStrict": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    // "outDir": "build",
+    // "moduleResolution": "node",
+    // "esModuleInterop": true,
+    // "sourceMap": false,
+    // "skipLibCheck": true,
+    // "lib": ["dom", "es2017"],
+    "types": ["react", "node", "jest"],
+    // "typeRoots": ["node_modules/@types"],
+    // "allowJs": true,
+    // "forceConsistentCasingInFileNames": true,
+    // "isolatedModules": true,
+    // "noEmit": true
+    "strictPropertyInitialization":false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "outDir": "build",
+    "baseUrl": "."
+  },
+  "exclude": ["node_modules"]
+}
