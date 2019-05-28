@@ -24,6 +24,17 @@ export class UserService {
     });
   }
 
+  async findOne(id: string): Promise<User | undefined> {
+    return await this.userRepository.findOne(id, {
+      relations: [
+        'ownedOrganizations',
+        'joinedOrganizations',
+        'ownedRepositories',
+        'joinedRepositories',
+      ],
+    });
+  }
+
   async isExistByEmail(email: string): Promise<boolean> {
     const exists = await this.userRepository.findOne({
       where: { email },
