@@ -1,0 +1,12 @@
+node_modules
+build
+.next
+dist
+**.log
+.backup
+.DS_Store
+build
+bundles
+**/**.js.map
+temp
+backup
