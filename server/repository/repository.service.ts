@@ -10,15 +10,18 @@ export class RepositoryService {
     @InjectRepository(RepositoryEntity)
     private readonly repoRepository: Repository<RepositoryEntity>,
   ) {}
+
   public async findById(id: string) {
     return await this.repoRepository.findOneOrFail({
       where: { id },
-      relations: ['modules'],
+      relations: ['modules', 'interfaces'],
     });
   }
 
   public async findAll() {
-    return await this.repoRepository.find();
+    return await this.repoRepository.find({
+      relations: ['owner', 'organization'],
+    });
   }
 
   public async create(createRepositoryDto: CreateRepositoryDto) {

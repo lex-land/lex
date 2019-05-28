@@ -19,24 +19,6 @@ export class Repository {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // /** hooks */
-  //   // @BeforeCreate
-  //   // @BeforeUpdate
-  //   // @BeforeDelete
-  //   static async cleanCache(instance: Repository) {
-  //     // await RedisService.delCache(CACHE_KEY.REPOSITORY_GET, instance.id);
-  //   }
-
-  //   // @BeforeBulkCreate
-  //   // @BeforeBulkUpdate
-  //   // @BeforeBulkDelete
-  //   static async bulkDeleteCache(options: any) {
-  //     const id = options && options.attributes && options.attributes.id;
-  //     if (id) {
-  //       // await RedisService.delCache(CACHE_KEY.REPOSITORY_GET, id);
-  //     }
-  //   }
-
   @Column({
     type: 'varchar',
     length: 256,
@@ -74,10 +56,6 @@ export class Repository {
   @ManyToOne(type => Organization, organization => organization.repositories)
   organization: Organization;
 
-  //   // @BelongsTo(() => User, 'lockerId')
-  @ManyToOne(type => User)
-  locker: User;
-
   @ManyToMany(type => User, user => user.joinedRepositories)
   @JoinTable()
   members: User[];
@@ -97,11 +75,4 @@ export class Repository {
   //   //   'collaboratorId'
   //   // )
   //   collaborators: User[];
-
-  //   // @BelongsToMany(
-  //   //   () => Repository,
-  //   //   () => RepositoriesCollaborators,
-  //   //   'collaboratorId'
-  //   // )
-  //   // repositories: Repository[];
 }
