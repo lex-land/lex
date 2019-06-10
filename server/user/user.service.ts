@@ -50,19 +50,38 @@ export class UserService {
       }),
     );
   }
-
+  async getUserByNameLogin({
+    fullname,
+    password,
+  }: any): Promise<User | undefined> {
+    return await this.userRepository.findOne({
+      where: { fullname, password: md5(password) },
+    });
+  }
   async getUserByLogin({
-    email,
+    username,
     password,
   }: CheckUserDto): Promise<User | undefined> {
     return await this.userRepository.findOne({
-      where: { email, password: md5(md5(password)) },
+      where: { fullname: username, password: md5(password) },
     });
   }
 
-  async getUserByEmail(email: string): Promise<User | undefined> {
+  async getUserByEmail(jwt: any): Promise<User | undefined> {
     return await this.userRepository.findOne({
-      where: { email },
+      where: { email: jwt.email },
+      relations: [
+        'ownedOrganizations',
+        'joinedOrganizations',
+        'ownedRepositories',
+        'joinedRepositories',
+      ],
+    });
+  }
+
+  async getUserByName(fullname: string) {
+    return await this.userRepository.findOne({
+      where: { fullname },
     });
   }
 }

@@ -14,8 +14,32 @@ export class RepositoryService {
   public async findById(id: string) {
     return await this.repoRepository.findOneOrFail({
       where: { id },
-      relations: ['modules', 'interfaces'],
+      relations: ['members', 'modules', 'modules.interfaces'],
     });
+  }
+
+  public async findWhere(payload: any) {
+    const repo = await this.repoRepository.findOneOrFail({
+      where: payload,
+      relations: ['interfaces'],
+    });
+    return repo;
+  }
+
+  public async findInterfacesById(id: string) {
+    const repo = await this.repoRepository.findOneOrFail({
+      where: { id },
+      relations: ['interfaces'],
+    });
+    return repo.interfaces;
+  }
+
+  public async findModulesById(id: string) {
+    const repo = await this.repoRepository.findOneOrFail({
+      where: { id },
+      relations: ['modules'],
+    });
+    return repo.modules;
   }
 
   public async findAll() {
@@ -26,5 +50,12 @@ export class RepositoryService {
 
   public async create(createRepositoryDto: CreateRepositoryDto) {
     return await this.repoRepository.save(createRepositoryDto);
+  }
+
+  public async update(
+    id: number,
+    createRepositoryDto: Partial<CreateRepositoryDto>,
+  ) {
+    return await this.repoRepository.update(id, createRepositoryDto);
   }
 }

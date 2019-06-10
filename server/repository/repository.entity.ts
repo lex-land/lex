@@ -2,12 +2,14 @@
 
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Interface } from '../interface/interface.entity';
 import { Module } from '../module/module.entity';
@@ -52,7 +54,6 @@ export class Repository {
   @ManyToOne(type => User, user => user.ownedRepositories)
   owner: User;
 
-  //   // @BelongsTo(() => Organization, 'organizationId')
   @ManyToOne(type => Organization, organization => organization.repositories)
   organization: Organization;
 
@@ -60,19 +61,15 @@ export class Repository {
   @JoinTable()
   members: User[];
 
-  // @HasMany(() => Module, 'repositoryId')
   @OneToMany(type => Module, module => module.repository)
   modules: Module[];
 
-  //   // @HasMany(() => Module, 'repositoryId')
   @OneToMany(type => Interface, _interface => _interface.repository)
   interfaces: Interface[];
 
-  //   // @BelongsToMany(
-  //   //   () => Repository,
-  //   //   () => RepositoriesCollaborators,
-  //   //   'repositoryId',
-  //   //   'collaboratorId'
-  //   // )
-  //   collaborators: User[];
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }

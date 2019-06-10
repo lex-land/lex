@@ -15,7 +15,23 @@ export class InterfaceService {
       relations: ['module'],
     });
   }
+  public async findById(id: string) {
+    return this.inteRepository.findOne(id, {
+      relations: [
+        'module',
+        'properties',
+        'properties.parent',
+        'properties.children',
+      ],
+    });
+  }
   public async create(createInteDto: any) {
     return await this.inteRepository.save(createInteDto);
+  }
+  public async update(id: string, createInteDto: any) {
+    return await this.inteRepository.update(id, createInteDto);
+  }
+  public async delete(id: string) {
+    return await this.inteRepository.delete(id);
   }
 }

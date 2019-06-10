@@ -1,44 +1,44 @@
 import {
   Body,
   Controller,
+  Delete,
+  Get,
+  Param,
   Post,
-  Query,
-  Req,
-  UseInterceptors,
+  Put,
 } from '@nestjs/common';
-import { AuthService } from '../auth/auth.service';
-import { FileInterceptor } from '@nestjs/platform-express';
+// import { Property } from './property.entity';
 import { PropertyService } from './property.service';
-import { User } from '../user/user.entity';
-import _ from 'lodash';
 
 @Controller('property')
 export class PropertyController {
-  constructor(
-    private readonly propService: PropertyService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly propService: PropertyService) {}
+
+  @Get('sync')
+  public async createSome() {
+    const json = await import('./data/some.json');
+    return this.propService.createSome(json.default);
+  }
 
   @Post()
-  @UseInterceptors(FileInterceptor(''))
-  public async create(@Body() body: any, @Query() query: any, @Req() req: any) {
-    const sessionUser: User = await this.authService.getUserByToken(
-      req.cookies.accessToken,
-    );
-    const { id, ...other } = body;
-    const queryData = _.mapValues(query, (_id: any) => ({ id: _id }));
-    if (id) {
-      return this.propService.update(query.repository, {
-        ...other,
-        ...queryData,
-        creator: sessionUser,
-      });
-    } else {
-      return this.propService.create({
-        ...other,
-        ...queryData,
-        creator: sessionUser,
-      });
-    }
+  public async create(@Body() body: any) {
+    return this.propService.create({
+      ...body,
+    });
+  }
+
+  @Put(':id')
+  public async update(@Param('id') id: string, @Body() body: any) {
+    return this.propService.update(id, body);
+  }
+
+  @Delete(':id')
+  public async delete(@Param('id') id: string) {
+    return this.propService.delete(+id);
+  }
+
+  @Delete()
+  public async deleteMany(@Body('ids') ids: number[]) {
+    return this.propService.deleteMany(ids);
   }
 }

@@ -1,6 +1,7 @@
 import { AuthModule } from '../auth/auth.module';
 import { InterfaceModule } from '../interface/interface.module';
 import { Module } from '@nestjs/common';
+import { ModuleModule } from '@server/module/module.module';
 import { PropertyModule } from '../property/property.module';
 import { Repository } from './repository.entity';
 import { RepositoryController } from './repository.controller';
@@ -11,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     TypeOrmModule.forFeature([Repository]),
     AuthModule,
+    ModuleModule,
     InterfaceModule,
     PropertyModule,
   ],

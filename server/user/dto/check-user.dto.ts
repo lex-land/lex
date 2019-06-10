@@ -1,4 +1,4 @@
 export class CheckUserDto {
-  readonly email: string;
+  readonly username: string;
   readonly password: string;
 }

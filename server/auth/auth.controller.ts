@@ -1,33 +1,30 @@
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Controller } from '@nestjs/common';
-// import { LoginPayload } from '../user/interfaces/login.interface';
-// import { MessagePattern } from '@nestjs/microservices';
-import { UserService } from '../user/user.service';
+import { JwtService } from '@nestjs/jwt';
+import { Token } from '@server/common/decorators/token.decorator';
+import { UserService } from '@server/user/user.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
     private readonly userService: UserService,
   ) {}
-
-  // @Get('token')
-  // async createToken(@Request() req: any): Promise<any> {
-  //   return await this.authService.createToken(req);
-  // }
-
-  // @MessagePattern({ cmd: 'auth/signIn' })
-  // async signIn(loginPayload: LoginPayload) {
-  //   return this.authService.signIn(loginPayload);
-  // }
-
-  // @MessagePattern({ cmd: 'auth/getUserByToken' })
-  // async getUserByToken(token: string) {
-  //   const user = await this.authService.getUserByToken(token);
-  //   if (user) {
-  //     return user;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  @Post()
+  async signIn(@Body() loginPayload: any) {
+    return this.authService.signIn(loginPayload);
+  }
+  @Get('session-user')
+  public async sessionUser(@Token() token: string, @Res() res: any) {
+    // this.jwtService.verify()
+    // put some validation logic here
+    // for example query user by id/email/username
+    if (token) {
+      const jwt = await this.jwtService.decode(token);
+      res.send(await this.userService.getUserByEmail(jwt));
+    } else {
+      res.status(403).send({});
+    }
+  }
 }

@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
   Tree,
   TreeChildren,
   TreeParent,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Interface } from '../interface/interface.entity';
 import { Module } from '../module/module.entity';
@@ -27,8 +29,9 @@ export enum TYPES {
   FUNCTION = 'Function',
   REGEXP = 'RegExp',
 }
+
 @Entity()
-@Tree('closure-table')
+@Tree('nested-set')
 export class Property {
   @PrimaryGeneratedColumn()
   id: number;
@@ -61,14 +64,15 @@ export class Property {
     type: 'varchar',
     length: 128,
     comment: 'property generation rules',
+    default: '5',
   })
-  rule: string;
+  mock: string;
 
   @Column({
     type: 'text',
     comment: 'value of this property',
   })
-  value: string;
+  default: string;
 
   @Column({
     type: 'text',
@@ -92,4 +96,16 @@ export class Property {
 
   @TreeParent()
   parent: Property;
+
+  @Column({
+    type: 'bool',
+    default: false,
+  })
+  required: boolean;
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }

@@ -1,6 +1,14 @@
-import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+} from '@nestjs/common';
 import { CreateModuPayload } from './interfaces/payload.interface';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { ModuleService } from './module.service';
 
 @Controller('module')
@@ -8,11 +16,32 @@ export class ModuleController {
   constructor(private readonly moduService: ModuleService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor(''))
   public async create(@Body() body: CreateModuPayload) {
     return this.moduService.create({
       ...body,
-      repository: { id: body.repository },
     });
+  }
+
+  @Get()
+  public async findAll(@Query('repository') repository: string) {
+    return this.moduService.findByRepository(repository);
+  }
+
+  @Get(':id')
+  public async findOne(@Param('id') id: string) {
+    return this.moduService.findOne(id);
+  }
+
+  @Put(':id')
+  public async update(
+    @Param('id') id: string,
+    @Body() { interfaces, ...body }: any,
+  ) {
+    return this.moduService.update(+id, body);
+  }
+
+  @Delete(':id')
+  public async delete(@Param('id') id: string) {
+    return this.moduService.delete(+id);
   }
 }

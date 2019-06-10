@@ -13,15 +13,6 @@ import { User } from '../user/user.entity';
 
 @Entity()
 export class Organization {
-  // @AfterCreate
-  // static async createLog(instance: Organization) {
-  //   // await Logger.create({
-  //   //   userId: instance.creatorId,
-  //   //   type: 'create',
-  //   //   organizationId: instance.id,
-  //   // });
-  // }
-
   @PrimaryGeneratedColumn()
   id: number;
 

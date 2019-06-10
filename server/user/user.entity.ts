@@ -17,6 +17,7 @@ export class User {
   @Column({
     type: 'varchar',
     length: 32,
+    unique: true,
   })
   fullname: string;
 

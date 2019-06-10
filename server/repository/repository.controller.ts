@@ -1,15 +1,57 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { AuthService } from '../auth/auth.service';
 import { CreateRepoPayload } from './interfaces/payload.interface';
+import { InterfaceService } from '@server/interface/interface.service';
+import { ModuleService } from '@server/module/module.service';
+import { PropertyService } from '@server/property/property.service';
 import { RepositoryService } from './repository.service';
-import { User } from '../user/user.entity';
+import { UserService } from '@server/user/user.service';
 
 @Controller('repository')
 export class RepositoryController {
   constructor(
     private readonly repoService: RepositoryService,
+    private readonly modService: ModuleService,
+    private readonly inteService: InterfaceService,
+    private readonly propService: PropertyService,
     private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
+  @Get('sync')
+  public async findRap2() {
+    const json = await import('./data/manage.json');
+    const repo = json.data;
+    return this.repoService.create({
+      name: repo.name,
+      description: repo.description,
+      creator: await this.userService.getUserByName(repo.creator.fullname),
+      owner: await this.userService.getUserByName(repo.owner.fullname),
+      members: await Promise.all(
+        repo.members.map(m => this.userService.getUserByName(m.fullname)),
+      ),
+      modules: await Promise.all(
+        repo.modules.map(async mod =>
+          this.modService.create({
+            name: mod.name,
+            description: mod.description,
+            // interfaces: await Promise.all(
+            //   mod.interfaces.map(async inte =>
+            //     this.inteService.create({
+            //       name: inte.name,
+            //       description: inte.description,
+            //       url: inte.url,
+            //       method: inte.method,
+            //       properties: await this.propService.createSome(
+            //         inte.properties,
+            //       ),
+            //     }),
+            //   ),
+            // ),
+          } as any),
+        ),
+      ),
+    } as any);
+  }
 
   @Get()
   public async findAll() {
@@ -17,16 +59,17 @@ export class RepositoryController {
   }
 
   @Post()
-  public async create(@Body() body: CreateRepoPayload, @Req() req: any) {
-    // TODO: 微服务出现不响应的问题
-    const sessionUser: User = await this.authService.getUserByToken(
-      req.cookies.accessToken,
-    );
+  public async create(@Body() body: CreateRepoPayload) {
     const json = await this.repoService.create({
       ...body,
-      creator: sessionUser,
-      owner: sessionUser,
-      members: body.members.filter(Boolean).map(id => ({ id })),
+    });
+    return json;
+  }
+
+  @Put(':id')
+  public async update(@Body() body: any, @Param('id') id: string) {
+    const json = await this.repoService.update(+id, {
+      ...body,
     });
     return json;
   }

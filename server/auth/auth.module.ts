@@ -13,7 +13,7 @@ import { UserModule } from '../user/user.module';
       defaultStrategy: 'jwt',
     }),
     JwtModule.register({
-      secretOrPrivateKey: 'secretKey',
+      secret: 'secretKey',
       signOptions: {
         expiresIn: 3600,
       },
