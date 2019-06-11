@@ -1,4 +1,4 @@
-import { DES, isEncrypted, md5Key } from '@config/env';
+import { DES, ENV, isEncrypted, md5Key } from '@config/env';
 import Cookies from 'universal-cookie';
 import CryptoJS from 'crypto-js';
 import md5 from 'md5';
@@ -56,15 +56,18 @@ export const getCookie = (key: string, ctx?: any) => {
 };
 
 export const getToken = (ctx: any = {}) => {
-  return getCookie('token', ctx);
+  return (
+    (ctx.req && ctx.req.headers.authorization) ||
+    getCookie(ENV.KEYOF_TOKEN, ctx)
+  );
 };
 
 export const setToken = (token: string, ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
-  cookie.set(Des.encrypt('token'), token, { path: '/' });
+  cookie.set(Des.encrypt(ENV.KEYOF_TOKEN), token, { path: '/' });
 };
 
 export const cleanToken = (ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
-  cookie.set(Des.encrypt('token'), '', { path: '/' });
+  cookie.set(Des.encrypt(ENV.KEYOF_TOKEN), '', { path: '/' });
 };
