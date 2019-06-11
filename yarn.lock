@@ -787,7 +787,7 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@blueprintjs/core@^3.15.1":
+"@blueprintjs/core@^3.15.0", "@blueprintjs/core@^3.15.1":
   version "3.15.1"
   resolved "https://registry.npm.taobao.org/@blueprintjs/core/download/@blueprintjs/core-3.15.1.tgz#9792e9fb7e2e066dd5339fadeaf2f85b1485832a"
   integrity sha1-l5Lp+34uBm3VM5+t6vL4WxSFgyo=
@@ -808,6 +808,15 @@
   resolved "https://registry.npm.taobao.org/@blueprintjs/icons/download/@blueprintjs/icons-3.8.0.tgz#7c77c67e4a241740f803f05e4f6e3ce43c6d6560"
   integrity sha1-fHfGfkokF0D4A/BeT2485DxtZWA=
   dependencies:
+    classnames "^2.2"
+    tslib "^1.9.0"
+
+"@blueprintjs/select@^3.8.1":
+  version "3.8.1"
+  resolved "https://registry.npm.taobao.org/@blueprintjs/select/download/@blueprintjs/select-3.8.1.tgz#e3a27746731b9cbaa9179620fdf3f3883a176ab9"
+  integrity sha1-46J3RnMbnLqpF5Yg/fPziDoXark=
+  dependencies:
+    "@blueprintjs/core" "^3.15.0"
     classnames "^2.2"
     tslib "^1.9.0"
 

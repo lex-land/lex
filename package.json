@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@blueprintjs/core": "^3.15.1",
+    "@blueprintjs/select": "^3.8.1",
     "@nestjs/common": "^6.0.0",
     "@nestjs/core": "^6.0.0",
     "@nestjs/jwt": "^6.1.0",
@@ -189,6 +190,7 @@
           "ignoreDestructuring": true
         }
       ],
+      "no-invalid-this": "off",
       "no-console": [
         "error",
         {
@@ -199,6 +201,7 @@
         }
       ],
       "camelcase": "off",
+      "react/prop-types": "off",
       "react/display-name": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn",
@@ -271,6 +274,7 @@
             "@core": "./core",
             "@config": "./config",
             "@helpers": "./helpers",
+            "@server": "./server",
             "@layout": "./layout"
           },
           "extensions": [
@@ -301,7 +305,8 @@
     "watch": [
       "server",
       "config",
-      "helpers/fetch.ts"
+      "helpers/fetch.ts",
+      "core/next-routes.tsx"
     ],
     "verbose": false,
     "debug": false,
