@@ -1,0 +1,18 @@
+.git
+.vscode
+.DS_Store
+.editorconfig
+
+# node_modules
+nginx
+test
+scripts
+npm-debug.log
+README.md
+Dockerfile
+Jenkinsfile
+temp
+jest.setup.js
+nest-cli.json
+nodemon-debug.json
+docker/mysql

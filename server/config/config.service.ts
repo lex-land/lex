@@ -15,15 +15,14 @@ export class ConfigService {
   public createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'mysql',
-      host: 'localhost',
+      host: process.env.MYSQL_URL,
       port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'test',
+      username: process.env.MYSQL_USERNAME,
+      password: process.env.MYSQL_PASSWD,
+      database: process.env.MYSQL_DATABASE,
       // https://github.com/typeorm/typeorm/issues/682
       entities: [__dirname + '/../**/**.entity{.ts,.js}'],
-      // TODO: 整理出分环境的配置
-      synchronize: true,
+      synchronize: false,
       logging: false,
     };
   }

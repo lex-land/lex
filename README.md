@@ -3,7 +3,7 @@
 ## Environment
 
 - node
-- mysql
+- docker
 
 ## Start
 
@@ -24,7 +24,8 @@ npm run start:dev
 - [x] 使用 nextjs 作为写 React 的姿势，代替 create-react-app
 - [x] 使用 typeorm 代替 sequelize-typescript
 - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 轻状态管理，不用redux，不用mobx，使用hooks进行状态逻辑复用
+- [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
+- [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
 - [ ] 支持 CicleCI
@@ -52,4 +53,3 @@ npm run start:dev
 - [ ] 个人中心页/设置页
 
 ## Troubleshooting
-

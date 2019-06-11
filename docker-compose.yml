@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+  lex:
+    container_name: lex
+    image: sunmiorg/lex:latest
+    environment:
+      # if you have your own mysql, config it here, and disable the 'mysql' config blow
+      - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
+      - MYSQL_PORT=3306
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWD=123456
+      - MYSQL_DATABASE=Lex
+      # production / development
+      - NODE_ENV=production
+      - PORT=3000
+    # privileged: true
+    links:
+      - mysql
+    depends_on:
+      - mysql
+    ports:
+      - "38080:3000"  # expose 38080
+
+  # https://github.com/typeorm/typeorm/issues/2093
+  # https://github.com/mysqljs/mysql/issues/2013
+  mysql:
+    container_name: lex-mysql
+    image: mysql:5.6
+    volumes:
+      - ./server/database/sql:/docker-entrypoint-initdb.d
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    ports:
+      - 3306:3306

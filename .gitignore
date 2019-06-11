@@ -10,3 +10,4 @@ bundles
 **/**.js.map
 temp
 backup
+docker/mysql
