@@ -52,4 +52,8 @@ npm run start:dev
 - [ ] 个人中心页/仓库页
 - [ ] 个人中心页/设置页
 
+## TODO
+
+- [ ] docker启动开发环境比直接用node启动慢
+
 ## Troubleshooting
