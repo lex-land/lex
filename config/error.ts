@@ -1,3 +1,4 @@
+import codeMessages from '@config/code.json';
 import { isClient } from './env';
 import { logger } from '@core/logger';
 
@@ -11,10 +12,10 @@ export class FetchError implements Error {
   name: string;
   message: string;
   code: number;
-  constructor(code: number, message: string) {
-    this.name = '接口异常';
+  constructor(code: number, message?: string) {
+    this.name = `接口异常`;
     this.code = code;
-    this.message = message;
+    this.message = message || (codeMessages as any)[code];
   }
 }
 
