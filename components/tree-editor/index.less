@@ -1,0 +1,100 @@
+.editable-row {
+  // position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .operator {
+    &__wrapper {
+      display: flex;
+      width: 50px;
+      align-items: center;
+    }
+    display: inline-block;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+  .editable-cell {
+    padding: 2px;
+  }
+  .bp3-html-select.editable-cell {
+    position: relative;
+  }
+  .editable__item {
+    min-width: 100px;
+    margin: 0 24px;
+  }
+}
+
+.tree-editor {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 11px;
+    padding-bottom: 10px;
+    box-shadow: 0 1px 0 rgba(16, 22, 26, 0.15);
+  }
+  &__footer {
+    // padding-top: 10px;
+    text-align: right;
+  }
+  td {
+    vertical-align: top;
+  }
+  .description {
+    margin-top: 5px;
+  }
+  code.type {
+    padding: 0;
+    background: none;
+    box-shadow: none;
+    color: inherit;
+    font-size: small;
+  }
+  .align-middle {
+    display: flex;
+    align-items: center;
+  }
+  .icon-button {
+    margin-right: 1em;
+    &.add {
+      margin-left: 1em;
+      // opacity: 0;
+      transition: 0.25s;
+    }
+  }
+  .child-line {
+    color: #ccc;
+  }
+
+  .editable-tr {
+    background: none;
+    transition: 0.15s;
+    &:hover {
+      background: rgba(138, 155, 168, 0.15);
+      .add.icon-button {
+        opacity: 1;
+      }
+    }
+    .description {
+      margin: 16px 0;
+    }
+  }
+
+  .readable-tr {
+  }
+  .bp3-switch {
+    margin-top: 0;
+  }
+  .bp3-tag {
+    margin-top: 5px;
+  }
+  .bp3-html-table {
+    width: 100%;
+  }
+}
