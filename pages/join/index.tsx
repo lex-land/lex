@@ -22,7 +22,8 @@ import md5 from 'md5';
 import { route } from '@helpers/next-routes';
 
 const loginValue = {
-  username: '',
+  fullname: '',
+  email: '',
   password: '',
 };
 
@@ -58,11 +59,22 @@ const Join: NextSFC = () => {
             <Card className="login-card">
               <H3 className="login-title">创建新用户</H3>
               <div className="login-control">
-                <FormGroup label="邮箱或全名">
+                <FormGroup label="邮箱">
                   <InputGroup
                     large
-                    name="username"
-                    value={formik.values.username}
+                    name="email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    required
+                  />
+                </FormGroup>
+              </div>
+              <div className="login-control">
+                <FormGroup label="全名">
+                  <InputGroup
+                    large
+                    name="fullname"
+                    value={formik.values.fullname}
                     onChange={formik.handleChange}
                     required
                   />
