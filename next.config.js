@@ -5,7 +5,7 @@ const withTypescript = require('@zeit/next-typescript');
 const withCSS = require('@zeit/next-css');
 const withLess = require('@zeit/next-less');
 const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
-const path = require('path');
+// const path = require('path');
 const { pick } = require('lodash');
 
 // fix: prevents error when .less files are required by node
@@ -41,7 +41,7 @@ const config = withLess(
       ]),
       generateEtags: false,
       lessLoaderOptions: {
-        paths: [path.resolve(__dirname, 'node_modules')],
+        // paths: [path.resolve(__dirname, 'node_modules')],
         javascriptEnabled: true,
       },
       // analyzeServer: ['server', 'both'].includes(process.env.BUNDLE_ANALYZE),
