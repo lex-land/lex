@@ -1,5 +1,10 @@
 # Lex
 
+## Environment
+
+- node
+- mysql
+
 ## Start
 
 ```shell
