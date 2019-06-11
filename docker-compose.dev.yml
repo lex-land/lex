@@ -23,7 +23,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "38080:3000"
+      - "3000:3000"
 
   # https://github.com/typeorm/typeorm/issues/2093
   # https://github.com/mysqljs/mysql/issues/2013
@@ -31,6 +31,8 @@ services:
     container_name: lex-mysql
     image: mysql:5.6
     volumes:
+      # 初始化数据库SQL
+      # https://stackoverflow.com/questions/38504257/mysql-scripts-in-docker-entrypoint-initdb-are-not-executed
       - ./server/database/sql:/docker-entrypoint-initdb.d
     command: --default-authentication-plugin=mysql_native_password
     restart: always
