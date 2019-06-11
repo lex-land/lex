@@ -15,7 +15,7 @@ yarn
 npm run start:dev
 ```
 
-运行开发环境完成后，查看 [http://localhost:3000](http://localhost:3000)
+成功运行开发环境后，查看 [http://localhost:3000](http://localhost:3000)
 
 ## Roadmap
 
@@ -23,12 +23,12 @@ npm run start:dev
 - [x] 使用 nestjs 代替 koa
 - [x] 使用 typeorm 代替 sequelize-typescript
 - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 使用 docker 运行项目的生产环境
+- [ ] 轻状态管理
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
-- [ ] 轻状态管理
-- [ ] 使用 Jenkins 的 Pipeline 进行 CI/CD
 - [ ] 支持 CicleCI
+- [ ] 支持 Jenkins 的 Pipeline 进行 CI/CD
+- [ ] 使用 docker 运行项目的生产环境
 
 ## New Feature
 
@@ -41,4 +41,14 @@ npm run start:dev
 
 ## Progress
 
-- [x] 新增dashboard、join、login、repo相关页面
+- [x] 新增 dashboard、join、login、repo 相关页面
+- [ ] 新用户注册页面
+- [ ] 仓库成员管理页面
+- [ ] 仪表盘页面
+- [ ] 导航条里的全局搜索
+- [ ] 个人中心页
+- [ ] 个人中心页/仓库页
+- [ ] 个人中心页/设置页
+
+## Troubleshooting
+
