@@ -5,7 +5,6 @@ import { Error500 } from './500';
 import React from 'react';
 import { getToken } from '@helpers/secure';
 import { logger } from '@core/logger';
-import { withLayout } from '@components/layout';
 
 const Routes = {
   500: Error500,
@@ -22,7 +21,7 @@ export default (props: any) => {
   logger.error(props.error);
   const token = getToken();
   if (token) {
-    const Error = withLayout(Routes[statusCode]);
+    const Error = Routes[statusCode];
     return <Error />;
   } else {
     const Error = Routes[1003];

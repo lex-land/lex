@@ -1,18 +1,22 @@
 import '../static/stylesheets/index.less';
 import 'moment/locale/zh-cn';
-import App, { Container } from 'next/app';
+import {
+  AppProps,
+  Container,
+  DefaultAppIProps,
+  NextAppContext,
+} from 'next/app';
+import { PageProps, defaultPageProps } from '@helpers/hooks';
 import { NProgressContainer } from '@core/nprogress/component';
+import { NextContext } from 'next';
 import React from 'react';
 import { Router } from '@helpers/next-routes';
-import { catchError } from '@config/error';
-import dynamic from 'next/dynamic';
-import { exportGlobalProps } from '@helpers/global-props';
 import { getToken } from '@helpers/secure';
+import { http } from '@helpers/fetch';
 import moment from 'moment';
 import { setToken } from '@helpers/token';
 
 moment.locale('zh-cn');
-catchError();
 
 Router.events.on('routeChangeComplete', () => {
   // TODO: 目前官方修复了在canary分支，但canary分支存在问题，待合并到主分支后配合修改
@@ -27,54 +31,53 @@ Router.events.on('routeChangeComplete', () => {
   }
 });
 
-const Provider = (props: { children: any }) => {
+const mergedPageProps = async (ctx: any) => {
+  return {
+    session: await http.get('/api/auth/session'),
+  };
+};
+
+const createMiddware = (ctx: NextContext) => {
+  // https://github.com/zeit/next.js/wiki/Redirecting-in-%60getInitialProps%60
+  const res = ctx.res;
+  const redirect = (path: string) => {
+    if (res) {
+      res.writeHead(302, {
+        Location: path,
+      });
+      res.end();
+    } else {
+      Router.push(path);
+    }
+  };
+  ctx.redirect = redirect;
+  ctx.getToken = () => getToken(ctx);
+};
+
+const App = (props: AppProps<any, any> & DefaultAppIProps) => {
+  const { Component, pageProps } = props;
   return (
     <Container>
       <NProgressContainer />
-      {props.children}
+      <PageProps.Provider value={pageProps}>
+        <Component />
+      </PageProps.Provider>
     </Container>
   );
 };
 
-const Error = dynamic<any>(import('@components/errors'));
-
-class SunmiEngine extends App<any> {
-  static getInitialProps = async ({ Component, ctx }: any) => {
-    let pageProps: any = {
-      statusCode: 200,
-    };
-    if (Component.getInitialProps) {
-      // 在组件的getInitialProps之前，全局存储token
-      setToken(getToken(ctx));
-      try {
-        pageProps = {
-          ...pageProps,
-          ...(await exportGlobalProps(ctx)),
-          ...(await Component.getInitialProps(ctx)),
-        };
-      } catch (error) {
-        pageProps.error = error;
-        pageProps.statusCode = error.code || error.statusCode || 500;
-      }
-    }
-    return { pageProps };
-  };
-
-  render() {
-    const { Component, pageProps } = this.props;
-    if (pageProps.statusCode !== 200) {
-      return (
-        <Provider>
-          <Error {...pageProps} />
-        </Provider>
-      );
-    }
-    return (
-      <Provider>
-        <Component {...pageProps} />
-      </Provider>
+App.getInitialProps = async ({ Component, ctx }: NextAppContext) => {
+  createMiddware(ctx);
+  let pageProps = defaultPageProps;
+  if (Component.getInitialProps) {
+    setToken(ctx.getToken()); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
+    pageProps = Object.assign(
+      pageProps,
+      await mergedPageProps(ctx),
+      await Component.getInitialProps(ctx),
     );
   }
-}
+  return { pageProps };
+};
 
-export default SunmiEngine;
+export default App;
