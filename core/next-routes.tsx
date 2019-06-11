@@ -17,10 +17,6 @@ interface Output {
   output: Partial<Methods>[];
 }
 
-interface Resource extends Output {
-  nest: (...result: any[]) => Output;
-}
-
 export const get = (source: string): Output => {
   return {
     output: [{ index: [source, `/${source}`, source] }],
@@ -29,7 +25,7 @@ export const get = (source: string): Output => {
 
 export const root = (source: string): Output => {
   return {
-    output: [{ index: ['root', '/', source] }],
+    output: [{ index: ['', '/', source] }],
   };
 };
 
@@ -60,7 +56,7 @@ const setMethods = (
     index: [`${page}`, base, page],
     create: [`${page}/new`, `${base}/new`, `${page}/new`],
     show: [`${page}/show`, `${base}/:${currentId}`, `${page}/show`],
-    edit: [`${page}/edit`, `${base}/:${currentId}/edit`, `${page}/edit`],
+    edit: [`${page}/edit`, `${base}/edit/:${currentId}`, `${page}/edit`],
   };
 
   if (only.length > 0) {
@@ -69,6 +65,10 @@ const setMethods = (
     return methods;
   }
 };
+
+interface Resource extends Output {
+  nest: (...result: any[]) => Output;
+}
 
 export const resources = (
   route: string,
