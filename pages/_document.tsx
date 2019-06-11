@@ -1,44 +1,42 @@
+// _document is only rendered on the server side and not on the client side
+// Event handlers like onClick can't be added to this file
+
 // ./pages/_document.js
-import Document, { DocumentProps, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
-import { ServerStyleSheet } from 'styled-components';
 
-interface Props extends DocumentProps {
-  styleTags: any;
-}
-
-class SunmiDocument extends Document<Props> {
-  public static async getInitialProps(ctx: any) {
-    const sheet = new ServerStyleSheet();
-    const page = ctx.renderPage((App: any) => (props: any) =>
-      sheet.collectStyles(<App {...props} />),
-    );
-    const styleTags = sheet.getStyleElement();
-    return { ...page, styleTags };
+class MyDocument extends Document {
+  static async getInitialProps(ctx: any) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
   }
 
-  public render() {
+  render() {
     return (
-      <html lang="zh">
+      <Html>
         <Head>
-          <meta charSet="UTF-8" />
-          <meta
-            name="viewport"
-            content={
-              'user-scalable=0, initial-scale=1, minimum-scale=1, width=device-width, height=device-height'
-            }
+          {/* <!-- Blueprint stylesheets --> */}
+          <link
+            href="https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css"
+            rel="stylesheet"
           />
-          <meta name="renderer" content="webkit" />
-          <link rel="shortcut icon" href="/static/favicon.ico" />
-          {this.props.styleTags}
+          <link
+            href="https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css"
+            rel="stylesheet"
+          />
+          <link
+            rel="shortcut icon"
+            href="/static/images/Luthor_bright.png"
+            type="image/x-icon"
+          />
         </Head>
         <body>
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     );
   }
 }
 
-export default SunmiDocument;
+export default MyDocument;
