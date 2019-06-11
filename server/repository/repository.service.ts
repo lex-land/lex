@@ -14,7 +14,7 @@ export class RepositoryService {
   public async findById(id: string) {
     return await this.repoRepository.findOneOrFail({
       where: { id },
-      relations: ['members', 'modules', 'modules.interfaces'],
+      relations: ['owner', 'members', 'modules', 'modules.interfaces'],
     });
   }
 
