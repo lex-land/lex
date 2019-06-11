@@ -23,9 +23,10 @@ npm run start:dev
 
 - [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
 - [x] 使用 nestjs 代替 koa
+- [x] 使用 nextjs 作为写React的姿势，代替 create-react-app
 - [x] 使用 typeorm 代替 sequelize-typescript
 - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 轻状态管理
+- [ ] 轻状态管理，不用redux，不用mobx，使用hooks进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
 - [ ] 支持 CicleCI
