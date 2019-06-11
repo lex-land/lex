@@ -6,6 +6,7 @@
       "@core/*": ["core/*"],
       "@config/*": ["config/*"],
       "@helpers/*": ["helpers/*"],
+      "@server/*": ["server/*"],
       "@components/*": ["components/*"],
       "@layout/*": ["layout/*"]
     },
