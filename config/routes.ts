@@ -17,8 +17,6 @@ add(resources('users'));
 add(get('login'));
 add(get('join'));
 
-add(get('settings'));
-
 add(root('dashboard'));
 
 // 打印对应关系
