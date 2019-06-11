@@ -67,15 +67,13 @@ export class UserService {
     });
   }
 
-  async getUserByEmail(jwt: any): Promise<User | undefined> {
+  async getUserByEmail(
+    jwt: any,
+    relations: string[],
+  ): Promise<User | undefined> {
     return await this.userRepository.findOne({
       where: { email: jwt.email },
-      relations: [
-        'ownedOrganizations',
-        'joinedOrganizations',
-        'ownedRepositories',
-        'joinedRepositories',
-      ],
+      relations,
     });
   }
 
