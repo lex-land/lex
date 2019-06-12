@@ -12,8 +12,8 @@ services:
       - MYSQL_PASSWD=123456
       - MYSQL_DATABASE=Lex
       - NODE_ENV=production
+      - SUNMI_PROD_URL=https://lex.sunmi.com
       - PORT=3000
-    # privileged: true
     links:
       - mysql
     depends_on:

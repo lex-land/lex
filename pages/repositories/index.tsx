@@ -6,7 +6,7 @@ import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
 
 const DashboardIndex: NextSFC<{ repo: Repository }> = () => (
-  <Page>
+  <Page authed>
     <div>Hello</div>
   </Page>
 );
