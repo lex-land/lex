@@ -1,4 +1,4 @@
-# Lex [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) [![Build Status](http://jenkins-hlcx.sunmi.com/job/lex/job/master/badge/icon?style=flat-square&subject=Custom%20Subject&status=Any%20State&color=darkturquoise)](http://jenkins-hlcx.sunmi.com/job/lex/job/master/)
+# Lex [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master)
 
 ## Environment
 
