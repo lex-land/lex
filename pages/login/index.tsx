@@ -14,7 +14,6 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import { Form, Formik } from 'formik';
-import { getToken, setToken } from '@helpers/secure';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
@@ -22,6 +21,7 @@ import React from 'react';
 import { http } from '@helpers/fetch';
 import md5 from 'md5';
 import { route } from '@helpers/next-routes';
+import { setToken } from '@helpers/secure';
 
 const loginValue = {
   username: '',
@@ -113,7 +113,7 @@ const Login: NextSFC = () => {
 };
 
 Login.getInitialProps = async ctx => {
-  if (getToken(ctx)) {
+  if (ctx.getToken()) {
     ctx.redirect('/');
   }
   return {};

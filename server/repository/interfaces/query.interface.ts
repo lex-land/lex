@@ -1,5 +1,5 @@
-import { Interface } from '@src/interface/interface.entity';
-import { Property } from '@src/property/property.entity';
+import { Interface } from '@server/interface/interface.entity';
+import { Property } from '@server/property/property.entity';
 import { Repository } from '../repository.entity';
 
 export interface RepositoryQuery extends Repository {

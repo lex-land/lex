@@ -93,8 +93,7 @@ const DashboardIndex: NextSFC = () => {
 };
 
 DashboardIndex.getInitialProps = async ctx => {
-  const token = ctx.getToken();
-  if (!token) {
+  if (!ctx.getToken()) {
     ctx.redirect('/login');
   }
   return {
