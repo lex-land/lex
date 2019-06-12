@@ -51,11 +51,9 @@ node {
             sshTransfer(
               cleanRemote: true,
               execCommand: "cd  /root/${PORJECT_NAME} && \
-              IMAGE_TAG=${IMAGE_TAG} docker-compose pull lex && \
-              SUNMI_ENV=${SUNMI_ENV} \
-              BUILD_TAG=${BUILD_TAG} \
-              IMAGE_TAG=${IMAGE_TAG} \
-              docker stack deploy -c ./docker-compose.yml ${PORJECT_NAME}",
+              docker-compose pull ${PORJECT_NAME} && \
+              docker-compose down && \
+              docker-compose up -d",
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
               excludes: '',
