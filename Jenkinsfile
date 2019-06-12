@@ -15,7 +15,6 @@ node {
     echo "整理环境变量, 拉取分支"
     echo "PORJECT_NAME : ${PORJECT_NAME}"
     echo "SSH_DEPLOY_CONFIGNAME : ${SSH_DEPLOY_CONFIGNAME}"
-    echo "SSH_NGINX_CONFIGNAME : ${SSH_NGINX_CONFIGNAME}"
   }
 
   // 按环境变量打包
