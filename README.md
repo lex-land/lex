@@ -1,9 +1,11 @@
-# Lex [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) [![Build Status](http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster)](http://jenkins-hlcx.sunmi.com/job/lex/job/master/)
+# Lex [![Build Status](http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster)](http://jenkins-hlcx.sunmi.com/job/lex/job/master/) [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) 
 
 ## Environment
 
 - node
 - docker
+- docker-compose
+- mysql
 
 ## Start
 
@@ -13,6 +15,7 @@ yarn
 
 # 运行开发环境
 npm run start:dev
+
 ```
 
 成功运行开发环境后，查看 [http://localhost:3000](http://localhost:3000)
@@ -20,9 +23,9 @@ npm run start:dev
 ## Deploy
 
 ```shell
-docker pull sunmiorg/lex:latest
 
-docker run sunmiorg/lex:latest
+docker-compose up -d
+
 ```
 
 ## Roadmap
@@ -33,11 +36,11 @@ docker run sunmiorg/lex:latest
 - [x] 使用 typeorm 代替 sequelize-typescript
 - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
 - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
+- [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
 - [ ] 支持 CicleCI
-- [ ] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [ ] 使用 docker 运行项目的生产环境
 
 ## New Feature
@@ -63,4 +66,4 @@ docker run sunmiorg/lex:latest
 ## Troubleshooting
 
 - Q: macOS 下，docker 启动开发环境比直接用 node 启动慢
-- A: https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4
+- A: 修改host, [Stackoverflow](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
