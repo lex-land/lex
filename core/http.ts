@@ -1,5 +1,3 @@
-import FormData from 'form-data';
-
 export const jsonToFormData = (obj: any) => {
   const formData = new FormData();
   Object.keys(obj).forEach(i => {

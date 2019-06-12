@@ -3,11 +3,14 @@ import { Card, H5, NonIdealState, Tag } from '@blueprintjs/core';
 import { usePageProps, useQuery } from '@helpers/hooks';
 import { CreateButton } from '@helpers/CURD-button';
 import { Link } from '@helpers/next-routes';
+import { ListHeader } from '@components/headers';
 import { Module } from '@server/module/module.entity';
+import NavList from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 import RepoNav from '@components/navs/repo-nav';
+import SiderPanel from '@components/navs/sider-panel';
 import { http } from '@helpers/fetch';
 
 const DashboardIndex: NextSFC = () => {
@@ -36,17 +39,30 @@ const DashboardIndex: NextSFC = () => {
         </div>
       )}
       {!!modules.length && (
-        <div className="content" style={{ padding: 40 }}>
-          <div style={{ marginBottom: 24 }}>
-            <CreateButton
-              action="/api/module"
-              fields={['name', 'description']}
-              params={{ repository: query.repository_id }}
-              buttonText="添加模块"
-              successForceReload
-              successToast="添加模块成功"
-            />
-          </div>
+        <div className="page">
+          {!!modules.length && (
+            <SiderPanel>
+              <ListHeader
+                title="全部模块"
+                rightElement={
+                  <CreateButton
+                    action="/api/module"
+                    fields={['name', 'description']}
+                    params={{ repository: query.repository_id }}
+                    buttonText="新增"
+                    buttonIcon="cube"
+                    successForceReload
+                  />
+                }
+              />
+              <NavList
+                itemIcon="cube"
+                itemRoute="repositories/modules/show"
+                rowKey="module_id"
+                dataSource={modules}
+              />
+            </SiderPanel>
+          )}
           <div className="module-card__list">
             {modules.map(mod => (
               <Card className="module-card" key={mod.id}>
@@ -62,7 +78,7 @@ const DashboardIndex: NextSFC = () => {
                   </Link>
                 </H5>
                 <p>
-                  {mod.description}{' '}
+                  {mod.description}
                   {/* <EditButton
                     action={`/api/module/${mod.id}`}
                     defaultValue={mod}

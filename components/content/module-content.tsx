@@ -1,22 +1,9 @@
 import './module-content.less';
-import {
-  Button,
-  ButtonGroup,
-  Card,
-  Classes,
-  Code,
-  H2,
-  H5,
-  HTMLTable,
-  Intent,
-  NonIdealState,
-  Popover,
-} from '@blueprintjs/core';
-import { CreateButton, EditButton } from '@helpers/CURD-button';
-import React, { Fragment } from 'react';
-import { BaseHeader } from './content-header';
+import { Card, Code, H4, HTMLTable, NonIdealState } from '@blueprintjs/core';
+import { CreateButton } from '@helpers/CURD-button';
 import { Link } from '@helpers/next-routes';
 import { Module } from '@server/module/module.entity';
+import React from 'react';
 import { useQuery } from '@helpers/hooks';
 
 const ModuleContent = (props: { mod: Module }) => {
@@ -24,16 +11,9 @@ const ModuleContent = (props: { mod: Module }) => {
   const query = useQuery();
   return (
     <div className="module-content" style={{ flex: '1 1', padding: 40 }}>
-      <BaseHeader
-        defaultValue={mod}
-        render={(value: any) => (
-          <Fragment>
-            <H2>
-              {value.name} {value.description && `(${value.description})`}
-            </H2>
-          </Fragment>
-        )}
-      />
+      <H4>
+        {mod.name} {mod.description && `(${mod.description})`}
+      </H4>
       {!mod.interfaces.length && (
         <Card>
           <NonIdealState
@@ -57,14 +37,25 @@ const ModuleContent = (props: { mod: Module }) => {
         <HTMLTable style={{ width: '100%' }}>
           <thead>
             <tr>
+              <th style={{ width: 200 }}>描述</th>
               <th style={{ width: 450 }}>接口</th>
-              <th style={{ width: 300 }}>描述</th>
-              <th>操作</th>
             </tr>
           </thead>
           <tbody>
             {mod.interfaces.map(inte => (
               <tr key={inte.id}>
+                <td>
+                  <Link
+                    route="repositories/modules/show"
+                    params={{
+                      repository_id: query.repository_id,
+                      module_id: mod.id,
+                      interface_id: inte.id,
+                    }}
+                  >
+                    <a>{inte.name}</a>
+                  </Link>
+                </td>
                 <td>
                   <Link
                     route="repositories/modules/show"
@@ -81,8 +72,19 @@ const ModuleContent = (props: { mod: Module }) => {
                     </Code>
                   </Link>
                 </td>
-                <td>{inte.name}</td>
-                <td>
+              </tr>
+            ))}
+          </tbody>
+        </HTMLTable>
+      )}
+    </div>
+  );
+};
+
+export default ModuleContent;
+
+{
+  /* <td>
                   <ButtonGroup>
                     <EditButton
                       fields={['method', 'url', 'name', 'description']}
@@ -121,14 +123,5 @@ const ModuleContent = (props: { mod: Module }) => {
                       <Button intent="danger" icon="trash" />
                     </Popover>
                   </ButtonGroup>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </HTMLTable>
-      )}
-    </div>
-  );
-};
-
-export default ModuleContent;
+                </td> */
+}

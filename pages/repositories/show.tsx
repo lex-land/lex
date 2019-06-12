@@ -1,16 +1,13 @@
 import './show.less';
-import { H2, NonIdealState } from '@blueprintjs/core';
+import { Button, H2, NonIdealState } from '@blueprintjs/core';
 import { usePageProps, useQuery } from '@helpers/hooks';
 import { CreateButton } from '@helpers/CURD-button';
-import { ListHeader } from '@components/headers';
 import ModuleContent from '@components/content/module-content';
-import NavList from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 import RepoNav from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
-import SiderPanel from '@components/navs/sider-panel';
 import { http } from '@helpers/fetch';
 
 const RepositoriesShow: NextSFC = () => {
@@ -19,33 +16,15 @@ const RepositoriesShow: NextSFC = () => {
   return (
     <Page authed className="repositories">
       <RepoNav repo={repo} />
-      <div className="body">
-        {!!repo.modules.length && (
-          <SiderPanel>
-            <ListHeader
-              title="模块"
-              rightElement={
-                <CreateButton
-                  action="/api/module"
-                  fields={['name', 'description']}
-                  params={{ repository: repo }}
-                  buttonText="新增"
-                  buttonIcon="cube"
-                  successForceReload
-                />
-              }
-            />
-            <NavList
-              itemIcon="cube"
-              itemRoute="repositories/modules/show"
-              rowKey="module_id"
-              dataSource={repo.modules}
-            />
-          </SiderPanel>
-        )}
+      <div className="body lex-container">
         <div style={{ flex: '1 1' }}>
-          <div style={{ padding: 40 }}>
-            <H2>{repo.name}</H2>
+          <div style={{ margin: 40 }}>
+            <H2 className="page-title">
+              <span>{repo.name}</span>
+              <div className="page-actions">
+                <Button icon="edit" minimal text="编辑本页面" />
+              </div>
+            </H2>
             <p>{repo.description}</p>
           </div>
           {!repo.modules.length && (

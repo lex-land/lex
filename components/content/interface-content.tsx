@@ -1,14 +1,13 @@
-import { Button, ButtonGroup, Callout, H2, H3, H4 } from '@blueprintjs/core';
-import { DeleteButton, EditButton } from '@helpers/CURD-button';
+import './interface-content.less';
+import { H2, H3, H4 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
 import { TreeEditor, TreeUtil } from '@components/tree-editor';
-import { BaseHeader } from './content-header';
 import { Interface } from '@server/interface/interface.entity';
 
 const TreeEditorHeader = (treeUtil: TreeUtil) => {
   return (
     <Fragment>
-      <ButtonGroup>
+      {/* <ButtonGroup>
         <Button onClick={() => treeUtil.onAppendRootChild()} icon="plus" />
         {!treeUtil.editable && (
           <Button onClick={() => treeUtil.setEditable(true)} icon="edit" />
@@ -20,7 +19,7 @@ const TreeEditorHeader = (treeUtil: TreeUtil) => {
             intent="danger"
           />
         )}
-      </ButtonGroup>
+      </ButtonGroup> */}
     </Fragment>
   );
 };
@@ -33,27 +32,18 @@ const InterfaceContent = ({
   inte: Interface;
 }) => {
   return (
-    <div className="content" style={{ padding: 40 }}>
-      <BaseHeader
-        defaultValue={inte}
-        render={(value: any, setValue: any) => (
-          <Fragment>
-            <H2>
-              [{value.method}] {value.url}({value.name})
-            </H2>
-            {value.description && <Callout>{value.description}</Callout>}
-            <br />
-            <EditButton
-              action={`/api/interface/${inte.id}`}
-              fields={['method', 'url', 'name', 'description']}
-              icon="edit"
-              onChange={setValue}
-              defaultValue={value}
-              successToast="已更新接口信息"
-            />
-          </Fragment>
-        )}
-      />
+    <div className="interface-content" style={{ padding: 40 }}>
+      <H2>
+        [{inte.method}] {inte.url}({inte.name})
+      </H2>
+      {inte.description && <p>{inte.description}</p>}
+      {/* <br />
+      <EditButton
+        action={`/api/interface/${inte.id}`}
+        fields={['method', 'url', 'name', 'description']}
+        icon="edit"
+        successToast="已更新接口信息"
+      /> */}
       <div style={{ padding: '40px 0' }}>
         <H4>请求参数</H4>
         <TreeEditor
@@ -78,13 +68,13 @@ const InterfaceContent = ({
       <div>
         <H3>返回码说明</H3>
       </div>
-      <DeleteButton
+      {/* <DeleteButton
         alertWhen={inte.properties.length}
         alertStrongText={inte.name}
         action={`/api/interface/${inte.id}`}
         buttonText="删除"
         successGoBack
-      />
+      /> */}
     </div>
   );
 };
