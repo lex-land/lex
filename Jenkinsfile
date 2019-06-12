@@ -53,7 +53,7 @@ node {
             sshTransfer(
               cleanRemote: true,
               execCommand: "cd  /data/www/${PORJECT_NAME} && \
-              IMAGE_TAG=${IMAGE_TAG} docker-compose pull app && \
+              IMAGE_TAG=${IMAGE_TAG} docker-compose pull lex && \
               SUNMI_ENV=${SUNMI_ENV} \
               BUILD_TAG=${BUILD_TAG} \
               IMAGE_TAG=${IMAGE_TAG} \
