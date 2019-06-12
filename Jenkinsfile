@@ -7,7 +7,6 @@ node {
   BUILD_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
   IMAGE_TAG = "latest"
   SSH_DEPLOY_CONFIGNAME = "lex.sunmi.com"
-  SSH_NGINX_CONFIGNAME = "test-bridge-nginx"
 
   // 整理环境变量
   stage('Prepare SCM') {
@@ -52,7 +51,7 @@ node {
           transfers: [
             sshTransfer(
               cleanRemote: true,
-              execCommand: "cd  /data/www/${PORJECT_NAME} && \
+              execCommand: "cd  /root/${PORJECT_NAME} && \
               IMAGE_TAG=${IMAGE_TAG} docker-compose pull lex && \
               SUNMI_ENV=${SUNMI_ENV} \
               BUILD_TAG=${BUILD_TAG} \
@@ -61,30 +60,8 @@ node {
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
               excludes: '',
-              sourceFiles: 'docker-compose.yml',
+              sourceFiles: 'server/**,docker-compose.yml',
               makeEmptyDirs: true
-            )
-          ],
-        )
-      ]
-    )
-  }
-
-  // SSH登录远端拉取镜像
-  stage('Nginx') {
-    sshPublisher(
-      publishers: [
-        sshPublisherDesc(
-          configName: SSH_NGINX_CONFIGNAME,
-          transfers: [
-            sshTransfer(
-              cleanRemote: false,
-              execCommand: "cd  /data/www/${SSH_NGINX_CONFIGNAME} && sh deploy.sh",
-              patternSeparator: '[, ]+',
-              remoteDirectory: SSH_NGINX_CONFIGNAME,
-              excludes: '',
-              sourceFiles: "conf.d/${SSH_DEPLOY_CONFIGNAME}.conf,certs/**",
-              makeEmptyDirs: false
             )
           ],
         )
