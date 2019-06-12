@@ -95,11 +95,12 @@ const Join: NextSFC = () => {
               <div className="login-control login-button__container">
                 <Button
                   large
+                  disabled
                   className="login-button"
                   intent="success"
                   type="submit"
                 >
-                  注册
+                  注册(敬请期待)
                 </Button>
               </div>
               <div className="register-button__container">
