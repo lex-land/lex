@@ -32,7 +32,7 @@ node {
 
   // Push镜像到Docker
   stage('Push') {
-    echo "推送镜像 ${IMAGE_TAG} 到 docker-hlcx"
+    echo "推送镜像 ${IMAGE_TAG} 到 dockerhub"
     echo "打包镜像 ${IMAGE_TAG}..."
     docker.withRegistry('https://hub.docker.com', 'dockerhub') {
         def appImage = docker.build("sunmiorg/lex:${IMAGE_TAG}")
