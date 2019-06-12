@@ -34,10 +34,12 @@ node {
   stage('Push') {
     echo "推送镜像 ${IMAGE_TAG} 到 docker-hlcx"
     echo "打包镜像 ${IMAGE_TAG}..."
-    def appImage = docker.build("sunmiorg/lex:${IMAGE_TAG}")
-    echo "${IMAGE_TAG} Build完毕！！"
-    appImage.push()
-    echo "${IMAGE_TAG} Push完毕！！"
+    docker.withRegistry('sunmiorg/lex', 'dockerhub') {
+        def appImage = docker.build("sunmiorg/lex:${IMAGE_TAG}")
+        echo "${IMAGE_TAG} Build完毕！！"
+        appImage.push()
+        echo "${IMAGE_TAG} Push完毕！！"
+    }
   }
 
   // 目标目录为/data/www/
