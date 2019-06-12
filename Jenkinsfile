@@ -32,9 +32,9 @@ node {
 
   // Push镜像到Docker
   stage('Push') {
-    echo "推送镜像 ${IMAGE_TAG} 到 docker-hlcx"
+    echo "推送镜像 ${IMAGE_TAG} 到 dockerhub"
     echo "打包镜像 ${IMAGE_TAG}..."
-    docker.withRegistry('https://hub.docker.com', 'dockerhub') {
+    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
         def appImage = docker.build("sunmiorg/lex:${IMAGE_TAG}")
         echo "${IMAGE_TAG} Build完毕！！"
         appImage.push()
@@ -53,7 +53,7 @@ node {
             sshTransfer(
               cleanRemote: true,
               execCommand: "cd  /data/www/${PORJECT_NAME} && \
-              IMAGE_TAG=${IMAGE_TAG} docker-compose pull app && \
+              IMAGE_TAG=${IMAGE_TAG} docker-compose pull lex && \
               SUNMI_ENV=${SUNMI_ENV} \
               BUILD_TAG=${BUILD_TAG} \
               IMAGE_TAG=${IMAGE_TAG} \

@@ -17,6 +17,14 @@ npm run start:dev
 
 成功运行开发环境后，查看 [http://localhost:3000](http://localhost:3000)
 
+## Deploy
+
+```shell
+docker pull sunmiorg/lex:latest
+
+docker run sunmiorg/lex:latest
+```
+
 ## Roadmap
 
 - [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
