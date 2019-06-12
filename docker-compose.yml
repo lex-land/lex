@@ -19,7 +19,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "3000:3000"  # expose 38080
+      - "13000:3000"
 
   # https://github.com/typeorm/typeorm/issues/2093
   # https://github.com/mysqljs/mysql/issues/2013
