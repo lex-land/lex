@@ -14,7 +14,5 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     //   useNewUrlParser: true,
     // }),
   ],
-  // providers: [...databaseProviders],
-  // exports: [...databaseProviders],
 })
 export class DatabaseModule {}

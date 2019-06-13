@@ -14,14 +14,7 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find({
-      relations: [
-        'ownedOrganizations',
-        'joinedOrganizations',
-        'ownedRepositories',
-        'joinedRepositories',
-      ],
-    });
+    return await this.userRepository.find({});
   }
 
   async findOne(id: string): Promise<User | undefined> {

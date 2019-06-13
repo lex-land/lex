@@ -6,11 +6,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { InterfaceService } from './interface.service';
 import { PropertyService } from '@server/property/property.service';
 
 @Controller('interface')
+@UseGuards(AuthGuard('jwt'))
 export class InterfaceController {
   constructor(
     private readonly inteService: InterfaceService,

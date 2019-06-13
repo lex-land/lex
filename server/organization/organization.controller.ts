@@ -1,10 +1,12 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth/auth.service';
 import { OrganizationService } from './organization.service';
 import { PostOrgPayload } from './interfaces/org.interface';
 import { UserService } from '../user/user.service';
 
 @Controller('organization')
+@UseGuards(AuthGuard('jwt'))
 export class OrganizationController {
   constructor(
     private readonly orgService: OrganizationService,

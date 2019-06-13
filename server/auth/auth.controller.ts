@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { FetchError } from '@config/error';
 import { JwtService } from '@nestjs/jwt';
@@ -32,6 +33,7 @@ export class AuthController {
   }
 
   @Get('session-user')
+  @UseGuards(AuthGuard('jwt'))
   public async sessionUser(@Token() token: string) {
     // this.jwtService.verify()
     // put some validation logic here

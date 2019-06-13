@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards,
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../auth/auth.service';
 import { CreateRepoPayload } from './interfaces/payload.interface';
 import { InterfaceService } from '@server/interface/interface.service';
@@ -8,6 +17,7 @@ import { RepositoryService } from './repository.service';
 import { UserService } from '@server/user/user.service';
 
 @Controller('repository')
+@UseGuards(AuthGuard('jwt'))
 export class RepositoryController {
   constructor(
     private readonly repoService: RepositoryService,

@@ -7,11 +7,14 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { CreateModuPayload } from './interfaces/payload.interface';
 import { ModuleService } from './module.service';
 
 @Controller('module')
+@UseGuards(AuthGuard('jwt'))
 export class ModuleController {
   constructor(private readonly moduService: ModuleService) {}
 
