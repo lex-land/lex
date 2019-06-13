@@ -50,7 +50,7 @@ node {
           configName: SSH_DEPLOY_CONFIGNAME,
           transfers: [
             sshTransfer(
-              cleanRemote: true,
+              cleanRemote: false,
               execCommand: "cd  /root/${PORJECT_NAME} && \
               npm install -g yarn && yarn && \
               docker-compose pull && \
@@ -60,7 +60,7 @@ node {
               remoteDirectory: PORJECT_NAME,
               excludes: 'docker/**,node_modules/**',
               sourceFiles: '**',
-              makeEmptyDirs: true
+              makeEmptyDirs: false
             )
           ],
         )
