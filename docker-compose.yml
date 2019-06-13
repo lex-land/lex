@@ -3,7 +3,11 @@ version: '3.1'
 services:
   lex:
     container_name: lex
-    image: sunmiorg/lex:latest
+    image: node:latest
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: 'npm start'
     environment:
       # if you have your own mysql, config it here, and disable the 'mysql' config blow
       - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
@@ -15,21 +19,22 @@ services:
       - SUNMI_PROD_URL=https://lex.sunmi.com
       - PORT=3000
     links:
-      - mysql
+      - lex-mysql
     depends_on:
-      - mysql
+      - lex-mysql
     ports:
       - "13000:3000"
 
   # https://github.com/typeorm/typeorm/issues/2093
   # https://github.com/mysqljs/mysql/issues/2013
-  mysql:
+  lex-mysql:
     container_name: lex-mysql
     image: mysql:5.6
     volumes:
       # 初始化数据库SQL
       # https://stackoverflow.com/questions/38504257/mysql-scripts-in-docker-entrypoint-initdb-are-not-executed
       - ./server/database/sql:/docker-entrypoint-initdb.d
+      - ./docker/mysql:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
