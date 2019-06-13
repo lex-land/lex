@@ -12,7 +12,7 @@ import { NextContext } from 'next';
 import React from 'react';
 import { Router } from '@helpers/next-routes';
 import { getToken } from '@helpers/secure';
-import { http } from '@helpers/fetch';
+// import { http } from '@helpers/fetch';
 import moment from 'moment';
 import { setToken } from '@helpers/token';
 
@@ -33,7 +33,7 @@ Router.events.on('routeChangeComplete', () => {
 
 const mergedPageProps = async (ctx: NextContext) => {
   return {
-    session: await http.get('/api/auth/session'),
+    // session: await http.get('/api/auth/session'),
   };
 };
 
@@ -71,11 +71,15 @@ App.getInitialProps = async ({ Component, ctx }: NextAppContext) => {
   let pageProps = defaultPageProps;
   if (Component.getInitialProps) {
     setToken(ctx.getToken()); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
-    pageProps = Object.assign(
-      pageProps,
-      await mergedPageProps(ctx),
-      await Component.getInitialProps(ctx),
-    );
+    try {
+      pageProps = Object.assign(
+        pageProps,
+        await mergedPageProps(ctx),
+        await Component.getInitialProps(ctx),
+      );
+    } catch (error) {
+      pageProps = Object.assign(pageProps, { error });
+    }
   }
   return { pageProps };
 };

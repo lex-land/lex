@@ -11,9 +11,7 @@ import { Interface } from '@server/interface/interface.entity';
 import { Module } from '@server/module/module.entity';
 import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
-import { User } from '@server/user/user.entity';
 import { route } from '@helpers/next-routes';
-import { usePageProps } from '@core/hooks';
 import { useRouter } from 'next/router';
 
 const RepoNav = ({
@@ -26,7 +24,6 @@ const RepoNav = ({
   inte?: Interface;
 }) => {
   const router = useRouter();
-  const { session } = usePageProps<{ session: User }>();
   const query: any = router.query;
   const selectedTabId = router.route
     .split('/')
@@ -36,10 +33,6 @@ const RepoNav = ({
     route(newId).push({ repository_id: query.repository_id });
   };
   const BREADCRUMBS: IBreadcrumbProps[] = [
-    {
-      href: `/`,
-      text: session && session.fullname,
-    },
     {
       href: `/repositories/${query.repository_id}`,
       text: repo && repo.name,

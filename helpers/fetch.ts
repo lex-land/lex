@@ -40,7 +40,10 @@ export async function fetch<D = any>(api: string, opts?: RequestInit) {
     return json;
   } catch (error) {
     if (process.env.NODE_ENV === 'production') {
-      throw new FetchError(500, `${error.message}${result.clone().text()}`);
+      throw new FetchError(
+        500,
+        `${error.message}${await result.clone().text()}`,
+      );
     } else {
       throw error;
     }
