@@ -31,7 +31,7 @@ Router.events.on('routeChangeComplete', () => {
   }
 });
 
-const mergedPageProps = async (ctx: any) => {
+const mergedPageProps = async (ctx: NextContext) => {
   return {
     session: await http.get('/api/auth/session'),
   };
