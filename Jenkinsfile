@@ -53,6 +53,7 @@ node {
               cleanRemote: true,
               execCommand: "cd  /root/${PORJECT_NAME} && \
               npm install -g yarn && yarn && \
+              docker-compose pull && \
               docker-compose down && \
               docker-compose up -d",
               patternSeparator: '[, ]+',
