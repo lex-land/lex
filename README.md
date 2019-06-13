@@ -1,4 +1,4 @@
-# Lex [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) 
+# Lex [![Build Status](http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster)](http://jenkins-hlcx.sunmi.com/job/lex/job/master/) [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) 
 
 Lex是一个接口文档管理工具，前身是Rap2，是在Rap2的想法上重新架构的一个产品。相比Swagger UI、sosoApi、showDoc等工具，Lex主要做的不仅仅把接口呈现出来，更多的是提供结构化的接口定义去为前端的mock数据、自动化接口测试、批量测试用例覆盖等一系列配合上下游的协作。
 
@@ -53,6 +53,7 @@ docker-compose up -d
 - [ ] 添加仓库 Wiki
 - [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
 - [ ] 添加用户角色，前端、后端、测试
+- [ ] 添加mock数据和接口数据的匹配
 
 ## Progress
 
