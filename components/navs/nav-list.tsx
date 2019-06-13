@@ -1,7 +1,7 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
 import { Link } from '@helpers/next-routes';
 import React from 'react';
-import { useQuery } from '@helpers/hooks';
+import { useQuery } from '@core/hooks';
 
 const NavList = ({
   dataSource,

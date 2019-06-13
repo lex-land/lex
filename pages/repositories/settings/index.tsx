@@ -13,7 +13,7 @@ import RepoNav from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
 import SimpleForm from '@components/forms/simple-form';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/hooks';
 
 const RepositoriesSettings: NextSFC<any> = () => {
   const { repo } = usePageProps<{ repo: Repository }>();

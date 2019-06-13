@@ -1,6 +1,6 @@
 import './show.less';
-import { usePageProps, useQuery } from '@helpers/hooks';
-import { CreateButton } from '@helpers/CURD-button';
+import { usePageProps, useQuery } from '@core/hooks';
+import { CreateButton } from '@components/curd/CURD-button';
 import { Interface } from '@server/interface/interface.entity';
 import InterfaceContent from '@components/content/interface-content';
 import { ListHeader } from '@components/headers';

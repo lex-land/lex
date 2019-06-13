@@ -1,10 +1,10 @@
 import './module-content.less';
 import { Card, Code, H4, HTMLTable, NonIdealState } from '@blueprintjs/core';
-import { CreateButton } from '@helpers/CURD-button';
+import { CreateButton } from '@components/curd/CURD-button';
 import { Link } from '@helpers/next-routes';
 import { Module } from '@server/module/module.entity';
 import React from 'react';
-import { useQuery } from '@helpers/hooks';
+import { useQuery } from '@core/hooks';
 
 const ModuleContent = (props: { mod: Module }) => {
   const { mod } = props;

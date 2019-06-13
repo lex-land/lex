@@ -16,7 +16,7 @@ import { Logo } from '@components/vi';
 import React from 'react';
 import { User } from '@server/user/user.entity';
 import { cleanToken } from '@helpers/secure';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/hooks';
 
 const LoginedNavbar = () => {
   const { session } = usePageProps<{ session: User }>();

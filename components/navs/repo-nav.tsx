@@ -13,7 +13,7 @@ import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
 import { User } from '@server/user/user.entity';
 import { route } from '@helpers/next-routes';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/hooks';
 import { useRouter } from 'next/router';
 
 const RepoNav = ({

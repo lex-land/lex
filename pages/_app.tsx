@@ -6,7 +6,7 @@ import {
   DefaultAppIProps,
   NextAppContext,
 } from 'next/app';
-import { PageProps, defaultPageProps } from '@helpers/hooks';
+import { PageProps, defaultPageProps } from '@core/hooks';
 import { NProgressContainer } from '@core/nprogress/component';
 import { NextContext } from 'next';
 import React from 'react';

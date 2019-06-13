@@ -13,13 +13,13 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import { Form, Formik } from 'formik';
+import { Link, route } from '@helpers/next-routes';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 import { http } from '@helpers/fetch';
 import md5 from 'md5';
-import { route } from '@helpers/next-routes';
 
 const loginValue = {
   fullname: '',
@@ -105,7 +105,9 @@ const Join: NextSFC = () => {
               </div>
               <div className="register-button__container">
                 已有账户？
-                <a href="/login">登录</a>
+                <Link route="login">
+                  <a>登录</a>
+                </Link>
               </div>
             </Card>
           </Form>

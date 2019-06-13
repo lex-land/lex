@@ -1,7 +1,7 @@
 import './index.less';
 import { Card, H5, NonIdealState, Tag } from '@blueprintjs/core';
-import { usePageProps, useQuery } from '@helpers/hooks';
-import { CreateButton } from '@helpers/CURD-button';
+import { usePageProps, useQuery } from '@core/hooks';
+import { CreateButton } from '@components/curd/CURD-button';
 import { Link } from '@helpers/next-routes';
 import { ListHeader } from '@components/headers';
 import { Module } from '@server/module/module.entity';

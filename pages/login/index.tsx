@@ -1,6 +1,5 @@
 import './index.less';
 import {
-  AnchorButton,
   Button,
   Card,
   Classes,
@@ -14,13 +13,13 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import { Form, Formik } from 'formik';
+import { Link, route } from '@helpers/next-routes';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 import { http } from '@helpers/fetch';
 import md5 from 'md5';
-import { route } from '@helpers/next-routes';
 import { setToken } from '@helpers/secure';
 
 const loginValue = {
@@ -56,13 +55,11 @@ const Login: NextSFC = () => {
             <Navbar className={Classes.DARK}>
               <NavbarGroup className="lex-container">
                 <Logo />
-                <AnchorButton
-                  href="/join"
-                  style={{ marginLeft: 8 }}
-                  intent="success"
-                >
-                  注册
-                </AnchorButton>
+                <Link route="join">
+                  <Button style={{ marginLeft: 8 }} intent="success">
+                    注册
+                  </Button>
+                </Link>
               </NavbarGroup>
             </Navbar>
             <Card className="login-card">
@@ -102,7 +99,9 @@ const Login: NextSFC = () => {
               </div>
               <div className="register-button__container">
                 还没有一个账户？
-                <a href="/join">创建新用户</a>
+                <Link route="join">
+                  <a>创建新用户</a>
+                </Link>
               </div>
             </Card>
           </Form>

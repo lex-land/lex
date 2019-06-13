@@ -18,7 +18,7 @@ import RepoNav from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
 import { User } from '@server/user/user.entity';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/hooks';
 
 const RepositoriesMembers: NextSFC<any> = () => {
   const { repo } = usePageProps<{ repo: Repository }>();

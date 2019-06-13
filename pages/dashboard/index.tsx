@@ -9,7 +9,7 @@ import {
   Position,
 } from '@blueprintjs/core';
 import { Avator } from '@components/users';
-import { CreateButton } from '@helpers/CURD-button';
+import { CreateButton } from '@components/curd/CURD-button';
 import { ListHeader } from '@components/headers';
 import NavList from '@components/navs/nav-list';
 import { NextSFC } from 'next';
@@ -18,7 +18,7 @@ import React from 'react';
 import SiderPanel from '@components/navs/sider-panel';
 import { User } from '@server/user/user.entity';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/hooks';
 
 const DashboardIndex: NextSFC = () => {
   const { user } = usePageProps<{ user: User }>();

@@ -1,7 +1,7 @@
 import './show.less';
 import { Button, H2, NonIdealState } from '@blueprintjs/core';
-import { usePageProps, useQuery } from '@helpers/hooks';
-import { CreateButton } from '@helpers/CURD-button';
+import { usePageProps, useQuery } from '@core/hooks';
+import { CreateButton } from '@components/curd/CURD-button';
 import ModuleContent from '@components/content/module-content';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
