@@ -34,7 +34,7 @@ services:
       # 初始化数据库SQL
       # https://stackoverflow.com/questions/38504257/mysql-scripts-in-docker-entrypoint-initdb-are-not-executed
       - ./server/database/sql:/docker-entrypoint-initdb.d
-      - ./docker/mysql:/var/lib/mysql
+      - /data/docker/mysql:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:

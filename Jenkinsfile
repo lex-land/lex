@@ -52,12 +52,12 @@ node {
             sshTransfer(
               cleanRemote: true,
               execCommand: "cd  /root/${PORJECT_NAME} && \
-              docker-compose pull ${PORJECT_NAME} && \
+              npm install -g yarn && yarn && \
               docker-compose down && \
               docker-compose up -d",
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
-              excludes: '',
+              excludes: 'docker/**,node_modules/**',
               sourceFiles: '**',
               makeEmptyDirs: true
             )
