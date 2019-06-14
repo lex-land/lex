@@ -16,6 +16,7 @@ export const createMiddware = (ctx: NextContext) => {
     } else {
       Router.push(path);
     }
+    return { statusCode: 302 };
   };
   ctx.redirect = redirect;
   ctx.getToken = () => getToken(ctx);
