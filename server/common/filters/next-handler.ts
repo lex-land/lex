@@ -19,8 +19,13 @@ export class NextHandlerFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
+    const status = exception.getStatus();
     try {
-      return this.handler(request, response);
+      if (status === 404) {
+        return this.handler(request, response);
+      } else {
+        return response.send(exception.getResponse());
+      }
     } catch (error) {
       response.send(error);
     }

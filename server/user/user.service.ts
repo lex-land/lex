@@ -14,9 +14,7 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find({
-      select: ['id', 'fullname'],
-    });
+    return await this.userRepository.find();
   }
 
   async findOne(id: string): Promise<User | undefined> {
@@ -41,10 +39,11 @@ export class UserService {
     const newUser = new User();
     return await this.userRepository.save(
       Object.assign(newUser, createUserDto, {
-        password: md5(md5(createUserDto.password)),
+        password: md5(createUserDto.password),
       }),
     );
   }
+
   async getUserByNameLogin({
     fullname,
     password,

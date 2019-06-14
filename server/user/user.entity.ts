@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { Organization } from '../organization/organization.entity';
 import { Repository } from '../repository/repository.entity';
 
@@ -21,6 +22,7 @@ export class User {
   })
   fullname: string;
 
+  @Exclude()
   @Column({
     type: 'varchar',
     length: 32,
