@@ -1,10 +1,13 @@
 <p align="center">
-  <a href="https://lex.sunmi.com" target="blank"><img src="./Lex.svg" width="150" alt="Lex Logo" /></a>
+  <a href="https://lex.sunmi.com" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
 </p>
 
-[![Build Status](http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster)](http://jenkins-hlcx.sunmi.com/job/lex/job/master/) [![CircleCI](https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg)](https://circleci.com/gh/sunmi-web/lex/tree/master) 
+<p align="center">
+<a href="http://jenkins-hlcx.sunmi.com/job/lex/job/master/" target="_blank"><img src="http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster" alt="Jenkins" /></a>
+<a href="https://circleci.com/gh/sunmi-web/lex/tree/master" target="_blank"><img src="https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg" alt="CircleCI" /></a>
+</p>
 
-Lex是一个接口文档管理工具，前身是Rap2，是在Rap2的想法上重新架构的一个产品。相比Swagger UI、sosoApi、showDoc等工具，Lex主要做的不仅仅把接口呈现出来，更多的是提供结构化的接口定义去为前端的mock数据、自动化接口测试、批量测试用例覆盖等一系列配合上下游的协作。
+Lex 是一个接口文档管理工具，前身是 Rap2，是在 Rap2 的想法上重新架构的一个产品。相比 Swagger UI、sosoApi、showDoc 等工具，Lex 主要做的不仅仅把接口呈现出来，更多的是提供结构化的接口定义去为前端的 mock 数据、自动化接口测试、批量测试用例覆盖等一系列配合上下游的协作。
 
 ## Environment
 
@@ -43,7 +46,7 @@ docker-compose up -d
 - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
 - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
-- [x] 重新设计logo
+- [x] 重新设计 logo
 - [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
@@ -58,7 +61,7 @@ docker-compose up -d
 - [ ] 添加仓库 Wiki
 - [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
 - [ ] 添加用户角色，前端、后端、测试
-- [ ] 添加mock数据和接口数据的匹配
+- [ ] 添加 mock 数据和接口数据的匹配
 
 ## Progress
 
@@ -74,4 +77,4 @@ docker-compose up -d
 ## Troubleshooting
 
 - Q: macOS 下，docker 启动开发环境比直接用 node 启动慢
-- A: 修改host, [Stackoverflow](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
+- A: 修改 host, [Stackoverflow](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
