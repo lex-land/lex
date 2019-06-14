@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   Param,
   Post,
   Put,
@@ -15,13 +14,6 @@ import { PropertyService } from './property.service';
 @UseGuards(AuthGuard('jwt'))
 export class PropertyController {
   constructor(private readonly propService: PropertyService) {}
-
-  @Get('sync')
-  public async createSome() {
-    const json = await import('./data/some.json');
-    return this.propService.createSome(json.default);
-  }
-
   @Post()
   public async create(@Body() body: any) {
     return this.propService.create({
