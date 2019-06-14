@@ -15,22 +15,6 @@ import { UserService } from '../user/user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly service: UserService) {}
-
-  @Get('sync')
-  @UseGuards(AuthGuard('jwt'))
-  public async sync() {
-    const json = await import('./data/user.json');
-    return Promise.all(
-      json.data.map(user =>
-        this.service.create({
-          fullname: user.fullname,
-          email: `${user.fullname}@sunmi.com`,
-          password: 'sunmi388',
-        }),
-      ),
-    );
-  }
-
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   @UseGuards(AuthGuard('jwt'))

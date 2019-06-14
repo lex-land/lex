@@ -1,7 +1,7 @@
-import { CheckUserDto } from './dto/check-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { LoginDto } from '../session/dto/login.dto';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import md5 from 'md5';
@@ -18,7 +18,7 @@ export class UserService {
   }
 
   async findOne(id: string): Promise<User | undefined> {
-    return await this.userRepository.findOne(id, {
+    return await this.userRepository.findOneOrFail(id, {
       relations: [
         'ownedOrganizations',
         'joinedOrganizations',
@@ -28,14 +28,22 @@ export class UserService {
     });
   }
 
-  async isExistByEmail(email: string): Promise<boolean> {
-    const exists = await this.userRepository.findOne({
-      where: { email },
+  async findOneByLoginDto(loginDto: LoginDto) {
+    return this.userRepository.findOneOrFail({
+      where: [
+        {
+          email: loginDto.username,
+          password: md5(loginDto.password),
+        },
+        {
+          fullname: loginDto.username,
+          password: md5(loginDto.password),
+        },
+      ],
     });
-    return !!exists;
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User | undefined> {
+  async create(createUserDto: CreateUserDto) {
     const newUser = new User();
     return await this.userRepository.save(
       Object.assign(newUser, createUserDto, {
@@ -44,36 +52,29 @@ export class UserService {
     );
   }
 
-  async getUserByNameLogin({
-    fullname,
-    password,
-  }: any): Promise<User | undefined> {
-    return await this.userRepository.findOne({
-      where: { fullname, password: md5(password) },
-    });
-  }
-  async getUserByLogin({
-    username,
-    password,
-  }: CheckUserDto): Promise<User | undefined> {
-    return await this.userRepository.findOne({
-      where: { fullname: username, password: md5(password) },
-    });
-  }
-
-  async getUserByEmail(
-    jwt: any,
-    relations: string[],
-  ): Promise<User | undefined> {
-    return await this.userRepository.findOne({
-      where: { email: jwt.email },
+  async findOneByEmail(email: string, relations: string[] = []) {
+    return await this.userRepository.findOneOrFail({
+      where: { email },
       relations,
     });
   }
 
-  async getUserByName(fullname: string) {
-    return await this.userRepository.findOne({
-      where: { fullname },
-    });
-  }
+  // async isExistByEmail(email: string): Promise<boolean> {
+  //   const exists = await this.userRepository.findOne({
+  //     where: { email },
+  //   });
+  //   return !!exists;
+  // }
+
+  // async getUserByNameLogin({ fullname, password }: any) {
+  //   return await this.userRepository.findOne({
+  //     where: { fullname, password: md5(password) },
+  //   });
+  // }
+
+  // async getUserByLogin({ username, password }: LoginDto) {
+  //   return await this.userRepository.findOne({
+  //     where: { fullname: username, password: md5(password) },
+  //   });
+  // }
 }
