@@ -6,40 +6,43 @@ import {
   FormGroup,
   H3,
   InputGroup,
-  Intent,
   Navbar,
   NavbarGroup,
-  Position,
-  Toaster,
 } from '@blueprintjs/core';
-import { Form, Formik } from 'formik';
-import { Link, route } from '@helpers/next-routes';
+import { Form, Formik, FormikActions } from 'formik';
+import { Link } from '@helpers/next-routes';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
+import { ValidationError } from 'class-validator';
 import { http } from '@helpers/fetch';
+import { login } from '@helpers/service';
 import md5 from 'md5';
 
-const loginValue = {
+const joinValue = {
   fullname: '',
   email: '',
   password: '',
 };
 
-type LoginValue = typeof loginValue;
+type joinValue = typeof joinValue;
 
-const handleSubmit = async (values: LoginValue) => {
-  const { accessToken } = await http.post(`/api/user`, {
+const handleSubmit = async (
+  values: joinValue,
+  formikActions: FormikActions<joinValue>,
+) => {
+  const { error, message } = await http.post(`/api/user`, {
     ...values,
-    password: md5(values.password),
+    password: values.password && md5(values.password),
   });
-  if (accessToken) {
-    route('/').replace({});
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: '登录成功',
+  if (error) {
+    const errorMsg: ValidationError[] = message;
+    errorMsg.forEach(e => {
+      formikActions.setFieldError(e.property, Object.values(e.constraints)[0]);
     });
+  } else {
+    await login({ username: values.fullname, password: values.password });
   }
 };
 
@@ -47,7 +50,7 @@ const Join: NextSFC = () => {
   return (
     <Page backgroundColor="#e9ebee" className="login">
       <Formik
-        initialValues={loginValue}
+        initialValues={joinValue}
         onSubmit={handleSubmit}
         render={formik => (
           <Form>
@@ -59,48 +62,65 @@ const Join: NextSFC = () => {
             <Card className="login-card">
               <H3 className="login-title">创建新用户</H3>
               <div className="login-control">
-                <FormGroup label="邮箱">
+                <FormGroup
+                  intent={formik.errors.email ? 'danger' : 'none'}
+                  label="邮箱"
+                  labelFor="email"
+                  helperText={formik.errors.email}
+                >
                   <InputGroup
                     large
+                    intent={formik.errors.email ? 'danger' : 'none'}
+                    id="email"
                     name="email"
                     value={formik.values.email}
                     onChange={formik.handleChange}
-                    required
                   />
                 </FormGroup>
               </div>
               <div className="login-control">
-                <FormGroup label="全名">
+                <FormGroup
+                  intent={formik.errors.fullname ? 'danger' : 'none'}
+                  label="全名"
+                  labelFor="fullname"
+                  helperText={formik.errors.fullname}
+                >
                   <InputGroup
                     large
+                    intent={formik.errors.fullname ? 'danger' : 'none'}
+                    id="fullname"
                     name="fullname"
                     value={formik.values.fullname}
                     onChange={formik.handleChange}
-                    required
                   />
                 </FormGroup>
               </div>
               <div className="login-control">
-                <FormGroup label="密码">
+                <FormGroup
+                  intent={formik.errors.password ? 'danger' : 'none'}
+                  label="密码"
+                  labelFor="password"
+                  helperText={formik.errors.password}
+                >
                   <InputGroup
                     large
+                    intent={formik.errors.password ? 'danger' : 'none'}
+                    id="password"
                     type="password"
                     name="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
-                    required
                   />
                 </FormGroup>
               </div>
               <div className="login-control login-button__container">
                 <Button
                   large
-                  disabled
                   className="login-button"
                   intent="success"
                   type="submit"
                 >
-                  注册(敬请期待)
+                  注册
                 </Button>
               </div>
               <div className="register-button__container">

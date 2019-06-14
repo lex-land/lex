@@ -6,21 +6,17 @@ import {
   FormGroup,
   H3,
   InputGroup,
-  Intent,
   Navbar,
   NavbarGroup,
-  Position,
-  Toaster,
 } from '@blueprintjs/core';
-import { Form, Formik } from 'formik';
-import { Link, route } from '@helpers/next-routes';
+import { Form, Formik, FormikActions } from 'formik';
+import { Link } from '@helpers/next-routes';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import { http } from '@helpers/fetch';
-import md5 from 'md5';
-import { setToken } from '@helpers/secure';
+import { ValidationError } from 'class-validator';
+import { login } from '@helpers/service';
 
 const loginValue = {
   username: '',
@@ -29,17 +25,15 @@ const loginValue = {
 
 type LoginValue = typeof loginValue;
 
-const handleSubmit = async (values: LoginValue) => {
-  const { accessToken } = await http.post(`/api/auth`, {
-    ...values,
-    password: md5(values.password),
-  });
-  if (accessToken) {
-    setToken(accessToken);
-    route('/').replace({});
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: '登录成功',
+const handleSubmit = async (
+  values: LoginValue,
+  formikActions: FormikActions<LoginValue>,
+) => {
+  const { error, message } = await login(values);
+  if (error) {
+    const errorMsg: ValidationError[] = message;
+    errorMsg.forEach(e => {
+      formikActions.setFieldError(e.property, Object.values(e.constraints)[0]);
     });
   }
 };
@@ -65,25 +59,33 @@ const Login: NextSFC = () => {
             <Card className="login-card">
               <H3 className="login-title">登录 Lex</H3>
               <div className="login-control">
-                <FormGroup label="邮箱或全名">
+                <FormGroup
+                  intent={formik.errors.username ? 'danger' : 'none'}
+                  label="邮箱或全名"
+                  helperText={formik.errors.username}
+                >
                   <InputGroup
                     large
+                    intent={formik.errors.username ? 'danger' : 'none'}
                     name="username"
                     value={formik.values.username}
                     onChange={formik.handleChange}
-                    required
                   />
                 </FormGroup>
               </div>
               <div className="login-control">
-                <FormGroup label="密码">
+                <FormGroup
+                  intent={formik.errors.password ? 'danger' : 'none'}
+                  label="密码"
+                  helperText={formik.errors.password}
+                >
                   <InputGroup
                     large
+                    intent={formik.errors.password ? 'danger' : 'none'}
                     type="password"
                     name="password"
                     value={formik.values.password}
                     onChange={formik.handleChange}
-                    required
                   />
                 </FormGroup>
               </div>

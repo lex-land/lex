@@ -20,14 +20,12 @@ import { http } from '@helpers/fetch';
 import { useAsync } from '@core/hooks';
 
 const LoginedNavbar = () => {
-  const { value: session } = useAsync<User>(() =>
-    http.get(`/api/auth/session`),
-  );
+  const { value: session } = useAsync<User>(() => http.get(`/api/session`));
   return (
     <Navbar className={Classes.DARK}>
       <NavbarGroup align={Alignment.LEFT}>
         <NavbarHeading>
-          <Logo />
+          <Logo size={30} />
         </NavbarHeading>
         <InputGroup leftIcon="search" placeholder="全局搜索，正在开发中..." />
       </NavbarGroup>
