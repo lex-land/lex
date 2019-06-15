@@ -37,7 +37,10 @@ const LoginedNavbar = () => {
                 <MenuItem text="账户" href={`/users/${session.fullname}`} />
                 <MenuItem text="仓库" href={`/repositories`} />
                 <MenuDivider />
-                <MenuItem text="设置" href="/settings" />
+                <MenuItem
+                  text="设置"
+                  href={`/users/${session.fullname}/settings`}
+                />
                 <MenuItem
                   text="退出登录"
                   onClick={() => cleanToken()}
