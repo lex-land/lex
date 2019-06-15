@@ -1,8 +1,7 @@
 import { Intent, Position, Toaster } from '@blueprintjs/core';
+import { cleanToken, setToken } from './secure';
 import { http } from './fetch';
 import md5 from 'md5';
-import { route } from './next-routes';
-import { setToken } from './secure';
 
 const loginValue = {
   username: '',
@@ -20,7 +19,6 @@ export const login = async (values: LoginValue) => {
     return { error, message };
   }
   if (accessToken) {
-    route('/').replace({});
     setToken(accessToken);
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,
@@ -30,3 +28,5 @@ export const login = async (values: LoginValue) => {
   }
   return { error, message };
 };
+
+export const logout = () => cleanToken();

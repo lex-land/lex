@@ -18,6 +18,7 @@ services:
       - NODE_ENV=production
       - SUNMI_PROD_URL=https://lex.sunmi.com
       - PORT=3000
+      - BUILD_TAG
     links:
       - lex-mysql
     depends_on:

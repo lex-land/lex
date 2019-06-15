@@ -1,35 +1,55 @@
+import { NextAppContext } from 'next/app';
 import { NextContext } from 'next';
-import { Router } from './next-routes';
+import { createHttp } from './fetch';
+import { createRedirect } from './next-routes';
 import { getToken } from './secure';
-import { http } from './fetch';
-import { setToken } from './token';
 
-export const createNextMiddware = async (ctx: NextContext) => {
-  ctx.getToken = () => getToken(ctx);
-  setToken(ctx.getToken()); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
+export interface PageProps {
+  // 🙅‍♂️不可修改
+  readonly statusCode: number;
+  token: string;
+  [key: string]: any;
+}
 
-  ctx.redirect = (path: string) => {
-    // https://github.com/zeit/next.js/wiki/Redirecting-in-%60getInitialProps%60
-    const res = ctx.res;
-    if (res) {
-      res.writeHead(302, {
-        Location: path,
-      });
-      res.end();
-    } else {
-      Router.push(path);
-    }
-    return { statusCode: 302 };
-  };
-
-  ctx.authorized = async () => {
+const createAuthorized = (ctx: NextContext) => {
+  return async () => {
     try {
-      const { statusCode } = await http.get(`/api/session`);
+      const { statusCode } = await ctx.http.get(`/api/session`);
       return statusCode !== 401;
     } catch (error) {
       return false;
     }
   };
+};
 
-  ctx.http = http;
+export const enhanceNextMiddware = (
+  callback: (
+    ctx: NextAppContext,
+    pageProps: PageProps,
+  ) => Promise<any> = async v => v,
+) => async (appCtx: NextAppContext) => {
+  const { Component, ctx } = appCtx;
+  ctx.getToken = () => getToken(ctx);
+  ctx.http = createHttp(ctx);
+  ctx.redirect = createRedirect(ctx);
+  ctx.authorized = createAuthorized(ctx);
+
+  // 初始化页面参数
+  let pageProps = {
+    token: '',
+    statusCode: (ctx.res && ctx.res.statusCode) || 200,
+  };
+  if (Component.getInitialProps) {
+    try {
+      pageProps = Object.assign(
+        pageProps,
+        await Component.getInitialProps(ctx),
+      );
+    } catch (error) {
+      pageProps.statusCode = error.code || 500;
+      pageProps = Object.assign(pageProps, error);
+    }
+  }
+  callback(appCtx, pageProps);
+  return { pageProps };
 };

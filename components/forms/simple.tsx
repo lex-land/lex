@@ -9,7 +9,7 @@ interface SimpleFormProps<T> {
   fields: string[];
 }
 
-const SimpleForm = (props: SimpleFormProps<any>) => {
+export const SimpleForm = (props: SimpleFormProps<any>) => {
   const targetValue = _.pick(props.defaultValue, props.fields) as any;
   const [mod, setMod] = useState(targetValue);
   useEffect(() => {
@@ -38,5 +38,3 @@ const SimpleForm = (props: SimpleFormProps<any>) => {
     </Form>
   );
 };
-
-export default SimpleForm;

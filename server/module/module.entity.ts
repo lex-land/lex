@@ -38,7 +38,9 @@ export class Module {
   @ManyToOne(type => User)
   creator: User;
 
-  @ManyToOne(type => Repository)
+  @ManyToOne(type => Repository, {
+    onDelete: 'CASCADE',
+  })
   repository: Repository;
 
   @OneToMany(() => Interface, _interface => _interface.module)

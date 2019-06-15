@@ -1,12 +1,12 @@
 import './show.less';
 import { Button, H2, NonIdealState } from '@blueprintjs/core';
-import { usePageProps, useQuery } from '@core/hooks';
-import { CreateButton } from '@components/curd/CURD-button';
-import ModuleContent from '@components/content/module-content';
+import { usePageProps, useQuery } from '@helpers/hooks';
+import { CreateButton } from '@components/curd';
+import { ModuleContent } from '@components/contents/module-content';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import RepoNav from '@components/navs/repo-nav';
+import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
 
 const RepositoriesShow: NextSFC = () => {
@@ -37,7 +37,7 @@ const RepositoriesShow: NextSFC = () => {
                     action={`/api/module`}
                     params={{ repository: query.repository_id }}
                     fields={['name', 'description']}
-                    buttonIcon="cube"
+                    icon="cube"
                     buttonText="新建"
                     successForceReload
                   />

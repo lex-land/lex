@@ -1,4 +1,4 @@
-import './show.less';
+import './edit.less';
 import { usePageProps, useQuery } from '@helpers/hooks';
 import { CreateButton } from '@components/curd';
 import { Interface } from '@server/interface/interface.entity';
@@ -48,7 +48,7 @@ const DashboardIndex: NextSFC<PageProps> = () => {
           />
         </SiderPanel>
         {!query.interface_id && <ModuleContent mod={mod} />}
-        {inte && <InterfaceContent edit={false} inte={inte} />}
+        {inte && <InterfaceContent edit={true} inte={inte} />}
       </div>
     </Page>
   );

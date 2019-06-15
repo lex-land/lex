@@ -6,14 +6,15 @@ import {
   Position,
   Toaster,
 } from '@blueprintjs/core';
+import { DeleteButton } from '@components/curd';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import RepoNav from '@components/navs/repo-nav';
+import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
-import SimpleForm from '@components/forms/simple-form';
+import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@core/hooks';
+import { usePageProps } from '@helpers/hooks';
 
 const RepositoriesSettings: NextSFC<any> = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
@@ -37,6 +38,12 @@ const RepositoriesSettings: NextSFC<any> = () => {
           onSubmit={handleSubmit}
           fields={['name', 'description']}
           defaultValue={repo}
+        />
+        <DeleteButton
+          alertWhen={true}
+          icon="trash"
+          action={`/api/repository/${repo.id}`}
+          successGoto="/"
         />
       </Card>
     </Page>

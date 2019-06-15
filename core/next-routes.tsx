@@ -25,7 +25,7 @@ export const get = (source: string): Output => {
 
 export const root = (source: string): Output => {
   return {
-    output: [{ index: ['', '/', source] }],
+    output: [{ index: [source, '/', source] }],
   };
 };
 

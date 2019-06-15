@@ -22,7 +22,11 @@ export class SessionService {
   }
   findUserByEmail(email: string, relations: string[] = []) {
     if (email) {
-      return this.userService.findOneByEmail(email, relations);
+      try {
+        return this.userService.findOneByEmail(email, relations);
+      } catch (error) {
+        new FetchError(400, '用户不存在');
+      }
     } else {
       return new FetchError(403, '身份失效');
     }

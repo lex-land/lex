@@ -14,13 +14,39 @@ import {
 import { Avator } from '@components/users';
 import { Logo } from '@components/vi';
 import React from 'react';
-import { User } from '@server/user/user.entity';
-import { cleanToken } from '@helpers/secure';
 import { http } from '@helpers/fetch';
-import { useAsync } from '@core/hooks';
+import { logout } from '@helpers/service';
+import { useAsync } from '@helpers/hooks';
+
+let user = { fullname: '-' };
+const AvatorBar = () => {
+  const { value: session } = useAsync(() => http.get(`/api/session`));
+  user = Object.assign(user, session);
+  return (
+    <NavbarGroup align={Alignment.RIGHT}>
+      <Popover
+        content={
+          <Menu>
+            <li className={Classes.MENU_HEADER}>
+              <h6 className={Classes.HEADING}>{user.fullname}已登录</h6>
+            </li>
+            <MenuItem text="账户" href={`/users/${user.fullname}`} />
+            <MenuItem text="仓库" href={`/repositories`} />
+            <MenuDivider />
+            <MenuItem href="https://github.com/sunmi-web/lex/" text="源代码" />
+            <MenuItem text="设置" href={`/users/${user.fullname}/settings`} />
+            <MenuItem text="退出登录" onClick={logout} href="/login" />
+          </Menu>
+        }
+        position={Position.BOTTOM_RIGHT}
+      >
+        <Avator minimal user={user} />
+      </Popover>
+    </NavbarGroup>
+  );
+};
 
 const LoginedNavbar = () => {
-  const { value: session } = useAsync<User>(() => http.get(`/api/session`));
   return (
     <Navbar className={Classes.DARK}>
       <NavbarGroup align={Alignment.LEFT}>
@@ -29,35 +55,7 @@ const LoginedNavbar = () => {
         </NavbarHeading>
         <InputGroup leftIcon="search" placeholder="全局搜索，正在开发中..." />
       </NavbarGroup>
-      {session && (
-        <NavbarGroup align={Alignment.RIGHT}>
-          <Popover
-            content={
-              <Menu>
-                <MenuItem text="账户" href={`/users/${session.fullname}`} />
-                <MenuItem text="仓库" href={`/repositories`} />
-                <MenuDivider />
-                <MenuItem
-                  href="https://github.com/sunmi-web/lex/"
-                  text="源代码"
-                />
-                <MenuItem
-                  text="设置"
-                  href={`/users/${session.fullname}/settings`}
-                />
-                <MenuItem
-                  text="退出登录"
-                  onClick={() => cleanToken()}
-                  href="/login"
-                />
-              </Menu>
-            }
-            position={Position.BOTTOM_RIGHT}
-          >
-            <Avator minimal user={session} />
-          </Popover>
-        </NavbarGroup>
-      )}
+      <AvatorBar />
     </Navbar>
   );
 };

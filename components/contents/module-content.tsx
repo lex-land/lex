@@ -1,12 +1,12 @@
 import './module-content.less';
 import { Card, Code, H4, HTMLTable, NonIdealState } from '@blueprintjs/core';
-import { CreateButton } from '@components/curd/CURD-button';
+import { CreateButton } from '@components/curd';
 import { Link } from '@helpers/next-routes';
 import { Module } from '@server/module/module.entity';
 import React from 'react';
-import { useQuery } from '@core/hooks';
+import { useQuery } from '@helpers/hooks';
 
-const ModuleContent = (props: { mod: Module }) => {
+export const ModuleContent = (props: { mod: Module }) => {
   const { mod } = props;
   const query = useQuery();
   return (
@@ -25,7 +25,7 @@ const ModuleContent = (props: { mod: Module }) => {
                 action={`/api/interface`}
                 params={{ repository: query.repository_id, module: mod.id }}
                 fields={['method', 'url', 'name', 'description']}
-                buttonIcon="application"
+                icon="application"
                 buttonText="新建"
                 successForceReload
               />
@@ -80,8 +80,6 @@ const ModuleContent = (props: { mod: Module }) => {
     </div>
   );
 };
-
-export default ModuleContent;
 
 {
   /* <td>

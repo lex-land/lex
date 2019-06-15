@@ -1,9 +1,9 @@
 import { Menu, MenuItem } from '@blueprintjs/core';
 import { Link } from '@helpers/next-routes';
 import React from 'react';
-import { useQuery } from '@core/hooks';
+import { useQuery } from '@helpers/hooks';
 
-const NavList = ({
+export const NavList = ({
   dataSource,
   rowKey,
   itemRoute,
@@ -33,5 +33,3 @@ const NavList = ({
     </Menu>
   );
 };
-
-export default NavList;

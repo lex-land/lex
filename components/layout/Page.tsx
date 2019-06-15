@@ -7,11 +7,11 @@ export interface PageProps {
   title?: string;
   children: any;
   style?: React.CSSProperties;
-  backgroundColor?: any;
+  backgroundColor?: string;
   authed?: boolean;
 }
 
-export const Page = (props: Partial<PageProps>) => {
+export const Page = (props: PageProps) => {
   return (
     <main className={props.className} style={props.style}>
       <Head>
@@ -19,10 +19,8 @@ export const Page = (props: Partial<PageProps>) => {
         <style>{`body{ background:${props.backgroundColor ||
           '#f5f8fa'} }`}</style>
       </Head>
-      <div>
-        {props.authed && <LoginedNavbar />}
-        {props.children}
-      </div>
+      {props.authed && <LoginedNavbar />}
+      {props.children}
     </main>
   );
 };

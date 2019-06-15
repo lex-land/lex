@@ -53,7 +53,7 @@ export class UserService {
   }
 
   async findOneByEmail(email: string, relations: string[] = []) {
-    return await this.userRepository.findOneOrFail({
+    return await this.userRepository.findOne({
       where: { email },
       relations,
     });

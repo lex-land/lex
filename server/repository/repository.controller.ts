@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -28,6 +29,11 @@ export class RepositoryController {
   @Put(':id')
   public async update(@Body() body: any, @Param('id') id: string) {
     return this.repoService.update(+id, body);
+  }
+
+  @Delete(':id')
+  public async delete(@Param('id') id: string) {
+    return this.repoService.delete(+id);
   }
 
   @Get(':id')

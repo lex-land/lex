@@ -14,11 +14,11 @@ import {
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import RepoNav from '@components/navs/repo-nav';
+import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
 import { User } from '@server/user/user.entity';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@core/hooks';
+import { usePageProps } from '@helpers/hooks';
 
 const RepositoriesMembers: NextSFC<any> = () => {
   const { repo } = usePageProps<{ repo: Repository }>();

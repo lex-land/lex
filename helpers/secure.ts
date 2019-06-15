@@ -50,7 +50,7 @@ export const paramsEncode = (params: object) => {
   return paramsString;
 };
 
-export const getCookie = (key: string, ctx?: any) => {
+export const getCookie = (key: string, ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
   return cookie.get(Des.encrypt(key));
 };
