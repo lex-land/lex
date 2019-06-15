@@ -55,7 +55,7 @@ node {
               npm install -g yarn && yarn && \
               docker-compose pull && \
               docker-compose down && \
-              docker-compose up -d",
+              BUILD_TAG=${BUILD_TAG} docker-compose up -d",
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
               excludes: 'docker/**,node_modules/**',
