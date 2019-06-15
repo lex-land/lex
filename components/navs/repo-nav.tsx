@@ -1,4 +1,3 @@
-import './repo-nav.less';
 import {
   Alignment,
   Breadcrumbs,
