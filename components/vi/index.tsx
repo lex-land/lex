@@ -2,11 +2,11 @@ import './index.less';
 import { Link } from '@helpers/next-routes';
 import React from 'react';
 
-export const Logo = ({ size = 45 }: { size: number }) => {
+export const Logo = ({ size = 45 }: { size?: number }) => {
   return (
     <Link route="/">
       <svg
-        className="icon"
+        className="logo"
         viewBox="0 0 1119 1024"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
