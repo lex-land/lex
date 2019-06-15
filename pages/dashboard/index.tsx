@@ -17,7 +17,6 @@ import { Page } from '@components/layout';
 import React from 'react';
 import SiderPanel from '@components/navs/sider-panel';
 import { User } from '@server/user/user.entity';
-import { http } from '@helpers/fetch';
 import { usePageProps } from '@core/hooks';
 
 const DashboardIndex: NextSFC = () => {
@@ -51,7 +50,7 @@ const DashboardIndex: NextSFC = () => {
               }
               position={Position.BOTTOM_LEFT}
             >
-              <Avator user={user} />
+              <Avator thumbnail user={user} />
             </Popover>
           </div>
           <Divider />
@@ -91,7 +90,7 @@ const DashboardIndex: NextSFC = () => {
 DashboardIndex.getInitialProps = async ctx => {
   return {
     // TODO: fetch异常处理
-    user: await http.get('/api/session/user'),
+    user: await ctx.http.get('/api/session/user'),
   };
 };
 
