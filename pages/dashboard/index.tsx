@@ -88,6 +88,11 @@ const DashboardIndex: NextSFC = () => {
 };
 
 DashboardIndex.getInitialProps = async ctx => {
+  // 没有token重定向到login
+  if (!ctx.getToken()) {
+    ctx.redirect('/login');
+    return {};
+  }
   return {
     // TODO: fetch异常处理
     user: await ctx.http.get('/api/session/user'),
