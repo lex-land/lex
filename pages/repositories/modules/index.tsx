@@ -1,16 +1,16 @@
 import './index.less';
 import { Card, H5, NonIdealState, Tag } from '@blueprintjs/core';
-import { usePageProps, useQuery } from '@core/hooks';
-import { CreateButton } from '@components/curd/CURD-button';
+import { CreateButton, DeleteButton } from '@components/curd';
+import { usePageProps, useQuery } from '@helpers/hooks';
 import { Link } from '@helpers/next-routes';
 import { ListHeader } from '@components/headers';
 import { Module } from '@server/module/module.entity';
-import NavList from '@components/navs/nav-list';
+import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import RepoNav from '@components/navs/repo-nav';
-import SiderPanel from '@components/navs/sider-panel';
+import { RepoNav } from '@components/navs/repo-nav';
+import { SiderPanel } from '@components/navs/sider-panel';
 
 const DashboardIndex: NextSFC = () => {
   const { modules } = usePageProps<{ modules: Module[] }>();
@@ -29,7 +29,7 @@ const DashboardIndex: NextSFC = () => {
                 action={`/api/module`}
                 params={{ repository: query.repository_id }}
                 fields={['name', 'description']}
-                buttonIcon="cube"
+                icon="cube"
                 buttonText="新建"
                 successForceReload
               />
@@ -49,7 +49,7 @@ const DashboardIndex: NextSFC = () => {
                     fields={['name', 'description']}
                     params={{ repository: query.repository_id }}
                     buttonText="新增"
-                    buttonIcon="cube"
+                    icon="cube"
                     successForceReload
                   />
                 }
@@ -76,51 +76,14 @@ const DashboardIndex: NextSFC = () => {
                     <a>{mod.name}</a>
                   </Link>
                 </H5>
-                <p>
-                  {mod.description}
-                  {/* <EditButton
-                    action={`/api/module/${mod.id}`}
-                    defaultValue={mod}
-                    fields={['name', 'description']}
-                    icon="edit"
-                    successForceReload
-                    successToast="已更新模块信息"
-                  />
-                  {mod.interfaces.length === 0 && (
-                    <DeleteButton
-                      successForceReload
-                      action={`/api/module/${mod.id}`}
-                      buttonText="删除"
-                      successToast="删除成功"
-                    />
-                  )} */}
-                </p>
+                <p>{mod.description}</p>
                 <Tag>{mod.interfaces.length}个接口</Tag>
-                {/* <EditButton
-              action={`/api/module/${mod.id}`}
-              fields={['name', 'description']}
-              buttonText="编辑"
-              onChange={setValue}
-              defaultValue={value}
-              successToast="已更新模块信息"
-            />
-            <DeleteButton
-              alertWhen={true}
-              alertStrongText={mod.name}
-              action={`/api/module/${mod.id}`}
-              buttonText="删除"
-              successForceReload
-              successToast="已删除模块信息"
-            />
-            <CreateButton
-              action={`/api/interface`}
-              fields={['method', 'url', 'name', 'description']}
-              params={{ repository: query.repository_id, module: mod.id }}
-              buttonText="新增接口"
-              defaultValue={{}}
-              successForceReload
-              successToast="已更新模块信息"
-            /> */}
+                <DeleteButton
+                  action={`/api/module/${mod.id}`}
+                  icon="trash"
+                  successGoto={`/repositories/${query.repository_id}/modules`}
+                  alertWhen={true}
+                />
               </Card>
             ))}
           </div>

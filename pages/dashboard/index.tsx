@@ -1,23 +1,16 @@
 import './index.less';
-import {
-  Divider,
-  Menu,
-  MenuDivider,
-  MenuItem,
-  Popover,
-  Position,
-} from '@blueprintjs/core';
-import { Avator } from '@components/users';
-import { CreateButton } from '@components/curd/CURD-button';
+import { AvatorNav } from '@components/navs/avator';
+import { CreateButton } from '@components/curd';
+import { Divider } from '@blueprintjs/core';
 import Error from '@components/errors';
 import { ListHeader } from '@components/headers';
-import NavList from '@components/navs/nav-list';
+import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import SiderPanel from '@components/navs/sider-panel';
+import { SiderPanel } from '@components/navs/sider-panel';
 import { User } from '@server/user/user.entity';
-import { usePageProps } from '@core/hooks';
+import { usePageProps } from '@helpers/hooks';
 
 const DashboardIndex: NextSFC = () => {
   const { user } = usePageProps<{ user: User }>();
@@ -25,34 +18,7 @@ const DashboardIndex: NextSFC = () => {
     <Page authed>
       <div className="dashboard">
         <SiderPanel className="dashboard-sidebar">
-          <div className="avator__container">
-            <Popover
-              content={
-                <Menu>
-                  <MenuItem icon="graph" text="Graph" />
-                  <MenuItem icon="map" text="Map" />
-                  <MenuItem
-                    icon="th"
-                    text="Table"
-                    shouldDismissPopover={false}
-                  />
-                  <MenuItem icon="zoom-to-fit" text="Nucleus" disabled={true} />
-                  <MenuDivider />
-                  <MenuItem icon="cog" text="Settings...">
-                    <MenuItem
-                      icon="add"
-                      text="Add new application"
-                      disabled={true}
-                    />
-                    <MenuItem icon="remove" text="Remove application" />
-                  </MenuItem>
-                </Menu>
-              }
-              position={Position.BOTTOM_LEFT}
-            >
-              <Avator thumbnail user={user} />
-            </Popover>
-          </div>
+          <AvatorNav {...user} />
           <Divider />
           <ListHeader
             title="仓库"
@@ -90,11 +56,9 @@ const DashboardIndex: NextSFC = () => {
 DashboardIndex.getInitialProps = async ctx => {
   // 没有token重定向到login
   if (!ctx.getToken()) {
-    ctx.redirect('/login');
-    return {};
+    return ctx.redirect('/login');
   }
   return {
-    // TODO: fetch异常处理
     user: await ctx.http.get('/api/session/user'),
   };
 };

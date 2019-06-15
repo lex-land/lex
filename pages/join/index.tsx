@@ -10,7 +10,7 @@ import {
   NavbarGroup,
 } from '@blueprintjs/core';
 import { Form, Formik, FormikActions } from 'formik';
-import { Link } from '@helpers/next-routes';
+import { Link, route } from '@helpers/next-routes';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
@@ -43,6 +43,7 @@ const handleSubmit = async (
     });
   } else {
     await login({ username: values.fullname, password: values.password });
+    route('/').replace({});
   }
 };
 

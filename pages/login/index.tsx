@@ -1,7 +1,7 @@
 import './index.less';
 import { Button, Classes, Navbar, NavbarGroup } from '@blueprintjs/core';
 import { Link } from '@helpers/next-routes';
-import LoginForm from '@components/forms/login';
+import { LoginForm } from '@components/forms/login';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';

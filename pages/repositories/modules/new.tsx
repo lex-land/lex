@@ -1,9 +1,9 @@
 import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
-import RepoNav from '@components/navs/repo-nav';
+import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
-import SimpleForm from '@components/forms/simple-form';
+import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
 
 const RepoModuleCreate: NextSFC<any> = ({ repo }) => {
