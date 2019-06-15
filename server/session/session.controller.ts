@@ -4,6 +4,7 @@ import {
   Controller,
   Get,
   Post,
+  Session,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -68,7 +69,7 @@ export class SessionController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  public async session(@Token() token: string) {
-    return this.sessionService.findUserByToken(token);
+  public async session(@Token() token: string, @Session() session: any) {
+    return (session.user = await this.sessionService.findUserByToken(token));
   }
 }

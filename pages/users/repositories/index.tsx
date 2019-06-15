@@ -4,21 +4,21 @@ import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 
-const UsersShow: NextSFC = () => {
+const UsersRepos: NextSFC = () => {
   return (
     <Page authed>
       <div className="page lex-container">
-        <H1>个人中心</H1>
+        <H1>仓库列表</H1>
         <Error code={503} embered />
       </div>
     </Page>
   );
 };
 
-UsersShow.getInitialProps = async () => {
+UsersRepos.getInitialProps = async () => {
   return {
     // statusCode: 503,
   };
 };
 
-export default UsersShow;
+export default UsersRepos;

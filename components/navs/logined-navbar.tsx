@@ -31,7 +31,10 @@ const AvatorBar = () => {
               <h6 className={Classes.HEADING}>{user.fullname}已登录</h6>
             </li>
             <MenuItem text="账户" href={`/users/${user.fullname}`} />
-            <MenuItem text="仓库" href={`/repositories`} />
+            <MenuItem
+              text="仓库"
+              href={`/users/${user.fullname}/repositories`}
+            />
             <MenuDivider />
             <MenuItem href="https://github.com/sunmi-web/lex/" text="源代码" />
             <MenuItem text="设置" href={`/users/${user.fullname}/settings`} />
