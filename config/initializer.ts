@@ -7,7 +7,7 @@ import moment from 'moment';
 moment.locale('zh-cn');
 catchError();
 
-// TODO: 目前官方修复了在canary分支，但canary分支存在问题，待合并到主分支后配合修改
+// FIXME: 为了解决开发环境下的样式加载问题，开发环境下会有样式闪烁问题，生产上没有
 Router.events.on('routeChangeComplete', () => {
   // https://github.com/zeit/next-plugins/issues/282
   if (process.env.NODE_ENV !== 'production') {

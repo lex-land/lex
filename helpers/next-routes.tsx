@@ -1,4 +1,5 @@
 export * from '@core/next-routes';
+import { NextContext } from 'next';
 import _ from 'lodash';
 import routes from '@config/routes';
 
@@ -43,6 +44,22 @@ export const route = (route: string = Router.route.substr(1)) => {
     replaceMerge,
     replaceRemove,
     pushHash,
+  };
+};
+
+export const createRedirect = (ctx: NextContext) => {
+  return (path: string) => {
+    // https://github.com/zeit/next.js/wiki/Redirecting-in-%60getInitialProps%60
+    const res = ctx.res;
+    if (res) {
+      res.writeHead(302, {
+        Location: path,
+      });
+      res.end();
+    } else {
+      Router.push(path);
+    }
+    return { statusCode: 302 };
   };
 };
 
