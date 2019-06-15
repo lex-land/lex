@@ -58,7 +58,7 @@ const RepoNav = ({
         >
           <Tab id="repositories/show" title="总览" />
           <Tab id="repositories/modules" title="模块" />
-          <Tab disabled id="repositories/wiki" title="Wiki" />
+          <Tab id="repositories/wiki" title="Wiki" />
           <Tab id="repositories/members" title="成员" />
           <Tab id="repositories/settings" title="设置" />
         </Tabs>
