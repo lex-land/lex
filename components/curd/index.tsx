@@ -2,14 +2,31 @@ import {
   Alert,
   Button,
   Drawer,
+  IconName,
   Intent,
   Position,
   Toaster,
 } from '@blueprintjs/core';
 import React, { Fragment, useState } from 'react';
-import SimpleForm from '@components/forms/simple-form';
+import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
 import { route } from '@helpers/next-routes';
+
+interface CurdButtonProps {
+  action: string;
+  fields?: string[];
+  params?: any;
+  buttonText?: string;
+  successToast?: string;
+  successForceReload?: boolean;
+  alertStrongText?: string;
+  alertWhen?: boolean;
+  successGoto?: string;
+  defaultValue?: any;
+  intent?: Intent;
+  onChange?: any;
+  icon?: IconName;
+}
 
 export const CreateButton = ({
   fields,
@@ -19,8 +36,8 @@ export const CreateButton = ({
   onChange,
   successForceReload,
   successToast,
-  buttonIcon,
-}: any) => {
+  icon,
+}: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
   const onAddClick = () => {
     setOpen(true);
@@ -37,7 +54,7 @@ export const CreateButton = ({
   };
   return (
     <Fragment>
-      <Button icon={buttonIcon} onClick={onAddClick} intent="success">
+      <Button icon={icon} onClick={onAddClick} intent="success">
         {buttonText}
       </Button>
       <Drawer
@@ -45,7 +62,11 @@ export const CreateButton = ({
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
       >
-        <SimpleForm fields={fields} defaultValue={{}} onSubmit={handleSubmit} />
+        <SimpleForm
+          fields={fields || []}
+          defaultValue={{}}
+          onSubmit={handleSubmit}
+        />
       </Drawer>
     </Fragment>
   );
@@ -62,7 +83,7 @@ export const EditButton = ({
   intent,
   icon,
   successForceReload,
-}: any) => {
+}: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
   const onAddClick = () => {
@@ -90,7 +111,7 @@ export const EditButton = ({
         isOpen={drawerOpen}
       >
         <SimpleForm
-          fields={fields}
+          fields={fields || []}
           defaultValue={value}
           onSubmit={handleSubmit}
         />
@@ -106,16 +127,18 @@ export const DeleteButton = ({
   successForceReload,
   alertStrongText,
   alertWhen,
-  successGoBack,
-}: any) => {
+  successGoto,
+  icon,
+}: CurdButtonProps) => {
   const [alertOpen, setOpen] = useState(false);
   const afterDelete = () => {
     successForceReload && route().replaceMerge({});
-    successGoBack && history.back();
+    successGoto && route(successGoto).replace({});
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,
       message: successToast || '删除成功',
     });
+    setOpen(false);
   };
 
   const deleteEmpty = async () => {
@@ -124,8 +147,8 @@ export const DeleteButton = ({
   };
 
   const deleteCascade = async () => {
-    // await http.delete(action);
-    // afterDelete();
+    await http.delete(action);
+    afterDelete();
   };
 
   const check = () => {
@@ -138,7 +161,7 @@ export const DeleteButton = ({
 
   return (
     <Fragment>
-      <Button intent={Intent.DANGER} onClick={check}>
+      <Button icon={icon} intent={Intent.DANGER} onClick={check}>
         {buttonText}
       </Button>
       <Alert

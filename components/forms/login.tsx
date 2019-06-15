@@ -4,6 +4,7 @@ import { Form, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { ValidationError } from 'class-validator';
 import { login } from '@helpers/service';
+import { route } from '@helpers/next-routes';
 
 const loginValue = {
   username: '',
@@ -22,10 +23,18 @@ const handleSubmit = async (
     errorMsg.forEach(e => {
       formikActions.setFieldError(e.property, Object.values(e.constraints)[0]);
     });
+  } else {
+    route().replace({});
   }
 };
 
-const LoginForm = ({ title, footer }: { title?: string; footer?: any }) => {
+export const LoginForm = ({
+  title,
+  footer,
+}: {
+  title?: string;
+  footer?: any;
+}) => {
   return (
     <Formik
       initialValues={loginValue}
@@ -79,5 +88,3 @@ const LoginForm = ({ title, footer }: { title?: string; footer?: any }) => {
     />
   );
 };
-
-export default LoginForm;

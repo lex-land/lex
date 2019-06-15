@@ -1,8 +1,9 @@
 import { CATCHED_CODE } from '@components/errors';
 import { ENV } from '@config/env';
 import { FetchError } from '@config/error';
+import { NextContext } from 'next';
 import codeMessages from '@config/code.json';
-import { getToken } from '@helpers/token';
+import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
 import { logger } from '@core/logger';
 import qs from 'qs';
@@ -15,16 +16,22 @@ export interface FetchResponse<D> {
   msg: string;
 }
 
+let token: string;
+
+export const getToken = () => token || getCookie(ENV.KEYOF_TOKEN);
+export const setToken = (t: string) => {
+  token = t;
+};
+
 export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理URL
   const url = api.startsWith('/') ? `${ENV.SUNMI_PROD_URL}${api}` : api;
-  const token = getToken();
   const options = {
     method: 'GET',
     ...opts,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: token,
+      Authorization: getToken(),
       ...(opts ? opts.headers : {}),
     },
   };
@@ -64,4 +71,10 @@ export const http = {
   post: createHttpUtil('POST'),
   put: createHttpUtil('PUT'),
   delete: createHttpUtil('DELETE'),
+};
+
+export const createHttp = (ctx: NextContext) => {
+  const token = ctx.getToken();
+  setToken(token); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
+  return http;
 };

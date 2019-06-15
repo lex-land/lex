@@ -13,7 +13,7 @@ import { Repository } from '@server/repository/repository.entity';
 import { route } from '@helpers/next-routes';
 import { useRouter } from 'next/router';
 
-const RepoNav = ({
+export const RepoNav = ({
   repo,
   mod,
   inte,
@@ -65,5 +65,3 @@ const RepoNav = ({
     </Navbar>
   );
 };
-
-export default RepoNav;

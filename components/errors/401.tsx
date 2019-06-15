@@ -1,5 +1,5 @@
 import './error.less';
-import LoginForm from '@components/forms/login';
+import { LoginForm } from '@components/forms/login';
 import { Page } from '@components/layout';
 import React from 'react';
 

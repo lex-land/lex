@@ -1,14 +1,13 @@
 import './index.less';
 import { Icon } from '@blueprintjs/core';
 import React from 'react';
-import { User } from '@server/user/user.entity';
 
 export const Avator = ({
   user,
   minimal = false,
   thumbnail = false,
 }: {
-  user: User;
+  user: { fullname: string };
   minimal?: boolean;
   thumbnail?: boolean;
 }) => {

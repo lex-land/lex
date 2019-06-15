@@ -5,7 +5,7 @@ import { Error404 } from './404';
 import { Error500 } from './500';
 import { Error503 } from './503';
 import React from 'react';
-import { usePageProps } from '@core/hooks';
+import { usePageProps } from '@helpers/hooks';
 
 const Routes = {
   401: Error401,
