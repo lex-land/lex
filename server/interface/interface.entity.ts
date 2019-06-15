@@ -65,7 +65,9 @@ export class Interface {
   @ManyToOne(type => User)
   locker: User;
 
-  @ManyToOne(type => Module)
+  @ManyToOne(type => Module, {
+    onDelete: 'CASCADE',
+  })
   module: Module;
 
   @ManyToOne(type => Repository)

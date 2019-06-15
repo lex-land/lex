@@ -82,7 +82,9 @@ export class Property {
   @ManyToOne(() => User)
   creator: User;
 
-  @ManyToOne(() => Interface, _interface => _interface.properties)
+  @ManyToOne(() => Interface, _interface => _interface.properties, {
+    onDelete: 'CASCADE',
+  })
   interface: Interface;
 
   @ManyToOne(() => Module)
@@ -91,7 +93,10 @@ export class Property {
   @ManyToOne(() => Repository)
   repository: Repository;
 
-  @TreeChildren()
+  @TreeChildren({
+    cascade: true,
+    // https://github.com/typeorm/typeorm/issues/193
+  })
   children: Property[];
 
   @TreeParent()
