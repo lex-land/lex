@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/login.dto';
 import { SessionService } from './session.service';
@@ -21,6 +29,7 @@ export class SessionController {
     }
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('user')
   @UseGuards(AuthGuard('jwt'))
   public async sessionUser(@Token() token: string) {
@@ -32,6 +41,7 @@ export class SessionController {
     ]);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   @UseGuards(AuthGuard('jwt'))
   public async session(@Token() token: string) {
