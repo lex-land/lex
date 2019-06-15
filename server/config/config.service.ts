@@ -22,8 +22,10 @@ export class ConfigService {
       database: process.env.MYSQL_DATABASE || 'Lex',
       // https://github.com/typeorm/typeorm/issues/682
       entities: [__dirname + '/../**/**.entity{.ts,.js}'],
+      // debug: true,
+      // dropSchema: true,
       synchronize: false,
-      logging: false,
+      logging: true,
     };
   }
 
