@@ -12,8 +12,7 @@ export class RepositoryService {
   ) {}
 
   public async findById(id: string) {
-    return await this.repoRepository.findOneOrFail({
-      where: { id },
+    return await this.repoRepository.findOneOrFail(id, {
       relations: ['owner', 'members', 'modules', 'modules.interfaces'],
     });
   }
@@ -27,16 +26,14 @@ export class RepositoryService {
   }
 
   public async findInterfacesById(id: string) {
-    const repo = await this.repoRepository.findOneOrFail({
-      where: { id },
+    const repo = await this.repoRepository.findOneOrFail(id, {
       relations: ['interfaces'],
     });
     return repo.interfaces;
   }
 
   public async findModulesById(id: string) {
-    const repo = await this.repoRepository.findOneOrFail({
-      where: { id },
+    const repo = await this.repoRepository.findOneOrFail(id, {
       relations: ['modules'],
     });
     return repo.modules;
