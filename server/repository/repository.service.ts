@@ -55,4 +55,7 @@ export class RepositoryService {
   ) {
     return await this.repoRepository.update(id, createRepositoryDto);
   }
+  public async delete(id: number) {
+    return await this.repoRepository.delete(id);
+  }
 }
