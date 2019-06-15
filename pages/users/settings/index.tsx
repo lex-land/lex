@@ -2,14 +2,14 @@ import { NextSFC } from 'next';
 import { Page } from '@components/layout';
 import React from 'react';
 
-const UsersCreate: NextSFC = () => {
+const UsersSettings: NextSFC = () => {
   return <Page authed>NULL</Page>;
 };
 
-UsersCreate.getInitialProps = async () => {
+UsersSettings.getInitialProps = async () => {
   return {
     statusCode: 503,
   };
 };
 
-export default UsersCreate;
+export default UsersSettings;

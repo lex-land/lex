@@ -11,7 +11,6 @@ import { Page } from '@components/layout';
 import React from 'react';
 import RepoNav from '@components/navs/repo-nav';
 import SiderPanel from '@components/navs/sider-panel';
-import { http } from '@helpers/fetch';
 
 const DashboardIndex: NextSFC = () => {
   const { modules } = usePageProps<{ modules: Module[] }>();
@@ -133,7 +132,7 @@ const DashboardIndex: NextSFC = () => {
 
 DashboardIndex.getInitialProps = async ctx => {
   return {
-    modules: await http.get<Module[]>(`/api/module`, {
+    modules: await ctx.http.get<Module[]>(`/api/module`, {
       repository: ctx.query.repository_id,
     }),
   };

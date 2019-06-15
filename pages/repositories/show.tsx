@@ -8,7 +8,6 @@ import { Page } from '@components/layout';
 import React from 'react';
 import RepoNav from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
-import { http } from '@helpers/fetch';
 
 const RepositoriesShow: NextSFC = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
@@ -58,7 +57,7 @@ const RepositoriesShow: NextSFC = () => {
 RepositoriesShow.getInitialProps = async ctx => {
   const repoId = ctx.query.repository_id;
   return {
-    repo: await http.get<Repository>(`/api/repository/${repoId}`),
+    repo: await ctx.http.get<Repository>(`/api/repository/${repoId}`),
   };
 };
 

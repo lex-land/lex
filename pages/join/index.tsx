@@ -138,6 +138,9 @@ const Join: NextSFC = () => {
 };
 
 Join.getInitialProps = async ctx => {
+  if (await ctx.authorized()) {
+    return ctx.redirect('/');
+  }
   return {};
 };
 

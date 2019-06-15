@@ -4,12 +4,12 @@ import {
   Menu,
   MenuDivider,
   MenuItem,
-  NonIdealState,
   Popover,
   Position,
 } from '@blueprintjs/core';
 import { Avator } from '@components/users';
 import { CreateButton } from '@components/curd/CURD-button';
+import Error from '@components/errors';
 import { ListHeader } from '@components/headers';
 import NavList from '@components/navs/nav-list';
 import { NextSFC } from 'next';
@@ -79,11 +79,7 @@ const DashboardIndex: NextSFC = () => {
           <ListHeader title="团队" />
         </SiderPanel>
         <div className="dashboard-content">
-          <NonIdealState
-            icon="search"
-            title="仪表盘，正在开发中..."
-            description="..."
-          />
+          <Error code={503} embered />
           {/* <div>我的团队成员动态</div>
           <div>我加入仓库的动态</div> */}
         </div>
@@ -93,9 +89,6 @@ const DashboardIndex: NextSFC = () => {
 };
 
 DashboardIndex.getInitialProps = async ctx => {
-  if (!ctx.getToken()) {
-    return ctx.redirect('/login');
-  }
   return {
     // TODO: fetch异常处理
     user: await http.get('/api/session/user'),

@@ -114,8 +114,8 @@ const Login: NextSFC = () => {
 };
 
 Login.getInitialProps = async ctx => {
-  if (ctx.getToken()) {
-    ctx.redirect('/');
+  if (await ctx.authorized()) {
+    return ctx.redirect('/');
   }
   return {};
 };

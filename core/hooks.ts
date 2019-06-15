@@ -3,7 +3,7 @@ export * from 'react-use';
 import React, { useContext } from 'react';
 import { useRouter } from 'next/router';
 
-export const defaultPageProps = {
+const defaultPageProps = {
   statusCode: 200,
   error: null,
 };
