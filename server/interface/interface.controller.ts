@@ -10,15 +10,11 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { InterfaceService } from './interface.service';
-import { PropertyService } from '@server/property/property.service';
 
 @Controller('interface')
 @UseGuards(AuthGuard('jwt'))
 export class InterfaceController {
-  constructor(
-    private readonly inteService: InterfaceService,
-    private readonly propService: PropertyService,
-  ) {}
+  constructor(private readonly inteService: InterfaceService) {}
   @Post()
   public async create(@Body() body: any) {
     return this.inteService.create({

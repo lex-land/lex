@@ -1,11 +1,12 @@
 import { DefaultQuery } from 'next/router';
-import { http } from '@helpers/fetch';
+import { NextContext } from 'next';
+import { http } from './fetch';
 
 declare module 'next' {
   interface NextContext<Q extends DefaultQuery = DefaultQuery, CustomReq = {}> {
     redirect: (path: string) => void;
     getToken: () => string;
-    setToken: (token: string) => void;
+    authorized: () => Promise<boolean>;
     http: typeof http;
   }
 }
