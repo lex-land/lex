@@ -1,3 +1,4 @@
+import { CATCHED_CODE } from '@components/errors';
 import { ENV } from '@config/env';
 import { FetchError } from '@config/error';
 import codeMessages from '@config/code.json';
@@ -37,13 +38,13 @@ export async function fetch<D = any>(api: string, opts?: RequestInit) {
   try {
     const json = await result.clone().json();
     logger.info(`[ ${options.method} ] ${api}`, json);
+    if (CATCHED_CODE.includes(json.statusCode)) {
+      throw new FetchError(json.statusCode);
+    }
     return json;
   } catch (error) {
     if (process.env.NODE_ENV === 'production') {
-      throw new FetchError(
-        500,
-        `${error.message}${await result.clone().text()}`,
-      );
+      throw new FetchError(500, error.message);
     } else {
       throw error;
     }

@@ -1,21 +1,33 @@
 import './error.less';
+import { Error401 } from './401';
 import { Error403 } from './403';
 import { Error404 } from './404';
 import { Error500 } from './500';
+import { Error503 } from './503';
 import React from 'react';
 import { usePageProps } from '@core/hooks';
 
 const Routes = {
+  401: Error401,
   500: Error500,
   404: Error404,
   403: Error403,
+  503: Error503,
 };
 
 export const CATCHED_CODE = Object.keys(Routes).map(Number);
 export type CatchedCode = keyof typeof Routes;
 
-export default () => {
+const Error = ({
+  code,
+  embered,
+}: {
+  embered?: boolean;
+  code?: CatchedCode;
+}) => {
   const { statusCode } = usePageProps<{ statusCode: CatchedCode }>();
-  const Error = Routes[statusCode];
-  return <Error />;
+  const Error: any = Routes[code || statusCode];
+  return <Error embered={embered} />;
 };
+
+export default Error;
