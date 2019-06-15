@@ -24,7 +24,7 @@ const DashboardIndex: NextSFC = () => {
             title="仓库"
             rightElement={
               <CreateButton
-                buttonIcon="git-repo"
+                icon="git-repo"
                 action="/api/repository"
                 fields={['name', 'description']}
                 params={{ creator: user, owner: user }}
