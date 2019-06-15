@@ -47,6 +47,7 @@ docker-compose up -d
 - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [x] 重新设计 logo
+- [ ] SEO
 - [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
 - [ ] 使用 algolia 全局接口搜索
