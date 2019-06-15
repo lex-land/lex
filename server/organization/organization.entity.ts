@@ -20,6 +20,7 @@ export class Organization {
     nullable: false,
     type: 'varchar',
     length: 256,
+    unique: true,
   })
   name: string;
 

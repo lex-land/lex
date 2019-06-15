@@ -13,6 +13,9 @@ export const Error503 = ({ embered }: { embered?: boolean }) => {
             <NonIdealState icon="geosearch" />
             <br />
             <div className="description">抱歉，此功能还在开发中</div>
+            <AnchorButton onClick={Router.back} intent="primary" minimal>
+              回到上页
+            </AnchorButton>
           </div>
         ) : (
           <div>

@@ -24,7 +24,7 @@ const handleSubmit = async (
       formikActions.setFieldError(e.property, Object.values(e.constraints)[0]);
     });
   } else {
-    route().replace({});
+    route().replaceMerge({});
   }
 };
 

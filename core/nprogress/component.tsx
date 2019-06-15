@@ -22,7 +22,7 @@ export const NProgressContainer = (props: any) => {
     };
   });
 
-  const { color = '#2299DD', spinner = true } = props;
+  const { color = '#106ba3', spinner = false } = props;
 
   return (
     <style>{`

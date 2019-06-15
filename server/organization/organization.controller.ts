@@ -1,7 +1,15 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Session,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateOrgDto } from './dto/create-org.dto';
 import { OrganizationService } from './organization.service';
-import { PostOrgPayload } from './interfaces/org.interface';
 
 @Controller('organization')
 @UseGuards(AuthGuard('jwt'))
@@ -13,7 +21,13 @@ export class OrganizationController {
   }
 
   @Post()
-  public async create(@Body() body: PostOrgPayload) {
-    return this.orgService.create(body);
+  public async create(@Body() body: CreateOrgDto, @Session() session: any) {
+    return this.orgService.create(
+      Object.assign(body, { creator: session.user, owner: session.user }),
+    );
+  }
+  @Get(':name')
+  public async findOneByName(@Param('name') name: string) {
+    return await this.orgService.findOneByName(name);
   }
 }
