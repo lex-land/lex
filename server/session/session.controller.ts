@@ -12,6 +12,7 @@ import { LoginDto } from './dto/login.dto';
 import { SessionService } from './session.service';
 import { Token } from '@server/common/decorators/token.decorator';
 import { UserService } from '@server/user/user.service';
+import { ValidationError } from 'class-validator';
 
 @Controller('session')
 export class SessionController {
@@ -21,11 +22,34 @@ export class SessionController {
   ) {}
   @Post()
   public async login(@Body() loginDto: LoginDto) {
-    const user = await this.userService.findOneByLoginDto(loginDto);
-    if (user) {
-      return this.sessionService.genToken(user);
+    const message: ValidationError[] = [];
+    const expection = {
+      error: '',
+      message,
+    };
+    if (await this.userService.isExist(loginDto.username)) {
+      try {
+        const user = await this.userService.findOneByLoginDto(loginDto);
+        return this.sessionService.genToken(user);
+      } catch (error) {
+        // 密码错误
+        expection.error = '密码错误';
+        expection.message.push({
+          property: 'password',
+          constraints: { passwordError: 'password is not correct' },
+          children: [],
+        });
+        return expection;
+      }
     } else {
-      return { accessToken: '' };
+      // 用户不存在
+      expection.error = '用户不存在';
+      expection.message.push({
+        property: 'username',
+        constraints: { usernameError: 'username is not exist' },
+        children: [],
+      });
+      return expection;
     }
   }
 

@@ -38,6 +38,10 @@ const LoginedNavbar = () => {
                 <MenuItem text="仓库" href={`/repositories`} />
                 <MenuDivider />
                 <MenuItem
+                  href="https://github.com/sunmi-web/lex/"
+                  text="源代码"
+                />
+                <MenuItem
                   text="设置"
                   href={`/users/${session.fullname}/settings`}
                 />
@@ -50,7 +54,7 @@ const LoginedNavbar = () => {
             }
             position={Position.BOTTOM_RIGHT}
           >
-            <Avator user={session} />
+            <Avator minimal user={session} />
           </Popover>
         </NavbarGroup>
       )}

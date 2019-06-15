@@ -59,12 +59,16 @@ export class UserService {
     });
   }
 
-  // async isExistByEmail(email: string): Promise<boolean> {
-  //   const exists = await this.userRepository.findOne({
-  //     where: { email },
-  //   });
-  //   return !!exists;
-  // }
+  async isExist(username: string): Promise<boolean> {
+    try {
+      const exists = await this.userRepository.findOne({
+        where: [{ fullname: username }, { email: username }],
+      });
+      return !!exists;
+    } catch (error) {
+      return false;
+    }
+  }
 
   // async getUserByNameLogin({ fullname, password }: any) {
   //   return await this.userRepository.findOne({
