@@ -35,20 +35,12 @@ export async function fetch<D = any>(api: string, opts?: RequestInit) {
   logger.info(`[ ${options.method} ] ${api} fetching...`);
 
   const result = await isomorphicFetch(`${url}`, options);
-  try {
-    const json = await result.clone().json();
-    logger.info(`[ ${options.method} ] ${api}`, json);
-    if (CATCHED_CODE.includes(json.statusCode)) {
-      throw new FetchError(json.statusCode);
-    }
-    return json;
-  } catch (error) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new FetchError(500, error.message);
-    } else {
-      throw error;
-    }
+  const json = await result.clone().json();
+  logger.info(`[ ${options.method} ] ${api}`, json);
+  if (CATCHED_CODE.includes(json.statusCode)) {
+    throw new FetchError(json.statusCode);
   }
+  return json;
 }
 
 const createHttpUtil = (method: string) => {
