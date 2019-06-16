@@ -1,15 +1,15 @@
-import Error from '@components/errors';
 import { H1 } from '@blueprintjs/core';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 
 const UsersShow: NextSFC = () => {
   return (
-    <Page authed>
+    <Page>
+      <Page.Navbar />
       <div className="page lex-container">
         <H1>个人中心</H1>
-        <Error code={503} embered />
+        <Page.EmberedError code={503} />
       </div>
     </Page>
   );

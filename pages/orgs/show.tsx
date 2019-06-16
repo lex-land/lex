@@ -1,22 +1,23 @@
 import { AnchorButton, Divider } from '@blueprintjs/core';
-import { AvatorNav } from '@components/navs/avator';
-import Error from '@components/errors';
+import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
+import { Flex } from '@components/layout/flex';
 import { ListHeader } from '@components/headers';
 import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Organization } from '@server/organization/organization.entity';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
-import { SiderPanel } from '@components/navs/sider-panel';
+import { SiderPanel } from '@components/layout/sider-panel';
 import { usePageProps } from '@helpers/hooks';
 
-const DashboardIndex: NextSFC = () => {
+const OrgsShow: NextSFC = () => {
   const { org } = usePageProps<{ org: Organization }>();
   return (
-    <Page authed>
-      <div className="dashboard">
-        <SiderPanel className="dashboard-sidebar">
-          <AvatorNav name={org.name} />
+    <Page>
+      <Page.Navbar />
+      <Flex>
+        <SiderPanel>
+          <DashboardSwitcher name={org.name} />
           <Divider />
           <AnchorButton style={{ width: '100%' }} minimal intent="primary">
             查看组织详情
@@ -39,19 +40,19 @@ const DashboardIndex: NextSFC = () => {
             dataSource={org.repositories}
           />
         </SiderPanel>
-        <div className="dashboard-content">
-          <Error code={503} embered />
-        </div>
-      </div>
+        <Flex.Auto>
+          <Page.EmberedError code={503} />
+        </Flex.Auto>
+      </Flex>
     </Page>
   );
 };
 
-DashboardIndex.getInitialProps = async ctx => {
+OrgsShow.getInitialProps = async ctx => {
   // 没有token重定向到login
   return {
     org: await ctx.http.get(`/api/organization/${ctx.query.org_id}`),
   };
 };
 
-export default DashboardIndex;
+export default OrgsShow;

@@ -7,16 +7,16 @@ import { ListHeader } from '@components/headers';
 import { Module } from '@server/module/module.entity';
 import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 import { RepoNav } from '@components/navs/repo-nav';
-import { SiderPanel } from '@components/navs/sider-panel';
+import { SiderPanel } from '@components/layout/sider-panel';
 
 const DashboardIndex: NextSFC = () => {
   const { modules } = usePageProps<{ modules: Module[] }>();
   const query = useQuery();
   return (
-    <Page authed className="modules">
+    <Page className="modules">
       <RepoNav />
       {!modules.length && (
         <div style={{ padding: 40 }}>

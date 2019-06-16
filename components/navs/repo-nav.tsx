@@ -44,7 +44,7 @@ export const RepoNav = ({
   ].filter(i => i.text);
 
   return (
-    <Navbar className="repo-nav">
+    <Navbar style={{ padding: '0 24px' }}>
       <Navbar.Group>
         <Breadcrumbs items={BREADCRUMBS} />
       </Navbar.Group>

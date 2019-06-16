@@ -1,12 +1,11 @@
-import Error from '@components/errors';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 
 const UsersSettings: NextSFC = () => {
   return (
-    <Page authed>
-      <Error code={503} embered />
+    <Page>
+      <Page.EmberedError code={503} />
     </Page>
   );
 };

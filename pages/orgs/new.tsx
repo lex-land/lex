@@ -1,22 +1,22 @@
-import Error from '@components/errors';
 import { H1 } from '@blueprintjs/core';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
+import { QuickForm } from '@components/forms/quick';
 import React from 'react';
-import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
 
 const OrgsCreate: NextSFC = () => {
   return (
-    <Page authed>
+    <Page>
+      <Page.Navbar />
       <div className="page lex-container">
         <H1>创建一个组织</H1>
-        <SimpleForm
-          defaultValue={{}}
-          onSubmit={newValue => http.post('/api/organization', newValue)}
+        <QuickForm
+          defaultValue={{ name: '', description: '' }}
+          action={newValue => http.post('/api/organization', newValue)}
           fields={['name', 'description']}
         />
-        <Error code={503} embered />
+        <Page.EmberedError code={503} />
       </div>
     </Page>
   );

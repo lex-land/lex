@@ -8,7 +8,7 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import React, { Fragment, useState } from 'react';
-import { SimpleForm } from '@components/forms/simple';
+import { QuickForm } from '@components/forms/quick';
 import { http } from '@helpers/fetch';
 import { route } from '@helpers/next-routes';
 
@@ -62,10 +62,10 @@ export const CreateButton = ({
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
       >
-        <SimpleForm
+        <QuickForm
           fields={fields || []}
           defaultValue={{}}
-          onSubmit={handleSubmit}
+          action={handleSubmit}
         />
       </Drawer>
     </Fragment>
@@ -110,10 +110,10 @@ export const EditButton = ({
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
       >
-        <SimpleForm
+        <QuickForm
           fields={fields || []}
           defaultValue={value}
-          onSubmit={handleSubmit}
+          action={handleSubmit}
         />
       </Drawer>
     </Fragment>

@@ -1,15 +1,27 @@
-import Error from '@components/errors';
 import { H1 } from '@blueprintjs/core';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
+import { QuickForm } from '@components/forms/quick';
 import React from 'react';
+import { http } from '@helpers/fetch';
+import { route } from '@helpers/next-routes';
 
 const UsersRepoCreate: NextSFC = () => {
   return (
-    <Page authed>
+    <Page>
+      <Page.Navbar />
       <div className="page lex-container">
         <H1>创建一个仓库</H1>
-        <Error code={503} embered />
+        <QuickForm
+          defaultValue={{ name: '', description: '' }}
+          action={newValue => http.post('/api/repository', newValue)}
+          fields={['name', 'description']}
+          success={(values, json) =>
+            route('repositories/show').replace({ repository_id: json.id })
+          }
+          successToast="成功创建仓库"
+        />
+        <Page.EmberedError code={503} />
       </div>
     </Page>
   );

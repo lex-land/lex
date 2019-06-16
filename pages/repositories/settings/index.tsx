@@ -1,32 +1,18 @@
-import {
-  Card,
-  Divider,
-  H4,
-  Intent,
-  Position,
-  Toaster,
-} from '@blueprintjs/core';
+import { Card, Divider, H4 } from '@blueprintjs/core';
 import { DeleteButton } from '@components/curd';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
+import { QuickForm } from '@components/forms/quick';
 import React from 'react';
 import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
-import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
 import { usePageProps } from '@helpers/hooks';
 
 const RepositoriesSettings: NextSFC<any> = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
-  const handleSubmit = (newRepo: any) => {
-    http.put(`/api/repository/${repo.id}`, newRepo);
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: '已成功修改仓库信息',
-    });
-  };
   return (
-    <Page authed>
+    <Page>
       <RepoNav repo={repo} />
       <Card className="lex-container" style={{ marginTop: 40 }}>
         <Divider />
@@ -34,8 +20,10 @@ const RepositoriesSettings: NextSFC<any> = () => {
         <Divider />
         <H4>基本信息</H4>
         <Divider />
-        <SimpleForm
-          onSubmit={handleSubmit}
+        <QuickForm
+          action={(newRepo: any) =>
+            http.put(`/api/repository/${repo.id}`, newRepo)
+          }
           fields={['name', 'description']}
           defaultValue={repo}
         />

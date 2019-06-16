@@ -12,7 +12,7 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
@@ -30,7 +30,7 @@ const RepositoriesMembers: NextSFC<any> = () => {
     });
   };
   return (
-    <Page authed>
+    <Page>
       <RepoNav repo={repo} />
       <div className="lex-container" style={{ marginTop: 40 }}>
         <form onSubmit={handleSubmit}>

@@ -8,10 +8,10 @@ import { Module } from '@server/module/module.entity';
 import { ModuleContent } from '@components/contents/module-content';
 import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 import { RepoNav } from '@components/navs/repo-nav';
-import { SiderPanel } from '@components/navs/sider-panel';
+import { SiderPanel } from '@components/layout/sider-panel';
 
 interface PageProps {
   mod: Module;
@@ -22,7 +22,7 @@ const DashboardIndex: NextSFC<PageProps> = () => {
   const { mod, inte } = usePageProps<PageProps>();
   const query = useQuery();
   return (
-    <Page authed className="interfaces">
+    <Page className="interfaces">
       <RepoNav repo={mod.repository} inte={inte} mod={mod} />
       <div className="body">
         <SiderPanel>

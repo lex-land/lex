@@ -4,7 +4,7 @@ import { usePageProps, useQuery } from '@helpers/hooks';
 import { CreateButton } from '@components/curd';
 import { ModuleContent } from '@components/contents/module-content';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 import { RepoNav } from '@components/navs/repo-nav';
 import { Repository } from '@server/repository/repository.entity';
@@ -13,7 +13,8 @@ const RepositoriesShow: NextSFC = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
   const query = useQuery();
   return (
-    <Page authed className="repositories">
+    <Page className="repositories">
+      <Page.Navbar />
       <RepoNav repo={repo} />
       <div className="body lex-container">
         <div style={{ flex: '1 1' }}>

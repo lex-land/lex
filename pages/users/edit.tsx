@@ -1,9 +1,9 @@
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 
 const UsersEdit: NextSFC = () => {
-  return <Page authed>NULL</Page>;
+  return <Page>NULL</Page>;
 };
 
 UsersEdit.getInitialProps = async () => {

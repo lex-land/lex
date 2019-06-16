@@ -1,36 +1,34 @@
-import './index.less';
-import { Button, Classes, Navbar, NavbarGroup } from '@blueprintjs/core';
+import { Button, NavbarGroup } from '@blueprintjs/core';
 import { Link } from '@helpers/next-routes';
-import { LoginForm } from '@components/forms/login';
+import { LoginForm } from '@helpers/login';
 import { Logo } from '@components/vi';
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
 
 const Login: NextSFC = () => {
   return (
-    <Page backgroundColor="#e9ebee" className="login-page">
-      <Navbar className={Classes.DARK}>
+    <Page backgroundColor="#e9ebee">
+      <Page.UnlogedNavbar>
         <NavbarGroup className="lex-container">
           <Logo />
           <Link route="join">
             <Button style={{ marginLeft: 8 }} intent="success">
-              注册
+              Sign Up
             </Button>
           </Link>
         </NavbarGroup>
-      </Navbar>
-      <LoginForm
-        title="登录 Lex"
-        footer={
-          <div className="login-form__footer">
-            还没有一个账户？
-            <Link route="join">
-              <a>创建新用户</a>
-            </Link>
-          </div>
-        }
-      />
+      </Page.UnlogedNavbar>
+      <Page.Card>
+        <Page.Card.Title>Log Into Lex</Page.Card.Title>
+        <LoginForm />
+        <Page.Card.Footer>
+          New to Lex？
+          <Link route="join">
+            <a>Create an account</a>
+          </Link>
+        </Page.Card.Footer>
+      </Page.Card>
     </Page>
   );
 };

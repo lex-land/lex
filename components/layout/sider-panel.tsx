@@ -1,7 +1,8 @@
-.sider-panel {
+import styled from 'styled-components';
+
+export const SiderPanel = styled.aside`
   overflow: hidden;
-  width: 22%;
-  min-height: calc(~'100vh - 50px');
+  min-height: calc(100vh - 50px);
   padding: 0 24px;
   border-right: 1px solid #ddd;
   background: #fff;
@@ -26,8 +27,4 @@
     margin-bottom: 24px;
     margin-left: 0;
   }
-}
-
-.sider-panel + * {
-  // margin-left: 22%;
-}
+`;
