@@ -1,18 +1,18 @@
 import { NextSFC } from 'next';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
+import { QuickForm } from '@components/forms/quick';
 import React from 'react';
-import { RepoNav } from '@components/navs/repo-nav';
+import { Repo } from '@components/repo';
 import { Repository } from '@server/repository/repository.entity';
-import { SimpleForm } from '@components/forms/simple';
 import { http } from '@helpers/fetch';
 
 const RepoModuleCreate: NextSFC<any> = ({ repo }) => {
   return (
     <Page>
-      <RepoNav repo={repo} />
+      <Repo.Nav repo={repo} />
       <a href="https://zhuanlan.zhihu.com/p/67797136">DDD</a>
-      <SimpleForm
-        onSubmit={newMod =>
+      <QuickForm
+        action={newMod =>
           http.post(`/api/module`, { ...newMod, repository: repo.id })
         }
         fields={['name', 'description']}

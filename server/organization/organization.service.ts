@@ -18,6 +18,10 @@ export class OrganizationService {
   async create(createOrgDto: CreateOrgDto): Promise<Organization> {
     return await this.orgRepository.save(createOrgDto);
   }
+  async delete(id: string) {
+    return await this.orgRepository.delete(id);
+  }
+
   async findOneByName(name: string) {
     return await this.orgRepository.findOne({
       where: { name },

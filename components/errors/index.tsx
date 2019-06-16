@@ -1,4 +1,3 @@
-import './error.less';
 import { Error401 } from './401';
 import { Error403 } from './403';
 import { Error404 } from './404';
@@ -18,16 +17,10 @@ const Routes = {
 export const CATCHED_CODE = Object.keys(Routes).map(Number);
 export type CatchedCode = keyof typeof Routes;
 
-const Error = ({
-  code,
-  embered,
-}: {
-  embered?: boolean;
-  code?: CatchedCode;
-}) => {
+const Error = ({ code }: { code?: CatchedCode }) => {
   const { statusCode } = usePageProps<{ statusCode: CatchedCode }>();
   const Error: any = Routes[code || statusCode];
-  return <Error embered={embered} />;
+  return <Error />;
 };
 
 export default Error;

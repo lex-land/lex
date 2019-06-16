@@ -31,7 +31,7 @@
     // "forceConsistentCasingInFileNames": true,
     // "isolatedModules": true,
     // "noEmit": true
-    "strictPropertyInitialization":false,
+    "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,

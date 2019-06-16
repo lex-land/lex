@@ -6,10 +6,11 @@ import {
   Param,
   Post,
   Put,
+  Session,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateRepoPayload } from './interfaces/payload.interface';
+import { CreateRepositoryDto } from './dto/create-repo.dto';
 import { RepositoryService } from './repository.service';
 
 @Controller('repository')
@@ -22,8 +23,13 @@ export class RepositoryController {
   }
 
   @Post()
-  public async create(@Body() body: CreateRepoPayload) {
-    return this.repoService.create(body);
+  public async create(
+    @Body() body: CreateRepositoryDto,
+    @Session() session: any,
+  ) {
+    return this.repoService.create(
+      Object.assign(body, { creator: session.user, owner: session.user }),
+    );
   }
 
   @Put(':id')

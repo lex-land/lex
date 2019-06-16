@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -26,8 +27,14 @@ export class OrganizationController {
       Object.assign(body, { creator: session.user, owner: session.user }),
     );
   }
+
   @Get(':name')
   public async findOneByName(@Param('name') name: string) {
     return await this.orgService.findOneByName(name);
+  }
+
+  @Delete(':id')
+  public async delete(@Param('id') id: string) {
+    return await this.orgService.delete(id);
   }
 }

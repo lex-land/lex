@@ -17,6 +17,18 @@ import { Interface } from '@server/interface/interface.entity';
 import { Property } from '@server/property/property.entity';
 import _ from 'lodash';
 import { http } from '@helpers/fetch';
+import styled from 'styled-components';
+
+const AlignLeftTable = styled(HTMLTable)`
+  width: 100%;
+  &.bp3-html-table td {
+    vertical-align: middle;
+  }
+  &.bp3-html-table td:first-child,
+  &.bp3-html-table th:first-child {
+    padding-left: 0;
+  }
+`;
 
 export interface TreeState {
   nodes: ITreeNode<any>[];
@@ -287,7 +299,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
       {props.header && (
         <div className="tree-editor__header">{props.header(treeUtil)}</div>
       )}
-      <HTMLTable className={Classes.RUNNING_TEXT} style={{ width: '100%' }}>
+      <AlignLeftTable className={Classes.RUNNING_TEXT}>
         <thead>
           <tr>
             <th style={{ width: 220 }}>字段名</th>
@@ -312,7 +324,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
             ),
           )}
         </tbody>
-      </HTMLTable>
+      </AlignLeftTable>
       {props.footer && (
         <div className="tree-editor__footer">{props.footer(treeUtil)}</div>
       )}

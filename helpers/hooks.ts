@@ -6,8 +6,8 @@ import { useRouter } from 'next/router';
 
 export const PagePropsContext = React.createContext({});
 
-export function usePageProps<T = PageProps>(): T {
-  return useContext(PagePropsContext) as any;
+export function usePageProps<T = PageProps>() {
+  return useContext(PagePropsContext) as PageProps & T;
 }
 
 export function useQuery<T = any>(): T {

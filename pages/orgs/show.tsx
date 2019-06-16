@@ -1,26 +1,24 @@
-import { AnchorButton, Divider } from '@blueprintjs/core';
-import { AvatorNav } from '@components/navs/avator';
-import Error from '@components/errors';
+import { AnchorButton, Button, Divider } from '@blueprintjs/core';
+import { CURD } from '@components/curd';
+import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
+import { Flex } from '@components/layout/flex';
 import { ListHeader } from '@components/headers';
 import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Organization } from '@server/organization/organization.entity';
-import { Page } from '@components/layout';
+import { Page } from '@components/page';
 import React from 'react';
-import { SiderPanel } from '@components/navs/sider-panel';
 import { usePageProps } from '@helpers/hooks';
 
-const DashboardIndex: NextSFC = () => {
+const OrgsShow: NextSFC = () => {
   const { org } = usePageProps<{ org: Organization }>();
   return (
-    <Page authed>
-      <div className="dashboard">
-        <SiderPanel className="dashboard-sidebar">
-          <AvatorNav name={org.name} />
+    <Page>
+      <Page.Navbar />
+      <Flex>
+        <Page.Sider>
+          <DashboardSwitcher name={org.name} />
           <Divider />
-          <AnchorButton style={{ width: '100%' }} minimal intent="primary">
-            查看组织详情
-          </AnchorButton>
           <ListHeader
             title="仓库"
             rightElement={
@@ -38,20 +36,32 @@ const DashboardIndex: NextSFC = () => {
             itemRoute="repositories/show"
             dataSource={org.repositories}
           />
-        </SiderPanel>
-        <div className="dashboard-content">
-          <Error code={503} embered />
-        </div>
-      </div>
+        </Page.Sider>
+        <Flex.Auto>
+          <Page.Content>
+            <AnchorButton minimal intent="primary">
+              编辑
+            </AnchorButton>
+            <CURD.Delete
+              alertWhen
+              successGoto="/"
+              action={`/api/organization/${org.id}`}
+              button={
+                <Button intent="danger" minimal text="退出并删除这个组织" />
+              }
+            />
+            <Page.EmberedError visible code={503} />
+          </Page.Content>
+        </Flex.Auto>
+      </Flex>
     </Page>
   );
 };
 
-DashboardIndex.getInitialProps = async ctx => {
-  // 没有token重定向到login
+OrgsShow.getInitialProps = async ctx => {
   return {
     org: await ctx.http.get(`/api/organization/${ctx.query.org_id}`),
   };
 };
 
-export default DashboardIndex;
+export default OrgsShow;
