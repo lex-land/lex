@@ -13,7 +13,7 @@ import { ValidationError } from 'class-validator';
 import _ from 'lodash';
 
 interface QuickFormProps<T> {
-  defaultValue?: T | any;
+  defaultValue?: object;
   action: (value: T) => any;
   success?: (value: T, json: any) => any;
   fields: string[];
@@ -22,14 +22,17 @@ interface QuickFormProps<T> {
   controlLarge?: boolean;
   submitButton?: IButtonProps;
 }
-
+import { initObjectByKeys } from '@core/transformer';
 export const QuickForm = (props: QuickFormProps<any>) => {
-  const targetValue = _.pick(props.defaultValue, props.fields) as any;
+  const targetValue = _.pick(
+    props.defaultValue || initObjectByKeys(props.fields),
+    props.fields,
+  ) as any;
   const handleSubmit = async (
     values: any,
     formikActions: FormikActions<any>,
   ) => {
-    const { error, message, ...json } = await props.action(
+    const { error = '', message, ...json } = await props.action(
       _.pick(values, props.fields),
     );
     if (error) {

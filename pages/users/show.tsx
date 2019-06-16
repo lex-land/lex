@@ -7,10 +7,10 @@ const UsersShow: NextSFC = () => {
   return (
     <Page>
       <Page.Navbar />
-      <div className="page lex-container">
+      <Page.Container>
         <H1>个人中心</H1>
         <Page.EmberedError code={503} />
-      </div>
+      </Page.Container>
     </Page>
   );
 };

@@ -1,29 +1,9 @@
-import {
-  Classes,
-  IMenuItemProps,
-  Menu,
-  MenuItem,
-  Popover,
-  Position,
-} from '@blueprintjs/core';
+import { Classes, Menu, MenuItem, Popover, Position } from '@blueprintjs/core';
+import React, { Fragment } from 'react';
 import { Avator } from '../avator';
-import { Link } from '@helpers/next-routes';
-import React from 'react';
 import { http } from '@helpers/fetch';
 import styled from 'styled-components';
 import { useAsync } from 'react-use';
-
-const LinkMenuItem = ({
-  href,
-  params,
-  ...props
-}: IMenuItemProps & { params?: any }) => {
-  return (
-    <Link route={href as any} params={{ ...params }}>
-      <MenuItem {...props} />
-    </Link>
-  );
-};
 
 const defaultUser = {
   fullname: '-',
@@ -49,21 +29,25 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
               <h6 className={Classes.HEADING}>切换视图</h6>
             </li>
             <Menu.Divider />
-            <LinkMenuItem href="dashboard" icon="person" text={user.fullname} />
-            {orgs.map((org: any) => (
-              <MenuItem
-                href={`/orgs/${org.name}`}
-                icon="people"
-                key={org.id}
-                text={org.name}
-              />
-            ))}
-            {orgs.length > 0 && <Menu.Divider />}
+            <Fragment>
+              <MenuItem href="/" icon="person" text={user.fullname} />
+              {orgs.map((org: any) => (
+                <MenuItem
+                  href={`/orgs/${encodeURIComponent(org.name)}`}
+                  icon="people"
+                  key={org.id}
+                  text={org.name}
+                />
+              ))}
+              <Menu.Divider />
+            </Fragment>
             {orgs.length > 0 && (
-              <LinkMenuItem href="orgs" icon="cog" text="管理组织" />
+              <Fragment>
+                <MenuItem href="/orgs" icon="cog" text="管理组织" />
+                <Menu.Divider />
+              </Fragment>
             )}
-            {orgs.length > 0 && <Menu.Divider />}
-            <LinkMenuItem href="orgs/new" icon="plus" text="添加组织" />
+            <MenuItem href="/orgs/new" icon="plus" text="添加组织" />
           </Menu>
         }
         position={Position.BOTTOM_LEFT}

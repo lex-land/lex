@@ -10,14 +10,16 @@ const Login: NextSFC = () => {
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
-        <NavbarGroup className="lex-container">
-          <Logo />
-          <Link route="join">
-            <Button style={{ marginLeft: 8 }} intent="success">
-              Sign Up
-            </Button>
-          </Link>
-        </NavbarGroup>
+        <Page.Container>
+          <NavbarGroup>
+            <Logo />
+            <Link route="join">
+              <Button style={{ marginLeft: 8 }} intent="success">
+                Sign Up
+              </Button>
+            </Link>
+          </NavbarGroup>
+        </Page.Container>
       </Page.UnlogedNavbar>
       <Page.Card>
         <Page.Card.Title>Log Into Lex</Page.Card.Title>

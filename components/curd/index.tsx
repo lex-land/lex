@@ -2,12 +2,12 @@ import {
   Alert,
   Button,
   Drawer,
-  IconName,
   Intent,
   Position,
   Toaster,
 } from '@blueprintjs/core';
 import React, { Fragment, useState } from 'react';
+import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms/quick';
 import { http } from '@helpers/fetch';
 import { route } from '@helpers/next-routes';
@@ -16,73 +16,68 @@ interface CurdButtonProps {
   action: string;
   fields?: string[];
   params?: any;
-  buttonText?: string;
   successToast?: string;
   successForceReload?: boolean;
   alertStrongText?: string;
   alertWhen?: boolean;
   successGoto?: string;
   defaultValue?: any;
-  intent?: Intent;
   onChange?: any;
-  icon?: IconName;
+  drawerTitle?: string;
+  button?: React.ReactNode;
 }
 
-export const CreateButton = ({
+const CreateButton = ({
   fields,
   action,
   params,
-  buttonText,
   onChange,
   successForceReload,
   successToast,
-  icon,
+  button,
+  drawerTitle,
 }: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
   const onAddClick = () => {
     setOpen(true);
   };
-  const handleSubmit = async (newMod: any) => {
-    await http.post(action, { ...newMod, ...params });
+  const success = async (newMod: any) => {
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
     successForceReload && route().replaceMerge({});
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: successToast || '添加成功',
-    });
   };
+  const defaultKeys = fields || [];
   return (
     <Fragment>
-      <Button icon={icon} onClick={onAddClick} intent="success">
-        {buttonText}
-      </Button>
+      {button && <span onClick={onAddClick}>{button}</span>}
       <Drawer
-        title={buttonText}
+        title={drawerTitle}
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
       >
-        <QuickForm
-          fields={fields || []}
-          defaultValue={{}}
-          action={handleSubmit}
-        />
+        <LexContent>
+          <QuickForm
+            fields={defaultKeys}
+            action={values => http.post(action, { ...values, ...params })}
+            success={success}
+            successToast={successToast || '新增成功'}
+          />
+        </LexContent>
       </Drawer>
     </Fragment>
   );
 };
 
-export const EditButton = ({
+const EditButton = ({
   fields,
   action,
   params,
-  buttonText,
   defaultValue,
   onChange,
   successToast,
-  intent,
-  icon,
   successForceReload,
+  drawerTitle,
+  button,
 }: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -102,33 +97,32 @@ export const EditButton = ({
   };
   return (
     <Fragment>
-      <Button icon={icon} intent={intent} onClick={onAddClick}>
-        {buttonText}
-      </Button>
+      {button && <span onClick={onAddClick}>{button}</span>}
       <Drawer
-        title={buttonText}
+        title={drawerTitle}
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
       >
-        <QuickForm
-          fields={fields || []}
-          defaultValue={value}
-          action={handleSubmit}
-        />
+        <LexContent>
+          <QuickForm
+            fields={fields || []}
+            defaultValue={value}
+            action={handleSubmit}
+          />
+        </LexContent>
       </Drawer>
     </Fragment>
   );
 };
 
-export const DeleteButton = ({
+const DeleteButton = ({
   action,
-  buttonText,
   successToast,
   successForceReload,
   alertStrongText,
   alertWhen,
   successGoto,
-  icon,
+  button,
 }: CurdButtonProps) => {
   const [alertOpen, setOpen] = useState(false);
   const afterDelete = () => {
@@ -161,9 +155,7 @@ export const DeleteButton = ({
 
   return (
     <Fragment>
-      <Button icon={icon} intent={Intent.DANGER} onClick={check}>
-        {buttonText}
-      </Button>
+      <span onClick={check}>{button}</span>
       <Alert
         isOpen={alertOpen}
         cancelButtonText="取消"
@@ -180,3 +172,56 @@ export const DeleteButton = ({
     </Fragment>
   );
 };
+
+{
+  /* <td>
+                  <ButtonGroup>
+                    <EditButton
+                      fields={['method', 'url', 'name', 'description']}
+                      defaultValue={inte}
+                      icon="edit"
+                    />
+                    <Popover
+                      position="auto"
+                      content={
+                        <div style={{ padding: 20 }}>
+                          <H5>删除确认</H5>
+                          <p>你确认要删除这个接口吗？这个动作将不能撤销</p>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'flex-end',
+                              marginTop: 15,
+                            }}
+                          >
+                            <Button
+                              className={Classes.POPOVER_DISMISS}
+                              style={{ marginRight: 10 }}
+                            >
+                              取消
+                            </Button>
+                            <Button
+                              intent={Intent.DANGER}
+                              className={Classes.POPOVER_DISMISS}
+                            >
+                              删除
+                            </Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <Button intent="danger" icon="trash" />
+                    </Popover>
+                  </ButtonGroup>
+                </td> */
+}
+
+export const CURD = Object.assign(
+  {},
+  {
+    Button,
+    Delete: DeleteButton,
+    Create: CreateButton,
+    Update: EditButton,
+  },
+);

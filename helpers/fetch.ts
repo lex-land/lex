@@ -41,7 +41,8 @@ export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理参数params
   logger.info(`[ ${options.method} ] ${api} fetching...`);
 
-  const result = await isomorphicFetch(`${url}`, options);
+  // 为了解决node请求中文识别问题
+  const result = await isomorphicFetch(encodeURI(url), options);
   const json = await result.clone().json();
   logger.info(`[ ${options.method} ] ${api}`, json);
   if (CATCHED_CODE.includes(json.statusCode)) {

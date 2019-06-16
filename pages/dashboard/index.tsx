@@ -6,7 +6,6 @@ import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
-import { SiderPanel } from '@components/layout/sider-panel';
 import { User } from '@server/user/user.entity';
 import { usePageProps } from '@helpers/hooks';
 
@@ -16,7 +15,7 @@ const DashboardIndex: NextSFC = () => {
     <Page>
       <Page.Navbar />
       <Flex>
-        <SiderPanel>
+        <Page.Sider>
           <DashboardSwitcher name={user.fullname} />
           <Divider />
           <ListHeader
@@ -25,7 +24,7 @@ const DashboardIndex: NextSFC = () => {
               <AnchorButton
                 icon="git-repo"
                 intent="success"
-                href={`/users/${user.fullname}/repositories/new`}
+                href="/repositories/new"
                 text="新增"
               />
             }
@@ -38,12 +37,12 @@ const DashboardIndex: NextSFC = () => {
           />
           <Divider />
           <ListHeader title="团队" />
-        </SiderPanel>
+        </Page.Sider>
         <Page.Content>
           <H5>我的团队成员动态</H5>
-          <Page.EmberedError code={503} />
+          <Page.EmberedError visible code={503} />
           <H5>我加入仓库的动态</H5>
-          <Page.EmberedError code={503} />
+          <Page.EmberedError visible code={503} />
         </Page.Content>
       </Flex>
     </Page>

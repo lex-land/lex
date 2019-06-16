@@ -1,68 +1,43 @@
-import './show.less';
 import { usePageProps, useQuery } from '@helpers/hooks';
-import { CreateButton } from '@components/curd';
+import IntePage from './interface';
 import { Interface } from '@server/interface/interface.entity';
-import InterfaceContent from '@components/contents/interface-content';
-import { ListHeader } from '@components/headers';
 import { Module } from '@server/module/module.entity';
-import { ModuleContent } from '@components/contents/module-content';
-import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
-import { RepoNav } from '@components/navs/repo-nav';
-import { SiderPanel } from '@components/layout/sider-panel';
+import { Repo } from '@components/repo';
 
 interface PageProps {
   mod: Module;
   inte: Interface | undefined;
 }
 
-const DashboardIndex: NextSFC<PageProps> = () => {
-  const { mod, inte } = usePageProps<PageProps>();
+const ModulesShow: NextSFC<PageProps> = () => {
+  const { mod } = usePageProps<PageProps>();
   const query = useQuery();
-  return (
-    <Page className="interfaces">
-      <RepoNav repo={mod.repository} inte={inte} mod={mod} />
-      <div className="body">
-        <SiderPanel>
-          <ListHeader
-            title="接口"
-            rightElement={
-              <CreateButton
-                action="/api/interface"
-                fields={['method', 'url', 'name', 'description']}
-                params={{ repository: query.repository_id, module: mod.id }}
-                buttonText="新增"
-                icon="application"
-                successForceReload
-              />
-            }
-          />
-          <NavList
-            rowKey="interface_id"
-            itemLinkReplace
-            itemIcon="application"
-            itemRoute="repositories/modules/show"
-            dataSource={mod.interfaces}
-          />
-        </SiderPanel>
-        {!query.interface_id && <ModuleContent mod={mod} />}
-        {inte && <InterfaceContent edit={false} inte={inte} />}
-      </div>
+  return query.interface_id ? (
+    <IntePage />
+  ) : (
+    <Page>
+      <Page.Navbar />
+      <Page.Container>
+        <Repo.Nav />
+        <Repo.SubPage>{mod.name}</Repo.SubPage>
+      </Page.Container>
     </Page>
   );
 };
 
-DashboardIndex.getInitialProps = async ctx => {
+ModulesShow.getInitialProps = async ctx => {
   const modId = ctx.query.module_id;
   const mod = await ctx.http.get<Module>(`/api/module/${modId}`);
-  const inteId = ctx.query.interface_id;
-  const inte = inteId && (await ctx.http.get(`/api/interface/${inteId}`));
+  const inte =
+    IntePage.getInitialProps &&
+    ((await IntePage.getInitialProps(ctx)) as Interface);
   return {
-    mod,
     inte,
+    mod,
   };
 };
 
-export default DashboardIndex;
+export default ModulesShow;

@@ -1,6 +1,5 @@
 import {
   Alignment,
-  AnchorButton,
   Card,
   Classes,
   H3,
@@ -16,12 +15,12 @@ import {
   Popover,
   Position,
 } from '@blueprintjs/core';
+import { LexContainer, LexContent } from '@components/layout/container';
 import React, { Fragment } from 'react';
 import { Avator } from '../avator';
 import { Flex } from '../layout/flex';
 import Head from 'next/head';
 import { Logo } from '@components/vi';
-import { Router } from '@helpers/next-routes';
 import { http } from '@helpers/fetch';
 import { logout } from '@helpers/service';
 import styled from 'styled-components';
@@ -59,6 +58,8 @@ interface ErrorProps {
   className?: string;
   description?: string;
   action?: any;
+  visible?: boolean;
+  title?: string;
 }
 
 const PageError = ({ code, description, action, className }: ErrorProps) => (
@@ -69,16 +70,17 @@ const PageError = ({ code, description, action, className }: ErrorProps) => (
   </ErrorContainer>
 );
 
-const EmberedError = ({ code, icon, className }: ErrorProps) => (
-  <ErrorContainer className={className}>
-    <NonIdealState icon="geosearch" />
-    <br />
-    <div className="description">抱歉，此功能还在开发中</div>
-    <AnchorButton onClick={Router.back} intent="primary" minimal>
-      回到上页
-    </AnchorButton>
-  </ErrorContainer>
-);
+const EmberedError = ({ className, ...props }: ErrorProps) =>
+  props.visible ? (
+    <ErrorContainer className={className}>
+      <NonIdealState icon={props.icon || 'geosearch'} />
+      <br />
+      <div className="description">
+        {props.description || '抱歉，当前功能未开发完成'}
+      </div>
+      {props.action}
+    </ErrorContainer>
+  ) : null;
 
 let user = { fullname: '-' };
 const AvatorBar = () => {
@@ -95,7 +97,7 @@ const AvatorBar = () => {
           <MenuItem text="仓库" href={`/users/${user.fullname}/repositories`} />
           <MenuDivider />
           <MenuItem href="https://github.com/sunmi-web/lex/" text="源代码" />
-          <MenuItem text="设置" href={`/users/${user.fullname}/settings`} />
+          <MenuItem text="设置" href={`/settings`} />
           <MenuItem text="退出登录" onClick={logout} href="/login" />
         </Menu>
       }
@@ -149,6 +151,36 @@ export const Page = Object.assign(
     );
   },
   {
+    Container: LexContainer,
+    Sider: styled.aside<{ offset?: number }>`
+      /* overflow: hidden; */
+      min-height: ${props => `calc(100vh - ${props.offset || 50}px)`};
+      min-width: 300px;
+      padding: 0 24px;
+      border-right: 1px solid rgba(16, 22, 26, 0.15);
+      /* background: linear-gradient(to right, #f5f8fa 0, #fff 40%); */
+      background: #fff;
+      .bp3-menu {
+        padding: 0;
+        margin-top: 16px;
+        .bp3-menu-item {
+          margin-bottom: 2px;
+        }
+      }
+      .bp3-divider {
+        margin-right: 0;
+        margin-left: 0;
+        border: 0;
+        margin-left: -24px;
+        background-image: linear-gradient(
+          90deg,
+          rgba(16, 22, 26, 0) 0,
+          rgba(16, 22, 26, 0.15) 40%
+        );
+        height: 1px;
+        padding: 0;
+      }
+    `,
     EmberedError: styled(EmberedError)`
       padding: 40px;
       text-align: center;
@@ -169,9 +201,7 @@ export const Page = Object.assign(
       padding: 0 24px;
     `,
     // 内容块
-    Content: styled(Flex.Auto)`
-      padding: 24px;
-    `,
+    Content: LexContent,
     Card: Object.assign(
       styled(Card)`
         width: 400px;

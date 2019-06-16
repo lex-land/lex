@@ -7,10 +7,10 @@ const UsersRepos: NextSFC = () => {
   return (
     <Page>
       <Page.Navbar />
-      <div className="page lex-container">
+      <Page.Container>
         <H1>仓库列表</H1>
         <Page.EmberedError code={503} />
-      </div>
+      </Page.Container>
     </Page>
   );
 };

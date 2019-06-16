@@ -53,6 +53,7 @@ docker-compose up -d
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [x] 重新设计 logo
 - [x] 使用 docker 运行项目的生产环境
+- [ ] 使用 styled-component 进行组件样式重构
 - [ ] SEO
 - [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
 - [ ] 重新思考 UI 呈现
@@ -61,7 +62,7 @@ docker-compose up -d
 
 ## New Feature
 
-- [ ] 添加从Rap2迁移功能，方便用户从Rap2迁移至Lex
+- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
 - [ ] 添加接口操作日志
 - [ ] 添加接口返回码
 - [ ] 添加仓库内公共内容
@@ -72,6 +73,8 @@ docker-compose up -d
 
 ## Progress
 
+- [x] 异常页面，包含401、403、404、500、503等
+- [x] 提取quickform组件用于表单的提交
 - [x] 新增 dashboard、join、login、repo 相关页面
 - [ ] 新用户注册页面
 - [ ] 仓库成员管理页面

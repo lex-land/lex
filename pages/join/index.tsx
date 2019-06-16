@@ -21,9 +21,11 @@ const Join: NextSFC = () => {
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
-        <NavbarGroup className="lex-container">
-          <Logo />
-        </NavbarGroup>
+        <Page.Container>
+          <NavbarGroup>
+            <Logo />
+          </NavbarGroup>
+        </Page.Container>
       </Page.UnlogedNavbar>
       <Page.Card>
         <Page.Card.Title>Create a New Account</Page.Card.Title>

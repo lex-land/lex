@@ -10,10 +10,9 @@ const UsersRepoCreate: NextSFC = () => {
   return (
     <Page>
       <Page.Navbar />
-      <div className="page lex-container">
+      <Page.Content>
         <H1>创建一个仓库</H1>
         <QuickForm
-          defaultValue={{ name: '', description: '' }}
           action={newValue => http.post('/api/repository', newValue)}
           fields={['name', 'description']}
           success={(values, json) =>
@@ -21,16 +20,14 @@ const UsersRepoCreate: NextSFC = () => {
           }
           successToast="成功创建仓库"
         />
-        <Page.EmberedError code={503} />
-      </div>
+        <Page.EmberedError visible code={503} />
+      </Page.Content>
     </Page>
   );
 };
 
 UsersRepoCreate.getInitialProps = async () => {
-  return {
-    // statusCode: 503,
-  };
+  return {};
 };
 
 export default UsersRepoCreate;

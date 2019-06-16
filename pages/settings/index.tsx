@@ -2,18 +2,19 @@ import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 
-const UsersSettings: NextSFC = () => {
+const Settings: NextSFC = () => {
   return (
     <Page>
-      <Page.EmberedError code={503} />
+      <Page.Navbar />
+      <Page.EmberedError visible code={503} />
     </Page>
   );
 };
 
-UsersSettings.getInitialProps = async () => {
+Settings.getInitialProps = async () => {
   return {
     // statusCode: 503,
   };
 };
 
-export default UsersSettings;
+export default Settings;

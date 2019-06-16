@@ -2,14 +2,14 @@ import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms/quick';
 import React from 'react';
-import { RepoNav } from '@components/navs/repo-nav';
+import { Repo } from '@components/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
 
 const RepoModuleCreate: NextSFC<any> = ({ repo }) => {
   return (
     <Page>
-      <RepoNav repo={repo} />
+      <Repo.Nav repo={repo} />
       <a href="https://zhuanlan.zhihu.com/p/67797136">DDD</a>
       <QuickForm
         action={newMod =>

@@ -1,40 +1,35 @@
-import './module-content.less';
-import { Card, Code, H4, HTMLTable, NonIdealState } from '@blueprintjs/core';
-import { CreateButton } from '@components/curd';
+import { Code, H4, HTMLTable } from '@blueprintjs/core';
 import { Link } from '@helpers/next-routes';
 import { Module } from '@server/module/module.entity';
 import React from 'react';
+import styled from 'styled-components';
 import { useQuery } from '@helpers/hooks';
 
-export const ModuleContent = (props: { mod: Module }) => {
+const AlignLeftTable = styled(HTMLTable)`
+  width: 100%;
+  &.bp3-html-table td {
+    vertical-align: middle;
+  }
+  &.bp3-html-table td:first-child,
+  &.bp3-html-table th:first-child {
+    padding-left: 0;
+  }
+`;
+
+export const ModuleContent = (props: {
+  mod: Module;
+  noContent: React.ReactNode;
+}) => {
   const { mod } = props;
   const query = useQuery();
   return (
-    <div className="module-content" style={{ flex: '1 1', padding: 40 }}>
+    <div>
       <H4>
         {mod.name} {mod.description && `(${mod.description})`}
       </H4>
-      {!mod.interfaces.length && (
-        <Card>
-          <NonIdealState
-            icon="search"
-            title="暂无接口"
-            description="当前模块没有任何接口，可以新建一个看看"
-            action={
-              <CreateButton
-                action={`/api/interface`}
-                params={{ repository: query.repository_id, module: mod.id }}
-                fields={['method', 'url', 'name', 'description']}
-                icon="application"
-                buttonText="新建"
-                successForceReload
-              />
-            }
-          />
-        </Card>
-      )}
+      {!mod.interfaces.length && props.noContent}
       {!!mod.interfaces.length && (
-        <HTMLTable style={{ width: '100%' }}>
+        <AlignLeftTable>
           <thead>
             <tr>
               <th style={{ width: 200 }}>描述</th>
@@ -75,51 +70,8 @@ export const ModuleContent = (props: { mod: Module }) => {
               </tr>
             ))}
           </tbody>
-        </HTMLTable>
+        </AlignLeftTable>
       )}
     </div>
   );
 };
-
-{
-  /* <td>
-                  <ButtonGroup>
-                    <EditButton
-                      fields={['method', 'url', 'name', 'description']}
-                      defaultValue={inte}
-                      icon="edit"
-                    />
-                    <Popover
-                      position="auto"
-                      content={
-                        <div style={{ padding: 20 }}>
-                          <H5>删除确认</H5>
-                          <p>你确认要删除这个接口吗？这个动作将不能撤销</p>
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'flex-end',
-                              marginTop: 15,
-                            }}
-                          >
-                            <Button
-                              className={Classes.POPOVER_DISMISS}
-                              style={{ marginRight: 10 }}
-                            >
-                              取消
-                            </Button>
-                            <Button
-                              intent={Intent.DANGER}
-                              className={Classes.POPOVER_DISMISS}
-                            >
-                              删除
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <Button intent="danger" icon="trash" />
-                    </Popover>
-                  </ButtonGroup>
-                </td> */
-}
