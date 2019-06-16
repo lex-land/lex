@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { CreateModuPayload } from './interfaces/payload.interface';
+import { CreateModuDto } from './dto/create-modu.dto';
 import { ModuleService } from './module.service';
 
 @Controller('module')
@@ -19,10 +19,8 @@ export class ModuleController {
   constructor(private readonly moduService: ModuleService) {}
 
   @Post()
-  public async create(@Body() body: CreateModuPayload) {
-    return this.moduService.create({
-      ...body,
-    });
+  public async create(@Body() body: CreateModuDto) {
+    return this.moduService.create(body);
   }
 
   @Get()
