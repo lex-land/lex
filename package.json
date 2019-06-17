@@ -386,8 +386,7 @@
       "^@core/(.*)$": "<rootDir>/core/$1",
       "^@components/(.*)$": "<rootDir>/components/$1",
       "^@config/(.*)$": "<rootDir>/config/$1",
-      "^@helpers/(.*)$": "<rootDir>/helpers/$1",
-      "^@layout/(.*)$": "<rootDir>/layout/$1"
+      "^@helpers/(.*)$": "<rootDir>/helpers/$1"
     },
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest"
