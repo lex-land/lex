@@ -1,12 +1,11 @@
 import { H1 } from '@blueprintjs/core';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms/quick';
 import React from 'react';
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/next-routes';
+import { route } from '@helpers/route';
 
-const UsersRepoCreate: NextSFC = () => {
+export default () => {
   return (
     <Page>
       <Page.Navbar />
@@ -25,9 +24,3 @@ const UsersRepoCreate: NextSFC = () => {
     </Page>
   );
 };
-
-UsersRepoCreate.getInitialProps = async () => {
-  return {};
-};
-
-export default UsersRepoCreate;

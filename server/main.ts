@@ -3,10 +3,8 @@ import {
   NestExpressApplication,
 } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
-import { ENV } from '@config/env';
-// import { HttpExceptionFilter } from './common/filters/http-expection';
 import { NestFactory } from '@nestjs/core';
-import { NextHandlerFilter } from './common/filters/next-handler';
+import { NextHandlerFilter } from '@helpers/filters/next-handler';
 import { ValidationPipe } from '@nestjs/common';
 // import csurf from 'csurf';
 import express from 'express';
@@ -30,7 +28,6 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setGlobalPrefix('api');
-  // app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalFilters(new NextHandlerFilter(nextApp));
   // 会话设置
   app.use(
@@ -60,14 +57,13 @@ async function bootstrap() {
       max: 10000, // limit each IP to 100 requests per windowMs
     }),
   );
-  // TODO:
   // 跨域安全
   app.enableCors({
     origin: [/\.sunmi\.com$/],
   });
-
-  await app.listen(ENV.PORT, () => {
-    logger.info(`[ success ] listening on http://localhost:${ENV.PORT}`);
+  const PORT = process.env.PORT || 3000;
+  await app.listen(PORT, () => {
+    logger.info(`[ success ] listening on http://localhost:${PORT}`);
   });
 }
 

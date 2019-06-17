@@ -1,9 +1,8 @@
 import { H1 } from '@blueprintjs/core';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 
-const UsersShow: NextSFC = () => {
+export default () => {
   return (
     <Page>
       <Page.Navbar />
@@ -14,11 +13,3 @@ const UsersShow: NextSFC = () => {
     </Page>
   );
 };
-
-UsersShow.getInitialProps = async () => {
-  return {
-    // statusCode: 503,
-  };
-};
-
-export default UsersShow;

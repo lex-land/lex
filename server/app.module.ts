@@ -1,5 +1,4 @@
 import { AppController } from './app.controller';
-import { ConfigModule } from './config/config.module';
 import { DatabaseModule } from './database/database.module';
 import { InterfaceModule } from './interface/interface.module';
 import { MigrationModule } from './migration/migration.module';
@@ -14,7 +13,6 @@ import { UserModule } from './user/user.module';
 @Module({
   controllers: [AppController],
   imports: [
-    ConfigModule,
     DatabaseModule,
     InterfaceModule,
     ModuleModule,

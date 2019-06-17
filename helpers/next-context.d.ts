@@ -6,7 +6,6 @@ declare module 'next' {
   interface NextContext<Q extends DefaultQuery = DefaultQuery, CustomReq = {}> {
     redirect: (path: string) => void;
     getToken: () => string;
-    authorized: () => Promise<boolean>;
     http: typeof http;
   }
 }

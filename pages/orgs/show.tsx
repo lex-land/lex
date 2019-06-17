@@ -1,16 +1,16 @@
 import { AnchorButton, Button, Divider } from '@blueprintjs/core';
+import { composePageProps, usePageProps } from '@core/next-compose';
 import { CURD } from '@components/curd';
 import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
 import { Flex } from '@components/layout/flex';
 import { ListHeader } from '@components/_useless_headers';
 import { NavList } from '@components/navs/nav-list';
-import { NextSFC } from 'next';
 import { Organization } from '@server/organization/organization.entity';
 import { Page } from '@components/page';
 import React from 'react';
-import { usePageProps } from '@helpers/hooks';
+import { org } from '@helpers/page-props';
 
-const OrgsShow: NextSFC = () => {
+export default composePageProps(org)(() => {
   const { org } = usePageProps<{ org: Organization }>();
   return (
     <Page>
@@ -56,12 +56,4 @@ const OrgsShow: NextSFC = () => {
       </Flex>
     </Page>
   );
-};
-
-OrgsShow.getInitialProps = async ctx => {
-  return {
-    org: await ctx.http.get(`/api/organization/${ctx.query.org_id}`),
-  };
-};
-
-export default OrgsShow;
+});

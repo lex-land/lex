@@ -3,10 +3,9 @@ import React, { Fragment } from 'react';
 import { TreeEditor, TreeUtil } from '@core/tree-editor';
 import { Flex } from '@components/layout/flex';
 import { Interface } from '@server/interface/interface.entity';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import { Repo } from '@components/repo';
-import { usePageProps } from '@helpers/hooks';
+import { usePageProps } from '@core/next-compose';
 
 const TreeEditorHeader = (treeUtil: TreeUtil) => {
   return (
@@ -25,7 +24,7 @@ const TreeEditorHeader = (treeUtil: TreeUtil) => {
   );
 };
 
-const IntePage: NextSFC = () => {
+export default () => {
   const { inte } = usePageProps<{ inte: Interface }>();
   return (
     <Page>
@@ -68,9 +67,3 @@ const IntePage: NextSFC = () => {
     </Page>
   );
 };
-
-IntePage.getInitialProps = async ctx => {
-  const inteId = ctx.query.interface_id;
-  return inteId && (await ctx.http.get(`/api/interface/${inteId}`));
-};
-export default IntePage;

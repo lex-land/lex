@@ -1,5 +1,5 @@
 import { Code, H4, HTMLTable } from '@blueprintjs/core';
-import { Link } from '@helpers/next-routes';
+import { Link } from '@helpers/route';
 import { Module } from '@server/module/module.entity';
 import React from 'react';
 import styled from 'styled-components';

@@ -1,4 +1,4 @@
-import './index.less';
+// import './index.less';
 import * as Yup from 'yup';
 import {
   Button,

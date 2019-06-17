@@ -1,4 +1,4 @@
-@import '~normalize.css';
+@import 'https://cdn.bootcss.com/normalize/8.0.1/normalize.css';
 @import 'https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css';
 @import 'https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css';
 

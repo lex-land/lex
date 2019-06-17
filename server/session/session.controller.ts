@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { LoginDto } from './dto/login.dto';
 import { SessionService } from './session.service';
-import { Token } from '@server/common/decorators/token.decorator';
+import { Token } from '@helpers/decorators/token.decorator';
 import { UserService } from '@server/user/user.service';
 import { ValidationError } from 'class-validator';
 

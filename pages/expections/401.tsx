@@ -1,4 +1,4 @@
-import { LoginForm } from '@helpers/login';
+import { LoginForm } from '@helpers/forms/login';
 import { Page } from '@components/page';
 import React from 'react';
 

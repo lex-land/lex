@@ -1,30 +1,38 @@
 import '@config/initializer';
 import { AppProps, Container, DefaultAppIProps } from 'next/app';
+import { PagePropsContext, composePageProps } from '@core/next-compose';
 import ErrorBoundary from '@config/error';
 import { NProgressContainer } from '@core/nprogress/component';
-import { PagePropsContext } from '@helpers/hooks';
 import React from 'react';
-import { enhanceNextMiddware } from '@helpers/next-middleware';
+import { enhancedCtx } from '@helpers/page-props';
 
-const App = (props: AppProps<any, any> & DefaultAppIProps) => {
-  const { Component, pageProps } = props;
-  return (
-    <Container>
-      <PagePropsContext.Provider value={pageProps}>
-        <NProgressContainer />
-        <ErrorBoundary statusCode={pageProps.statusCode}>
-          <Component />
-        </ErrorBoundary>
-      </PagePropsContext.Provider>
-    </Container>
-  );
-};
+type Props = AppProps<any, any> & DefaultAppIProps & { statusCode: any };
 
-App.getInitialProps = enhanceNextMiddware(async ({ ctx }, pageProps) => {
-  // 为pageProps新增公共数据
-  // 在子组件里即可以用usePageProps进行获取
-  pageProps.token = ctx.getToken();
-  return pageProps;
+const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
+  // 初始化页面参数
+  let pageProps = {};
+  let statusCode = (ctx.res && ctx.res.statusCode) || 200;
+  if (Component.getInitialProps) {
+    try {
+      pageProps = await Component.getInitialProps(ctx);
+    } catch (error) {
+      // FetchError
+      statusCode = error.code || 500;
+    }
+  }
+  return { pageProps, statusCode };
 });
 
-export default App;
+export default composePageProps(initialAppProps)((props: Props) => {
+  const { Component, pageProps, statusCode } = props;
+  return (
+    <ErrorBoundary statusCode={statusCode}>
+      <PagePropsContext.Provider value={pageProps}>
+        <Container>
+          <NProgressContainer />
+          <Component />
+        </Container>
+      </PagePropsContext.Provider>
+    </ErrorBoundary>
+  );
+});

@@ -1,11 +1,20 @@
-import { DES, ENV, isEncrypted, md5Key } from '@config/env';
+import CONSTANTS from '@config/constants';
 import Cookies from 'universal-cookie';
 import CryptoJS from 'crypto-js';
 import md5 from 'md5';
 
+const ENV = {
+  DES: {
+    Key: '666',
+    Iv: '666',
+  },
+  isEncrypted: 0,
+  md5Key: '666',
+};
+
 const tripledes = CryptoJS.TripleDES;
-const IV = CryptoJS.enc.Utf8.parse(DES.Iv || 'xxx');
-const KEY = CryptoJS.enc.Utf8.parse(DES.Key || 'xxx');
+const IV = CryptoJS.enc.Utf8.parse(ENV.DES.Iv || 'xxx');
+const KEY = CryptoJS.enc.Utf8.parse(ENV.DES.Key || 'xxx');
 
 export const Des = {
   encrypt(message: string | null) {
@@ -34,17 +43,17 @@ export const Des = {
 export const passwordEncode = (p: string) => decodeURIComponent(Des.encrypt(p));
 
 export const signEncode = (form: any) => {
-  if (!md5Key) {
+  if (!ENV.md5Key) {
     throw new Error('请检查.env环境变量配置文件！no md5Key');
   }
-  const key = md5Key;
+  const key = ENV.md5Key;
   const { params, timeStamp, randomNum } = form;
-  return md5(params + isEncrypted + timeStamp + randomNum + md5(key));
+  return md5(params + ENV.isEncrypted + timeStamp + randomNum + md5(key));
 };
 
 export const paramsEncode = (params: object) => {
   const paramsString = JSON.stringify(params);
-  if (isEncrypted) {
+  if (ENV.isEncrypted) {
     return Des.encrypt(paramsString);
   }
   return paramsString;
@@ -58,16 +67,16 @@ export const getCookie = (key: string, ctx: any = {}) => {
 export const getToken = (ctx: any = {}) => {
   return (
     (ctx.req && ctx.req.headers.authorization) ||
-    getCookie(ENV.KEYOF_TOKEN, ctx)
+    getCookie(CONSTANTS.KEYOF_TOKEN, ctx)
   );
 };
 
 export const setToken = (token: string, ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
-  cookie.set(Des.encrypt(ENV.KEYOF_TOKEN), token, { path: '/' });
+  cookie.set(Des.encrypt(CONSTANTS.KEYOF_TOKEN), token, { path: '/' });
 };
 
 export const cleanToken = (ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
-  cookie.set(Des.encrypt(ENV.KEYOF_TOKEN), '', { path: '/' });
+  cookie.set(Des.encrypt(CONSTANTS.KEYOF_TOKEN), '', { path: '/' });
 };
