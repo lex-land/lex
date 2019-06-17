@@ -1,6 +1,6 @@
 import '@config/initializer';
 import { AppProps, Container, DefaultAppIProps } from 'next/app';
-import Error, { CATCHED_CODE } from '@components/errors';
+import ErrorBoundary from '@config/error';
 import { NProgressContainer } from '@core/nprogress/component';
 import { PagePropsContext } from '@helpers/hooks';
 import React from 'react';
@@ -12,11 +12,9 @@ const App = (props: AppProps<any, any> & DefaultAppIProps) => {
     <Container>
       <PagePropsContext.Provider value={pageProps}>
         <NProgressContainer />
-        {CATCHED_CODE.includes(pageProps.statusCode) ? (
-          <Error />
-        ) : (
+        <ErrorBoundary statusCode={pageProps.statusCode}>
           <Component />
-        )}
+        </ErrorBoundary>
       </PagePropsContext.Provider>
     </Container>
   );

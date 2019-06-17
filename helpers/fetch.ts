@@ -1,14 +1,10 @@
-import { CATCHED_CODE } from '@components/errors';
+import { CATCHED_CODE, FetchError } from '@config/error';
 import { ENV } from '@config/env';
-import { FetchError } from '@config/error';
 import { NextContext } from 'next';
-import codeMessages from '@config/code.json';
 import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
 import { logger } from '@core/logger';
 import qs from 'qs';
-
-export type Code = keyof typeof codeMessages;
 
 export interface FetchResponse<D> {
   code: number;
