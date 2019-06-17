@@ -32,60 +32,58 @@ const RepositoriesMembers: NextSFC<any> = () => {
   return (
     <Page>
       <Page.Navbar />
-      <Page.Container>
-        <Repo.Nav />
-        <Repo.SubPage>
-          <form onSubmit={handleSubmit}>
-            <Card>
-              {repo.members.map(m => (
-                <div key={m.id}>
-                  <span>{m.fullname}</span>
-                  <Popover
-                    position="auto"
-                    content={
-                      <div style={{ padding: 20 }}>
-                        <H5>移除成员</H5>
-                        <p>
-                          你确认要踢掉 <strong>{m.fullname}</strong>
-                        </p>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            marginTop: 15,
-                          }}
+      <Repo.Nav />
+      <Repo.SubPage>
+        <form onSubmit={handleSubmit}>
+          <Card>
+            {repo.members.map(m => (
+              <div key={m.id}>
+                <span>{m.fullname}</span>
+                <Popover
+                  position="auto"
+                  content={
+                    <div style={{ padding: 20 }}>
+                      <H5>移除成员</H5>
+                      <p>
+                        你确认要踢掉 <strong>{m.fullname}</strong>
+                      </p>
+                      <div
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'flex-end',
+                          marginTop: 15,
+                        }}
+                      >
+                        <Button
+                          className={Classes.POPOVER_DISMISS}
+                          style={{ marginRight: 10 }}
                         >
-                          <Button
-                            className={Classes.POPOVER_DISMISS}
-                            style={{ marginRight: 10 }}
-                          >
-                            取消
-                          </Button>
-                          <Button
-                            intent={Intent.DANGER}
-                            className={Classes.POPOVER_DISMISS}
-                          >
-                            删除
-                          </Button>
-                        </div>
+                          取消
+                        </Button>
+                        <Button
+                          intent={Intent.DANGER}
+                          className={Classes.POPOVER_DISMISS}
+                        >
+                          删除
+                        </Button>
                       </div>
-                    }
-                  >
-                    <Button intent="danger" icon="trash" />
-                  </Popover>
-                  <Divider />
-                </div>
-              ))}
-              <div style={{ flex: '1 1', marginTop: 24, textAlign: 'right' }}>
-                <ControlGroup>
-                  <InputGroup />
-                  <Button intent="success" text="添加成员" />
-                </ControlGroup>
+                    </div>
+                  }
+                >
+                  <Button intent="danger" icon="trash" />
+                </Popover>
+                <Divider />
               </div>
-            </Card>
-          </form>
-        </Repo.SubPage>
-      </Page.Container>
+            ))}
+            <div style={{ flex: '1 1', marginTop: 24, textAlign: 'right' }}>
+              <ControlGroup>
+                <InputGroup />
+                <Button intent="success" text="添加成员" />
+              </ControlGroup>
+            </div>
+          </Card>
+        </form>
+      </Repo.SubPage>
     </Page>
   );
 };

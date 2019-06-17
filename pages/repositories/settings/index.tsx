@@ -13,32 +13,30 @@ const RepositoriesSettings: NextSFC<any> = () => {
   return (
     <Page>
       <Page.Navbar />
-      <Page.Container>
-        <Repo.Nav />
-        <Repo.SubPage>
-          <Card>
-            <Divider />
-            <H4>转移仓库所属</H4>
-            <Divider />
-            <H4>基本信息</H4>
-            <Divider />
-            <QuickForm
-              action={(newRepo: any) =>
-                http.put(`/api/repository/${repo.id}`, newRepo)
-              }
-              fields={['name', 'description']}
-              defaultValue={repo}
-              successToast="更新仓库信息成功"
-            />
-            {/* <DeleteButton
+      <Repo.Nav />
+      <Repo.SubPage>
+        <Card>
+          <Divider />
+          <H4>转移仓库所属</H4>
+          <Divider />
+          <H4>基本信息</H4>
+          <Divider />
+          <QuickForm
+            action={(newRepo: any) =>
+              http.put(`/api/repository/${repo.id}`, newRepo)
+            }
+            fields={['name', 'description']}
+            defaultValue={repo}
+            successToast="更新仓库信息成功"
+          />
+          {/* <DeleteButton
             alertWhen={true}
             icon="trash"
             action={`/api/repository/${repo.id}`}
             successGoto="/"
           /> */}
-          </Card>
-        </Repo.SubPage>
-      </Page.Container>
+        </Card>
+      </Repo.SubPage>
     </Page>
   );
 };

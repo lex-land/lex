@@ -7,12 +7,10 @@ const RepositoriesWiki: NextSFC<any> = () => {
   return (
     <Page>
       <Page.Navbar />
-      <Page.Container>
-        <Repo.Nav />
-        <Repo.SubPage>
-          <Page.EmberedError visible code={503} />
-        </Repo.SubPage>
-      </Page.Container>
+      <Repo.Nav />
+      <Repo.SubPage>
+        <Page.EmberedError visible code={503} />
+      </Repo.SubPage>
     </Page>
   );
 };
