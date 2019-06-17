@@ -1,9 +1,10 @@
 import { CATCHED_CODE, FetchError } from '@config/error';
-import { ENV } from '@config/env';
+import CONSTANTS from '@config/constants';
 import { NextContext } from 'next';
 import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
 import { logger } from '@core/logger';
+import path from 'path';
 import qs from 'qs';
 
 export interface FetchResponse<D> {
@@ -14,14 +15,14 @@ export interface FetchResponse<D> {
 
 let token: string;
 
-export const getToken = () => token || getCookie(ENV.KEYOF_TOKEN);
+export const getToken = () => token || getCookie(CONSTANTS.KEYOF_TOKEN);
 export const setToken = (t: string) => {
   token = t;
 };
 
 export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理URL
-  const url = api.startsWith('/') ? `${ENV.SUNMI_PROD_URL}${api}` : api;
+  const url = api.startsWith('/') ? `${CONSTANTS.SUNMI_PROD_URL}${api}` : api;
   const options = {
     method: 'GET',
     ...opts,
@@ -75,3 +76,19 @@ export const createHttp = (ctx: NextContext) => {
   setToken(token); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
   return http;
 };
+
+export const fetchMock = async (url: string, opts?: RequestInit) => {
+  const SUNMI_RAP_SERVER = `rapserver.sunmi.com/app/mock/data`;
+  const { method = 'GET' } = opts || {};
+  logger.info(`[ Mock GET ] ${url}`);
+  const rapURL = path.join(SUNMI_RAP_SERVER, method, encodeURIComponent(url));
+  const json = await fetch(`http://${rapURL}`, opts as any).then(res =>
+    res.json(),
+  );
+  logger.info(`[ Mock GET ] ${url} }`, json);
+  return json;
+};
+
+export function mock<D = any>(url: string): Promise<FetchResponse<D>> {
+  return fetchMock(url.replace('/apis', ''), {});
+}

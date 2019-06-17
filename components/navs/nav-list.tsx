@@ -1,4 +1,4 @@
-import { Link } from '@helpers/next-routes';
+import { Link } from '@helpers/route';
 import React from 'react';
 import { useQuery } from '@helpers/hooks';
 

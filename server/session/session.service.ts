@@ -1,4 +1,4 @@
-import { ENV } from '@config/env';
+import CONSTANTS from '@config/constants';
 import { FetchError } from '@config/error';
 import { Injectable } from '@nestjs/common';
 import { Jwt } from './interfaces/jwt.interface';
@@ -14,7 +14,7 @@ export class SessionService {
   ) {}
   genToken(user: User) {
     return {
-      [ENV.KEYOF_TOKEN]: this.jwtService.sign({ email: user.email }),
+      [CONSTANTS.KEYOF_TOKEN]: this.jwtService.sign({ email: user.email }),
     };
   }
   decodeToken(token: string): Jwt {

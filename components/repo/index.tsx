@@ -1,7 +1,7 @@
 import { Tab, Tabs } from '@blueprintjs/core';
 import { Flex } from '@components/layout/flex';
 import React from 'react';
-import { route } from '@helpers/next-routes';
+import { route } from '@helpers/route';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 

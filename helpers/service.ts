@@ -30,3 +30,12 @@ export const login = async (values: LoginValue) => {
 };
 
 export const logout = () => cleanToken();
+
+export const session = {
+  user: () => http.get(`/api/session/user`),
+  isSigned: () =>
+    http
+      .get(`/api/session`)
+      .then(({ statusCode }) => statusCode !== 401)
+      .catch(() => false),
+};

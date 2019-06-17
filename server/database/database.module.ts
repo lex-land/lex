@@ -1,13 +1,12 @@
-import { ConfigModule } from '@server/config/config.module';
-import { ConfigService } from '@server/config/config.service';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { dbConfig } from '@config/database';
 
 @Module({
   imports: [
+    // https://docs.nestjs.com/techniques/database
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useExisting: ConfigService,
+      useFactory: () => dbConfig,
     }),
     // 配置 mongodb
     // MongooseModule.forRoot('mongodb://localhost/engine', {

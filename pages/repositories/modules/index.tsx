@@ -1,16 +1,17 @@
 import { Card, H5, Tag } from '@blueprintjs/core';
-import { usePageProps, useQuery } from '@helpers/hooks';
+import { composePageProps, usePageProps } from '@core/next-compose';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
-import { Link } from '@helpers/next-routes';
+import { Link } from '@helpers/route';
 import { Module } from '@server/module/module.entity';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/repo';
+import { mods } from '@helpers/page-props';
+import { useQuery } from '@helpers/hooks';
 
-const DashboardIndex: NextSFC = () => {
-  const { modules } = usePageProps<{ modules: Module[] }>();
+export default composePageProps(mods)(() => {
+  const { mods } = usePageProps<{ mods: Module[] }>();
   const query = useQuery();
   return (
     <Page>
@@ -18,7 +19,7 @@ const DashboardIndex: NextSFC = () => {
       <Repo.Nav />
       <Repo.SubPage>
         <Page.EmberedError
-          visible={modules.length === 0}
+          visible={mods.length === 0}
           code={404}
           description="当前仓库没有任何模块，可以新建一个看看"
           action={
@@ -34,9 +35,9 @@ const DashboardIndex: NextSFC = () => {
             />
           }
         />
-        {!!modules.length && (
+        {!!mods.length && (
           <Flex>
-            {modules.map(mod => (
+            {mods.map(mod => (
               <Card className="module-card" key={mod.id}>
                 <H5>
                   <Link
@@ -58,14 +59,4 @@ const DashboardIndex: NextSFC = () => {
       </Repo.SubPage>
     </Page>
   );
-};
-
-DashboardIndex.getInitialProps = async ctx => {
-  return {
-    modules: await ctx.http.get<Module[]>(`/api/module`, {
-      repository: ctx.query.repository_id,
-    }),
-  };
-};
-
-export default DashboardIndex;
+});

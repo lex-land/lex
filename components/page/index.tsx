@@ -21,6 +21,7 @@ import { Avator } from '../avator';
 import { Flex } from '../layout/flex';
 import Head from 'next/head';
 import { Logo } from '@components/vi';
+import _ from 'lodash';
 import { http } from '@helpers/fetch';
 import { logout } from '@helpers/service';
 import styled from 'styled-components';
@@ -82,10 +83,9 @@ const EmberedError = ({ className, ...props }: ErrorProps) =>
     </ErrorContainer>
   ) : null;
 
-let user = { fullname: '-' };
 const AvatorBar = () => {
   const { value: session } = useAsync(() => http.get(`/api/session`));
-  user = Object.assign(user, session);
+  const user = Object.assign({ fullname: '-' }, session);
   return (
     <Popover
       content={
@@ -137,12 +137,13 @@ const WrappedNavbar = ({
   );
 };
 
-export const Page = Object.assign(
+export const Page = _.merge(
   (props: PageProps) => {
     return (
       <main className={props.className} style={props.style}>
         <Head>
-          <title>{props.title || 'Lex-接口文档管理'}</title>
+          <title>{`Lex-${props.title || '接口文档管理'}`}</title>
+          <link href="/stylesheets/main.css" rel="stylesheet" />
           <style>{`body{ background:${props.backgroundColor ||
             '#f5f8fa'} }`}</style>
         </Head>
@@ -151,6 +152,9 @@ export const Page = Object.assign(
     );
   },
   {
+    // https://stackoverflow.com/questions/41272375/object-assign-does-not-copy-functions
+    // composePageProps: composePageProps,
+    // createPageProps: createPageProps,
     Container: LexContainer,
     Sider: styled.aside<{ offset?: number }>`
       /* overflow: hidden; */

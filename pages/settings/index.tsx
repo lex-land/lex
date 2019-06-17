@@ -1,8 +1,7 @@
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 
-const Settings: NextSFC = () => {
+export default () => {
   return (
     <Page>
       <Page.Navbar />
@@ -10,11 +9,3 @@ const Settings: NextSFC = () => {
     </Page>
   );
 };
-
-Settings.getInitialProps = async () => {
-  return {
-    // statusCode: 503,
-  };
-};
-
-export default Settings;

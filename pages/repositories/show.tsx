@@ -1,13 +1,14 @@
-import { usePageProps, useQuery } from '@helpers/hooks';
+import { composePageProps, usePageProps } from '@core/next-compose';
 import { CURD } from '@components/curd';
 import { ModuleContent } from '@components/_useless_contents/module-content';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/repo';
 import { Repository } from '@server/repository/repository.entity';
+import { repo } from '@helpers/page-props';
+import { useQuery } from '@helpers/hooks';
 
-const RepositoriesShow: NextSFC = () => {
+export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   const query = useQuery();
   return (
@@ -68,13 +69,4 @@ const RepositoriesShow: NextSFC = () => {
       </Repo.SubPage>
     </Page>
   );
-};
-
-RepositoriesShow.getInitialProps = async ctx => {
-  const repoId = ctx.query.repository_id;
-  return {
-    repo: await ctx.http.get<Repository>(`/api/repository/${repoId}`),
-  };
-};
-
-export default RepositoriesShow;
+});

@@ -46,7 +46,6 @@
     "express": "^4.16.4",
     "express-rate-limit": "^5.0.0",
     "express-session": "^1.16.1",
-    "form-data": "^2.3.3",
     "formik": "^1.5.4",
     "helmet": "^3.18.0",
     "isomorphic-fetch": "^2.2.1",
@@ -107,9 +106,6 @@
     "@types/yup": "^0.26.13",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "@zeit/next-bundle-analyzer": "^0.1.2",
-    "@zeit/next-css": "^1.0.1",
-    "@zeit/next-less": "^1.0.1",
     "@zeit/next-typescript": "^1.1.1",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-module-resolver": "^3.2.0",
@@ -126,8 +122,6 @@
     "husky": "^2.2.0",
     "jest": "^23.6.0",
     "jest-cli": "^24.8.0",
-    "less": "^2.7.3",
-    "less-vars-to-js": "^1.3.0",
     "lint-staged": "^8.1.6",
     "nodemon": "^1.19.0",
     "prettier": "^1.17.0",
@@ -145,8 +139,7 @@
     "ts-node": "3.3.0",
     "tsconfig-paths": "^3.8.0",
     "typescript": "3.3.3333",
-    "webpack": "4",
-    "webpack-filter-warnings-plugin": "^1.2.1"
+    "webpack": "4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
@@ -209,6 +202,7 @@
           ]
         }
       ],
+      "spaced-comment": "off",
       "camelcase": "off",
       "react/prop-types": "off",
       "react/display-name": "off",
@@ -265,14 +259,6 @@
         "react-use"
       ],
       [
-        "import",
-        {
-          "libraryName": "antd",
-          "style": true
-        },
-        "antd"
-      ],
-      [
         "module-resolver",
         {
           "root": [
@@ -312,8 +298,11 @@
   },
   "nodemonConfig": {
     "watch": [
+      "next.config.js",
       "server",
-      "config"
+      "config",
+      "core",
+      "helpers"
     ],
     "verbose": false,
     "debug": false,

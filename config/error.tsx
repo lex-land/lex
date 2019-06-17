@@ -1,6 +1,5 @@
 import ErrorRoute from '../pages/expections';
 import React from 'react';
-import { isClient } from './env';
 import { logger } from '@core/logger';
 
 export const CATCHED_CODE = Object.keys(ErrorRoute).map(Number);
@@ -43,7 +42,7 @@ export const onWindowError = (e: any) => {
 };
 
 export const catchError = () => {
-  if (isClient) {
+  if (typeof window !== 'undefined') {
     window.onerror = onWindowError;
     window.addEventListener('unhandledrejection', onUnhandledrejection);
   }

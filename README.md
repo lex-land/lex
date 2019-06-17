@@ -64,6 +64,7 @@ docker-compose up -d
 - [ ] 使用 algolia 全局接口搜索
 - [ ] 支持 CicleCI
 - [ ] SEO
+- [ ] 支持[GraphQL](https://nec.is/writing/next-js-apollo-graphql-performance-tuning-from-lists-to-details/)
 
 ## Progress
 
@@ -96,6 +97,11 @@ docker-compose up -d
   - 当我写页面的时候，就用 Page 上的组件进行页面布局，比如<Page.Container/>
   - 当我写 Repo 子页面的时候，就用 Repo 上的组件进行子页面布局，比如<Repo.SubPage/>
   - 相关样式基于上面的原则就会跟着模块走
+
+- getInitialProps 的逻辑复用
+  - [一些想法](https://github.com/zeit/next.js/issues/186)
+  - [with-recompose](https://github.com/zeit/next.js/tree/canary/examples/with-recompose)
+  - [next-compose-initial-props](https://www.npmjs.com/package/next-compose-initial-props)
 
 ## Next Feature
 

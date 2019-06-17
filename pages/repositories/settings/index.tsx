@@ -1,14 +1,14 @@
 import { Card, Divider, H4 } from '@blueprintjs/core';
-import { NextSFC } from 'next';
+import { composePageProps, usePageProps } from '@core/next-compose';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms/quick';
 import React from 'react';
 import { Repo } from '@components/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@helpers/hooks';
+import { repo } from '@helpers/page-props';
 
-const RepositoriesSettings: NextSFC<any> = () => {
+export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   return (
     <Page>
@@ -39,11 +39,4 @@ const RepositoriesSettings: NextSFC<any> = () => {
       </Repo.SubPage>
     </Page>
   );
-};
-
-RepositoriesSettings.getInitialProps = async ctx => {
-  const repoId = ctx.query.repository_id;
-  const repo = await http.get<Repository>(`/api/repository/${repoId}`);
-  return { repo };
-};
-export default RepositoriesSettings;
+});

@@ -1,7 +1,7 @@
 import { AnchorButton } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import React from 'react';
-import { Router } from '@helpers/next-routes';
+import { Router } from '@helpers/route';
 
 export const Error503 = () => {
   return (

@@ -1,9 +1,8 @@
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/repo';
 
-const RepositoriesWiki: NextSFC<any> = () => {
+export default () => {
   return (
     <Page>
       <Page.Navbar />
@@ -14,8 +13,3 @@ const RepositoriesWiki: NextSFC<any> = () => {
     </Page>
   );
 };
-
-RepositoriesWiki.getInitialProps = async ctx => {
-  return {};
-};
-export default RepositoriesWiki;

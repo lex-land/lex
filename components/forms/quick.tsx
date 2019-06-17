@@ -11,6 +11,7 @@ import { Form, Formik, FormikActions } from 'formik';
 import React from 'react';
 import { ValidationError } from 'class-validator';
 import _ from 'lodash';
+import { initObjectByKeys } from '@core/transformer';
 
 interface QuickFormProps<T> {
   defaultValue?: object;
@@ -22,7 +23,7 @@ interface QuickFormProps<T> {
   controlLarge?: boolean;
   submitButton?: IButtonProps;
 }
-import { initObjectByKeys } from '@core/transformer';
+
 export const QuickForm = (props: QuickFormProps<any>) => {
   const targetValue = _.pick(
     props.defaultValue || initObjectByKeys(props.fields),

@@ -10,7 +10,7 @@ import React, { Fragment, useState } from 'react';
 import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms/quick';
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/next-routes';
+import { route } from '@helpers/route';
 
 interface CurdButtonProps {
   action: string;
@@ -44,7 +44,10 @@ const CreateButton = ({
   const success = async (newMod: any) => {
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
-    successForceReload && route().replaceMerge({});
+    successForceReload &&
+      route()
+        .merge()
+        .replace();
   };
   const defaultKeys = fields || [];
   return (
@@ -89,7 +92,10 @@ const EditButton = ({
     setValue({ ...newMod, ...params });
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
-    successForceReload && route().replaceMerge({});
+    successForceReload &&
+      route()
+        .merge()
+        .replace();
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,
       message: successToast || '编辑成功',
@@ -126,7 +132,10 @@ const DeleteButton = ({
 }: CurdButtonProps) => {
   const [alertOpen, setOpen] = useState(false);
   const afterDelete = () => {
-    successForceReload && route().replaceMerge({});
+    successForceReload &&
+      route()
+        .merge()
+        .replace();
     successGoto && route(successGoto).replace({});
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,

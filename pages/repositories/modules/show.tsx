@@ -1,18 +1,19 @@
-import { usePageProps, useQuery } from '@helpers/hooks';
+import { composePageProps, usePageProps } from '@core/next-compose';
+import { inte, mod } from '@helpers/page-props';
 import IntePage from './interface';
 import { Interface } from '@server/interface/interface.entity';
 import { Module } from '@server/module/module.entity';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/repo';
+import { useQuery } from '@helpers/hooks';
 
 interface PageProps {
   mod: Module;
   inte: Interface | undefined;
 }
 
-const ModulesShow: NextSFC<PageProps> = () => {
+export default composePageProps(mod, inte)(() => {
   const { mod } = usePageProps<PageProps>();
   const query = useQuery();
   return query.interface_id ? (
@@ -24,18 +25,4 @@ const ModulesShow: NextSFC<PageProps> = () => {
       <Repo.SubPage>{mod.name}</Repo.SubPage>
     </Page>
   );
-};
-
-ModulesShow.getInitialProps = async ctx => {
-  const modId = ctx.query.module_id;
-  const mod = await ctx.http.get<Module>(`/api/module/${modId}`);
-  const inte =
-    IntePage.getInitialProps &&
-    ((await IntePage.getInitialProps(ctx)) as Interface);
-  return {
-    inte,
-    mod,
-  };
-};
-
-export default ModulesShow;
+});

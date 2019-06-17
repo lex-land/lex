@@ -1,4 +1,4 @@
-import './index.less';
+// import './index.less';
 import { H5 } from '@blueprintjs/core';
 import React from 'react';
 

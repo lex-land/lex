@@ -1,12 +1,13 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
-import { Link } from '@helpers/next-routes';
-import { LoginForm } from '@helpers/login';
+import { Link } from '@helpers/route';
+import { LoginForm } from '@helpers/forms/login';
 import { Logo } from '@components/vi';
-import { NextSFC } from 'next';
 import { Page } from '@components/page';
 import React from 'react';
+import { composePageProps } from '@core/next-compose';
+import { signedUser } from '@helpers/page-props';
 
-const Login: NextSFC = () => {
+export default composePageProps(signedUser.redirect('/'))(() => {
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
@@ -33,13 +34,4 @@ const Login: NextSFC = () => {
       </Page.Card>
     </Page>
   );
-};
-
-Login.getInitialProps = async ctx => {
-  if (await ctx.authorized()) {
-    return ctx.redirect('/');
-  }
-  return {};
-};
-
-export default Login;
+});

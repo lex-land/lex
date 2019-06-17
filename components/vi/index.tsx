@@ -1,5 +1,5 @@
-import './index.less';
-import { Link } from '@helpers/next-routes';
+// import './index.less';
+import { Link } from '@helpers/route';
 import React from 'react';
 
 export const Logo = ({ size = 45 }: { size?: number }) => {

@@ -11,16 +11,15 @@ import {
   Position,
   Toaster,
 } from '@blueprintjs/core';
-import { NextSFC } from 'next';
+import { composePageProps, usePageProps } from '@core/next-compose';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/repo';
 import { Repository } from '@server/repository/repository.entity';
-import { User } from '@server/user/user.entity';
 import { http } from '@helpers/fetch';
-import { usePageProps } from '@helpers/hooks';
+import { repo } from '@helpers/page-props';
 
-const RepositoriesMembers: NextSFC<any> = () => {
+export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   const handleSubmit = (newRepo: any) => {
     http.post(`/api/repository/${repo.id}/members`, newRepo);
@@ -86,13 +85,4 @@ const RepositoriesMembers: NextSFC<any> = () => {
       </Repo.SubPage>
     </Page>
   );
-};
-
-RepositoriesMembers.getInitialProps = async ctx => {
-  const repoId = ctx.query.repository_id;
-  const repo = await http.get<Repository>(`/api/repository/${repoId}`);
-  const users = await http.get<User[]>(`/api/user`);
-  return { repo, users };
-};
-
-export default RepositoriesMembers;
+});
