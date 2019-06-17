@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { Avator } from '../avator';
 import { http } from '@helpers/fetch';
 import styled from 'styled-components';
-import { useAsync } from 'react-use';
+import { useAsync } from '@helpers/hooks';
 
 const defaultUser = {
   fullname: '-',

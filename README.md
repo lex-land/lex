@@ -45,22 +45,59 @@ docker-compose up -d
 
 - [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
 - [x] 重新设计 logo
-- [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
 - [x] 使用 nestjs 代替 koa
 - [x] 使用 nextjs 作为写 React 的姿势，代替 create-react-app
 - [x] 使用 typeorm 代替 sequelize-typescript
 - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
+- [x] 轻状态管理，使用 hooks 进行状态逻辑复用
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
-- [x] 重新设计 logo
 - [x] 使用 docker 运行项目的生产环境
+- [ ] 不断优化页面异常处理
+- [ ] 不断优化 helpers、components、core、pages 之间的关系
+- [ ] 重新思考 UI 呈现，使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
+- [ ] 优先完成 repo 仓库模块
 - [ ] 使用 styled-component 进行组件样式重构
-- [ ] SEO
-- [ ] 轻状态管理，不用 redux，不用 mobx，使用 hooks 进行状态逻辑复用
-- [ ] 重新思考 UI 呈现
+- [ ] 完成与 Rap 的功能
+- [ ] 完成 Next Feature
+- [ ] 表单完全校验
+- [ ] 风格化
 - [ ] 使用 algolia 全局接口搜索
 - [ ] 支持 CicleCI
+- [ ] SEO
 
-## New Feature
+## Progress
+
+- [ ] 异常页面，包含 401、403、404、500、503 等，现阶段已经一致化，还待风格化 （完成度 80%）
+- [ ] join 页面 全名重复待校验 （完成度 70%）
+- [ ] login 页面，登录页面已完成，待风格化 （完成度 80%）
+- [ ] repo/new 页，
+- [ ] repo/show 页，
+- [ ] repo/members 页，
+- [ ] repo/modules 页，
+- [ ] repo/modules/show 页，
+- [ ] repo/modules/edit 页，
+- [ ] repo/settings 页，
+- [ ] repo/wiki 页，
+- [ ] users 页
+- [ ] orgs 页
+- [ ] settings 页
+- [ ] 导航条里的全局搜索
+- [ ] dashboard 页面 仪表盘只做了左侧的导航
+
+## Maybe Good Idea
+
+- 提取 quickform 组件用于表单的提交
+
+  - 与 Button 组合产生 CURD
+  - 与 Page.Card 组合产生 登录、注册、重新验证等 页面
+
+- 使用 styled-components 基于模块进行组件拆分
+
+  - 当我写页面的时候，就用 Page 上的组件进行页面布局，比如<Page.Container/>
+  - 当我写 Repo 子页面的时候，就用 Repo 上的组件进行子页面布局，比如<Repo.SubPage/>
+  - 相关样式基于上面的原则就会跟着模块走
+
+## Next Feature
 
 - [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
 - [ ] 添加接口操作日志
@@ -70,19 +107,6 @@ docker-compose up -d
 - [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
 - [ ] 添加用户角色，前端、后端、测试
 - [ ] 添加 mock 数据和接口数据的匹配
-
-## Progress
-
-- [x] 异常页面，包含401、403、404、500、503等
-- [x] 提取quickform组件用于表单的提交
-- [x] 新增 dashboard、join、login、repo 相关页面
-- [ ] 新用户注册页面
-- [ ] 仓库成员管理页面
-- [ ] 仪表盘页面
-- [ ] 导航条里的全局搜索
-- [ ] 个人中心页
-- [ ] 个人中心页/仓库页
-- [ ] 个人中心页/设置页
 
 ## Troubleshooting
 

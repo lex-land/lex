@@ -1,4 +1,5 @@
-import '../public/stylesheets/index.less';
+import './main.less';
+
 import 'moment/locale/zh-cn';
 import { Router } from '@helpers/next-routes';
 import { catchError } from '@config/error';

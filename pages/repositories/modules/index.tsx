@@ -15,54 +15,47 @@ const DashboardIndex: NextSFC = () => {
   return (
     <Page>
       <Page.Navbar />
-      <Page.Container>
-        <Repo.Nav />
-        <Repo.SubPage>
-          <Page.EmberedError
-            visible={modules.length === 0}
-            code={404}
-            description="当前仓库没有任何模块，可以新建一个看看"
-            action={
-              <CURD.Create
-                action={`/api/module`}
-                params={{ repository: query.repository_id }}
-                fields={['name', 'description']}
-                drawerTitle="新建模块"
-                button={
-                  <CURD.Button
-                    icon="cube"
-                    minimal
-                    intent="success"
-                    text="新建"
-                  />
-                }
-                successForceReload
-              />
-            }
-          />
-          {!!modules.length && (
-            <Flex>
-              {modules.map(mod => (
-                <Card className="module-card" key={mod.id}>
-                  <H5>
-                    <Link
-                      route="repositories/modules/show"
-                      params={{
-                        repository_id: query.repository_id,
-                        module_id: mod.id,
-                      }}
-                    >
-                      <a>{mod.name}</a>
-                    </Link>
-                  </H5>
-                  <p>{mod.description}</p>
-                  <Tag>{mod.interfaces.length}个接口</Tag>
-                </Card>
-              ))}
-            </Flex>
-          )}
-        </Repo.SubPage>
-      </Page.Container>
+      <Repo.Nav />
+      <Repo.SubPage>
+        <Page.EmberedError
+          visible={modules.length === 0}
+          code={404}
+          description="当前仓库没有任何模块，可以新建一个看看"
+          action={
+            <CURD.Create
+              action={`/api/module`}
+              params={{ repository: query.repository_id }}
+              fields={['name', 'description']}
+              drawerTitle="新建模块"
+              button={
+                <CURD.Button icon="cube" minimal intent="success" text="新建" />
+              }
+              successForceReload
+            />
+          }
+        />
+        {!!modules.length && (
+          <Flex>
+            {modules.map(mod => (
+              <Card className="module-card" key={mod.id}>
+                <H5>
+                  <Link
+                    route="repositories/modules/show"
+                    params={{
+                      repository_id: query.repository_id,
+                      module_id: mod.id,
+                    }}
+                  >
+                    <a>{mod.name}</a>
+                  </Link>
+                </H5>
+                <p>{mod.description}</p>
+                <Tag>{mod.interfaces.length}个接口</Tag>
+              </Card>
+            ))}
+          </Flex>
+        )}
+      </Repo.SubPage>
     </Page>
   );
 };

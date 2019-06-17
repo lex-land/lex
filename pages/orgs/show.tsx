@@ -2,7 +2,7 @@ import { AnchorButton, Button, Divider } from '@blueprintjs/core';
 import { CURD } from '@components/curd';
 import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
 import { Flex } from '@components/layout/flex';
-import { ListHeader } from '@components/headers';
+import { ListHeader } from '@components/_useless_headers';
 import { NavList } from '@components/navs/nav-list';
 import { NextSFC } from 'next';
 import { Organization } from '@server/organization/organization.entity';

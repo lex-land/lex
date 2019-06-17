@@ -20,10 +20,8 @@ const ModulesShow: NextSFC<PageProps> = () => {
   ) : (
     <Page>
       <Page.Navbar />
-      <Page.Container>
-        <Repo.Nav />
-        <Repo.SubPage>{mod.name}</Repo.SubPage>
-      </Page.Container>
+      <Repo.Nav />
+      <Repo.SubPage>{mod.name}</Repo.SubPage>
     </Page>
   );
 };

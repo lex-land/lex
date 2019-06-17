@@ -25,7 +25,7 @@ export class ConfigService {
       // debug: true,
       // dropSchema: true,
       synchronize: false,
-      logging: true,
+      logging: false,
     };
   }
 
