@@ -74,7 +74,7 @@ const PageError = ({ code, description, action, className }: ErrorProps) => (
 const EmberedError = ({ className, ...props }: ErrorProps) =>
   props.visible ? (
     <ErrorContainer className={className}>
-      <NonIdealState icon={props.icon || 'geosearch'} />
+      <NonIdealState icon={props.icon} />
       <br />
       <div className="description">
         {props.description || '抱歉，当前功能未开发完成'}

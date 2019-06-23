@@ -4,7 +4,7 @@ import { TreeEditor, TreeUtil } from '@core/tree-editor';
 import { Flex } from '@components/layout/flex';
 import { Interface } from '@server/interface/interface.entity';
 import { Page } from '@components/page';
-import { Repo } from '@components/repo';
+import { Repo } from '@components/domains/repo';
 import { usePageProps } from '@core/next-compose';
 
 const TreeEditorHeader = (treeUtil: TreeUtil) => {
@@ -29,8 +29,8 @@ export default () => {
   return (
     <Page>
       <Page.Navbar />
-      <Repo.Nav />
       <Repo.SubPage>
+        <Repo.Nav />
         <Flex.Auto>
           <div>
             <H2 className="page-title">

@@ -1,11 +1,14 @@
 import { Tab, Tabs } from '@blueprintjs/core';
 import { Flex } from '@components/layout/flex';
 import React from 'react';
+import { Repository } from '@server/repository/repository.entity';
 import { route } from '@helpers/route';
 import styled from 'styled-components';
+import { usePageProps } from '@core/next-compose';
 import { useRouter } from 'next/router';
 
 const RepoNav = () => {
+  const { repo } = usePageProps<{ repo: Repository }>();
   const router = useRouter();
   const query: any = router.query;
   const selectedTabId = router.route
@@ -25,10 +28,13 @@ const RepoNav = () => {
       >
         <Tab id="repositories/show" title="总览" />
         <Tab id="repositories/modules" title="模块" />
-        <Tab id="repositories/wiki" title="Wiki" />
+        <Tab disabled id="repositories/wiki" title="Wiki" />
         <Tab id="repositories/members" title="成员" />
         <Tab id="repositories/settings" title="设置" />
       </Tabs>
+      {repo.modules.map(mod => (
+        <div key={mod.id}>{mod.name}</div>
+      ))}
     </div>
   );
 };

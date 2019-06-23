@@ -1,23 +1,23 @@
 import { Card, H5, Tag } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
+import { mods, repo } from '@helpers/page-props';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import { Link } from '@helpers/route';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
 import React from 'react';
-import { Repo } from '@components/repo';
-import { mods } from '@helpers/page-props';
+import { Repo } from '@components/domains/repo';
 import { useQuery } from '@helpers/hooks';
 
-export default composePageProps(mods)(() => {
+export default composePageProps(repo, mods)(() => {
   const { mods } = usePageProps<{ mods: Module[] }>();
   const query = useQuery();
   return (
     <Page>
       <Page.Navbar />
-      <Repo.Nav />
       <Repo.SubPage>
+        <Repo.Nav />
         <Page.EmberedError
           visible={mods.length === 0}
           code={404}

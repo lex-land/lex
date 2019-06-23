@@ -1,4 +1,4 @@
-import { H1 } from '@blueprintjs/core';
+import { Button, H1 } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms/quick';
 import React from 'react';
@@ -20,6 +20,8 @@ export default () => {
           successToast="成功创建仓库"
         />
         <Page.EmberedError visible code={503} />
+
+        <Button onClick={() => http.post('/api/migration/repo')}>迁移</Button>
       </Page.Content>
     </Page>
   );

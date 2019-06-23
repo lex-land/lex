@@ -14,7 +14,7 @@ import {
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { Page } from '@components/page';
 import React from 'react';
-import { Repo } from '@components/repo';
+import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
 import { repo } from '@helpers/page-props';
