@@ -1,3 +1,4 @@
+import * as bodyParser from 'body-parser';
 import {
   ExpressAdapter,
   NestExpressApplication,
@@ -29,6 +30,9 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public'));
   app.setGlobalPrefix('api');
   app.useGlobalFilters(new NextHandlerFilter(nextApp));
+
+  app.use(bodyParser.json({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb' }));
   // 会话设置
   app.use(
     session({
