@@ -3,14 +3,13 @@ import { composePageProps, usePageProps } from '@core/next-compose';
 import { newComer, user } from '@helpers/page-props';
 import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
 import { Flex } from '@components/layout/flex';
-import { ListHeader } from '@components/_useless_headers';
-import { NavList } from '@components/navs/nav-list';
 import { Page } from '@components/page';
 import React from 'react';
+import { User } from '@server/user/user.entity';
 
 export default composePageProps(newComer.redirect('/login'), user.session)(
   () => {
-    const { user } = usePageProps<{ user: any }>();
+    const { user } = usePageProps<{ user: User }>();
     return (
       <Page>
         <Page.Navbar />
@@ -18,27 +17,22 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
           <Page.Sider>
             <DashboardSwitcher name={user.fullname} />
             <Divider />
-            <ListHeader
-              title="仓库"
-              rightElement={
-                <AnchorButton
-                  icon="git-repo"
-                  intent="success"
-                  href="/repositories/new"
-                  text="新增"
-                />
-              }
-            />
-            <NavList
-              itemIcon="git-repo"
-              rowKey="repository_id"
-              itemRoute="repositories/show"
-              dataSource={user.joinedRepositories.concat(
-                user.ownedRepositories,
-              )}
-            />
-            <Divider />
-            <ListHeader title="团队" />
+            <Flex align="center" justify="space-between">
+              <H5 style={{ marginBottom: 0 }}>仓库</H5>
+              <AnchorButton
+                icon="git-repo"
+                intent="success"
+                href="/repositories/new"
+                text="新增"
+              />
+            </Flex>
+            {user.joinedRepositories
+              .concat(user.ownedRepositories)
+              .map(repo => (
+                <div key={repo.id}>
+                  <a href={`/repositories/${repo.id}`}>{repo.name}</a>
+                </div>
+              ))}
           </Page.Sider>
           <Page.Content>
             <H5>我的团队成员动态</H5>
