@@ -6,3 +6,4 @@ dist
 .DS_Store
 build
 **/**.js.map
+cache
