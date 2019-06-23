@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
-  Tree,
-  TreeChildren,
-  TreeParent,
   UpdateDateColumn,
 } from 'typeorm';
 import { Interface } from '../interface/interface.entity';
@@ -15,6 +12,7 @@ import { Module } from '../module/module.entity';
 import { Repository } from '../repository/repository.entity';
 import { User } from '../user/user.entity';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export enum SCOPES {
   REQUEST = 'request',
   RESPONSE = 'response',
@@ -30,8 +28,8 @@ export enum TYPES {
   REGEXP = 'RegExp',
 }
 
+// https://typeorm.io/#/tree-entities/adjacency-list
 @Entity()
-@Tree('nested-set')
 export class Property {
   @PrimaryGeneratedColumn()
   id: number;
@@ -87,19 +85,20 @@ export class Property {
   })
   interface: Interface;
 
-  @ManyToOne(() => Module)
+  @ManyToOne(() => Module, {
+    onDelete: 'CASCADE',
+  })
   module: Module;
 
   @ManyToOne(() => Repository)
   repository: Repository;
 
-  @TreeChildren({
-    cascade: true,
-    // https://github.com/typeorm/typeorm/issues/193
-  })
+  @OneToMany(() => Property, prop => prop.parent)
   children: Property[];
 
-  @TreeParent()
+  @ManyToOne(() => Property, prop => prop.children, {
+    onDelete: 'CASCADE',
+  })
   parent: Property;
 
   @Column({
