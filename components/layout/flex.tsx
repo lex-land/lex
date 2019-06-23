@@ -1,18 +1,24 @@
 import styled from 'styled-components';
 
-const StyledFlex = styled.div`
+interface StyledFlexProps {
+  align?: 'flex-end' | 'center' | 'flex-end';
+  justify?:
+    | 'flex-end'
+    | 'center'
+    | 'flex-end'
+    | 'space-between'
+    | 'space-around';
+}
+
+const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
+  align-items: ${props => props.align};
+  justify-content: ${props => props.justify};
 `;
 
-const Justified = Object.assign(
-  styled(StyledFlex)`
-    justify-content: space-between;
-  `,
-  {
-    // Left: styled.div``,
-    // Right: styled.div``,
-  },
-);
+const Justified = styled(StyledFlex)`
+  justify-content: space-between;
+`;
 
 export const Flex = Object.assign(StyledFlex, {
   Auto: styled.div`
