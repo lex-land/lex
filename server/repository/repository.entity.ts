@@ -30,6 +30,7 @@ export class Repository {
 
   @Column({
     type: 'text',
+    nullable: true,
   })
   description: string;
 

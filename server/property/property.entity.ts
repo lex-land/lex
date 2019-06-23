@@ -62,6 +62,7 @@ export class Property {
     length: 128,
     comment: 'mock rules',
     default: '5',
+    nullable: true,
   })
   rule: string;
 
@@ -73,6 +74,7 @@ export class Property {
 
   @Column({
     type: 'text',
+    nullable: true,
   })
   description: string;
 

@@ -45,7 +45,7 @@ export class RepositoryService {
     });
   }
 
-  public async create(createRepositoryDto: CreateRepositoryDto) {
+  public async create(createRepositoryDto: any) {
     return await this.repoRepository.save(createRepositoryDto);
   }
 

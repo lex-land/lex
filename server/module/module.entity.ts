@@ -23,6 +23,7 @@ export class Module {
 
   @Column({
     type: 'text',
+    nullable: true,
   })
   description: string;
 

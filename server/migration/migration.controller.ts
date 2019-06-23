@@ -1,17 +1,48 @@
-import { Controller } from '@nestjs/common';
-
-// import { InterfaceService } from '@server/interface/interface.service';
-// import { ModuleService } from '@server/module/module.service';
-// import { PropertyService } from '@server/property/property.service';
-// import { UserService } from '@server/user/user.service';
+import { Controller, Post } from '@nestjs/common';
+import { InterfaceService } from '@server/interface/interface.service';
+import { ModuleService } from '@server/module/module.service';
+import { PropertyService } from '@server/property/property.service';
+import { RepositoryService } from '@server/repository/repository.service';
 
 @Controller('migration')
 export class MigrationController {
-  // @Get('sync')
-  // public async createSome() {
-  //   const json = await import('./data/some.json');
-  //   return this.propService.createSome(json.default);
-  // }
+  constructor(
+    private readonly repoService: RepositoryService,
+    private readonly modService: ModuleService,
+    private readonly inteService: InterfaceService,
+    private readonly propService: PropertyService,
+  ) {}
+  @Post('repo')
+  public async migrationRepo() {
+    const { data: repoJson } = await import('./data/repo.json');
+    const repo = await this.repoService.create({
+      name: repoJson.name,
+      description: repoJson.description,
+    });
+    for (const repoMod of repoJson.modules) {
+      const mod = await this.modService.create({
+        name: repoMod.name,
+        description: repoMod.description,
+        repository: repo,
+      });
+      for (const modInte of repoMod.interfaces) {
+        const inte = await this.inteService.create({
+          method: modInte.method,
+          url: modInte.url,
+          name: modInte.name,
+          description: modInte.description,
+          repository: repo,
+          module: mod,
+        });
+        await this.propService.createSome(modInte.properties, {
+          repository: repo,
+          module: mod,
+          interface: inte,
+        });
+      }
+    }
+    return repo;
+  }
   // @Get('sync')
   // public async sync() {
   //   const json = await import('./data/org.json');

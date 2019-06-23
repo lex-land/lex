@@ -47,6 +47,7 @@ export class Interface {
 
   @Column({
     type: 'text',
+    nullable: true,
   })
   description: string;
 

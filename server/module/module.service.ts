@@ -1,4 +1,3 @@
-import { CreateModuDto } from './dto/create-modu.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Module } from './module.entity';
@@ -24,7 +23,7 @@ export class ModuleService {
     });
   }
 
-  public async create(createModuDto: CreateModuDto) {
+  public async create(createModuDto: any) {
     return await this.moduRepository.save(createModuDto);
   }
 

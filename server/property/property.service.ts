@@ -2,6 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Property } from './property.entity';
 import { TreeRepository } from 'typeorm';
+import { pick } from 'lodash';
 
 @Injectable()
 export class PropertyService {
@@ -41,19 +42,25 @@ export class PropertyService {
     return Promise.all(roots.map(p => repo.findDescendantsTree(p)));
   }
 
-  public async createSome(properties: any) {
+  public async createSome(properties: any[], relations: any) {
     const propTree: any = {};
-    properties.forEach((prop: any) => {
-      propTree[prop.id] = Object.assign(new Property(), prop);
-      propTree[prop.id].default = prop.value;
-    });
-    properties.forEach((prop: any) => {
-      if (prop.parentId !== -1) {
-        propTree[prop.id].parent = propTree[prop.parentId];
+    const roots = properties.filter(row => row.parentId === -1);
+    const isChildren = (parents: any) => (row: any) =>
+      row.parentId && parents.some((root: any) => root.id === row.parentId);
+
+    let currentChildren: any[] = roots;
+    while (currentChildren.length > 0) {
+      for (const row of currentChildren) {
+        propTree[row.id] = await this.create({
+          ...pick(row, ['name', 'description', 'type', 'rule', 'scope']),
+          default: row.value,
+          parent: propTree[row.parentId],
+          ...relations,
+        });
       }
-      this.propRepository.save(propTree[prop.id]);
-    });
-    return properties;
+      currentChildren = properties.filter(isChildren(currentChildren));
+    }
+    return roots;
   }
 
   public async deleteMany(propertieIds: number[]) {
