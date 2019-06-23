@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 import {
   Column,
   Entity,
@@ -59,20 +57,20 @@ export class Interface {
   })
   priority: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(() => User)
   creator: User;
 
-  @ManyToOne(type => User)
+  @ManyToOne(() => User)
   locker: User;
 
-  @ManyToOne(type => Module, {
+  @ManyToOne(() => Module, {
     onDelete: 'CASCADE',
   })
   module: Module;
 
-  @ManyToOne(type => Repository)
+  @ManyToOne(() => Repository)
   repository: Repository;
 
-  @OneToMany(() => Property, property => property.interface)
+  @OneToMany(() => Property, prop => prop.interface)
   properties: Property[];
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   Entity,
@@ -24,25 +23,17 @@ export class Module {
 
   @Column({
     type: 'text',
-    nullable: false,
   })
   description: string;
 
-  @Column({
-    type: 'bigint',
-    default: 1,
-    nullable: false,
-  })
-  priority: number;
-
-  @ManyToOne(type => User)
+  @ManyToOne(() => User)
   creator: User;
 
-  @ManyToOne(type => Repository, {
+  @ManyToOne(() => Repository, {
     onDelete: 'CASCADE',
   })
   repository: Repository;
 
-  @OneToMany(() => Interface, _interface => _interface.module)
+  @OneToMany(() => Interface, inte => inte.module)
   interfaces: Interface[];
 }

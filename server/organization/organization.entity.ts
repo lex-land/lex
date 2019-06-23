@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Column,
   Entity,
@@ -44,18 +43,18 @@ export class Organization {
   visibility: boolean;
 
   // ManyToOne 会为实体创建一个creatorId列
-  @ManyToOne(type => User)
+  @ManyToOne(() => User)
   creator: User;
 
   // JoinColumn 会为实体创建一个creatorId列
-  @ManyToOne(type => User, user => user.ownedOrganizations)
+  @ManyToOne(() => User, user => user.ownedOrganizations)
   owner: User;
 
-  @ManyToMany(type => User, user => user.joinedOrganizations)
+  @ManyToMany(() => User, user => user.joinedOrganizations)
   // @JoinTable多对多关系拥有者必须指定的
   @JoinTable()
   members: User[];
 
-  @OneToMany(type => Repository, repository => repository.organization)
+  @OneToMany(() => Repository, repository => repository.organization)
   repositories: Repository[];
 }

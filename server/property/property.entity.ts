@@ -12,7 +12,6 @@ import { Module } from '../module/module.entity';
 import { Repository } from '../repository/repository.entity';
 import { User } from '../user/user.entity';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 export enum SCOPES {
   REQUEST = 'request',
   RESPONSE = 'response',
@@ -61,10 +60,10 @@ export class Property {
   @Column({
     type: 'varchar',
     length: 128,
-    comment: 'property generation rules',
+    comment: 'mock rules',
     default: '5',
   })
-  mock: string;
+  rule: string;
 
   @Column({
     type: 'text',
