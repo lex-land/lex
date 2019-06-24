@@ -4,7 +4,9 @@ import { PagePropsContext, composePageProps } from '@core/next-compose';
 import ErrorBoundary from '@config/error';
 import { NProgressContainer } from '@core/nprogress/component';
 import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import { enhancedCtx } from '@helpers/page-props';
+import { lexTheme } from '@config/theme/lex-theme';
 
 type Props = AppProps<any, any> & DefaultAppIProps & { statusCode: any };
 
@@ -28,10 +30,12 @@ export default composePageProps(initialAppProps)((props: Props) => {
   return (
     <ErrorBoundary statusCode={statusCode}>
       <PagePropsContext.Provider value={pageProps}>
-        <Container>
-          <NProgressContainer />
-          <Component />
-        </Container>
+        <ThemeProvider theme={lexTheme}>
+          <Container>
+            <NProgressContainer />
+            <Component />
+          </Container>
+        </ThemeProvider>
       </PagePropsContext.Provider>
     </ErrorBoundary>
   );
