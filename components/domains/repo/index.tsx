@@ -58,9 +58,9 @@ const TextLink = styled.a`
 `;
 
 const ActionLink = styled(TextLink)`
-  color: ${props => (props['aria-selected'] ? '#0A6640' : '#0F9960')};
+  color: #0d8050;
   &:hover {
-    color: ${props => (props['aria-selected'] ? '#0A6640' : '#0F9960')};
+    color: #0d8050;
   }
   svg {
     margin-right: 5px;
