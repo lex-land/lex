@@ -1,0 +1,30 @@
+{
+  "editor.fontSize": 14,
+  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "Dracula Soft",
+  "vsicons.projectDetection.autoReload": true,
+  "workbench.settings.editor": "json",
+  "window.zoomLevel": 0,
+  "workbench.statusBar.feedback.visible": false,
+  "sqltools.showStatusbar": false,
+  "sqltools.connections": [
+    {
+      "connectionTimeout": 30,
+      "database": "Lex",
+      "dialect": "MySQL",
+      "name": "localhost",
+      "password": "123456",
+      "port": 3306,
+      "server": "127.0.0.1",
+      "username": "root"
+    }
+  ],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "prettier.eslintIntegration": true,
+  "prettier.stylelintIntegration": true
+}
