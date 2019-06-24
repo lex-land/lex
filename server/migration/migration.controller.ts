@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Session } from '@nestjs/common';
 import { InterfaceService } from '@server/interface/interface.service';
 import { ModuleService } from '@server/module/module.service';
 import { PropertyService } from '@server/property/property.service';
@@ -13,11 +13,13 @@ export class MigrationController {
     private readonly propService: PropertyService,
   ) {}
   @Post('repo')
-  public async migrationRepo() {
+  public async migrationRepo(@Session() session: any) {
     const { data: repoJson } = await import('./data/repo.json');
     const repo = await this.repoService.create({
       name: repoJson.name,
       description: repoJson.description,
+      creator: session.user,
+      owner: session.user,
     });
     for (const repoMod of repoJson.modules) {
       const mod = await this.modService.create({
