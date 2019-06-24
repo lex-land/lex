@@ -48,7 +48,7 @@ export default () => {
               successForceReload
               button={<CURD.Button text="编辑" />}
             />
-            <div style={{ padding: '40px 0' }}>
+            <div id="请求参数" style={{ padding: '40px 0' }}>
               <H3>请求参数</H3>
               <TreeEditor
                 header={TreeEditorHeader}
@@ -61,7 +61,7 @@ export default () => {
                 )}
               />
             </div>
-            <div style={{ padding: '40px 0' }}>
+            <div id="响应参数" style={{ padding: '40px 0' }}>
               <H3>响应参数</H3>
               <TreeEditor
                 header={TreeEditorHeader}
@@ -74,7 +74,9 @@ export default () => {
               />
             </div>
           </Page.Content>
-          <Inte.Sider />
+          <Inte.Scrollspy
+            items={['请求参数', '响应参数', '返回码', '示例请求', 'SDK']}
+          />
         </Flex>
       </Repo.SubPage>
     </Page>

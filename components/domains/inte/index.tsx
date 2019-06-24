@@ -15,6 +15,7 @@ import React, { useEffect, useState } from 'react';
 import { CURD } from '@components/curd';
 import { Interface } from '@server/interface/interface.entity';
 import { Property } from '@server/property/property.entity';
+import Scrollspy from 'react-scrollspy';
 import _ from 'lodash';
 // TODO: 组件层面去掉HTTP，让此组件保持无状态
 import { http } from '@helpers/fetch';
@@ -336,26 +337,52 @@ const StickyContainer = styled.div`
 const Sticky = styled.div`
   position: sticky;
   top: 0;
+  padding: 32px;
 `;
 
-export const InteSider = () => {
+const ScrollspyListItem = styled.li`
+  & + & {
+    padding-top: 12px;
+  }
+  a {
+    color: #929598;
+  }
+  &.is-current {
+    a {
+      color: #106ba3;
+    }
+  }
+`;
+
+const ScrollspyList = styled(Scrollspy)`
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+  font-size: 13px;
+`;
+
+export const InteScrollspy = ({ items }: { items: string[] }) => {
+  const ids = items;
   return (
     <StickyContainer>
-      <Sticky>本页导航</Sticky>
+      <Sticky>
+        <ScrollspyList items={ids} currentClassName="is-current">
+          {ids.map(id => (
+            <ScrollspyListItem key={id}>
+              <a href={`#${id}`}>{id}</a>
+            </ScrollspyListItem>
+          ))}
+        </ScrollspyList>
+      </Sticky>
     </StickyContainer>
   );
 };
 
 export const InteCURD = {
-  Create: ({ button }: any) => (
+  Create: ({ button, params }: any) => (
     <CURD.Create
       action={`/api/interface`}
-      params={
-        {
-          // repository: query.repository_id,
-          // module: 1,
-        }
-      }
+      params={params}
       fields={['method', 'url', 'name', 'description']}
       button={button}
       drawerTitle="新增接口"
@@ -366,5 +393,5 @@ export const InteCURD = {
 
 export const Inte = {
   CURD: InteCURD,
-  Sider: InteSider,
+  Scrollspy: InteScrollspy,
 };
