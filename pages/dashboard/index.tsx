@@ -1,7 +1,7 @@
 import { AnchorButton, Divider, H5 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { newComer, user } from '@helpers/page-props';
-import { DashboardSwitcher } from '@components/navs/dashboard-switcher';
+import { Dashboard } from '@components/domains/dashboard';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import React from 'react';
@@ -15,7 +15,7 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
         <Page.Navbar />
         <Flex>
           <Page.Sider>
-            <DashboardSwitcher name={user.fullname} />
+            <Dashboard.Switcher name={user.fullname} />
             <Divider />
             <Flex align="center" justify="space-between">
               <H5 style={{ marginBottom: 0 }}>仓库</H5>
@@ -26,13 +26,13 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
                 text="新增"
               />
             </Flex>
-            {user.joinedRepositories
-              .concat(user.ownedRepositories)
-              .map(repo => (
-                <div key={repo.id}>
-                  <a href={`/repositories/${repo.id}`}>{repo.name}</a>
-                </div>
-              ))}
+            <Dashboard.Navlist
+              icon="git-repo"
+              dataSource={user.joinedRepositories.concat(
+                user.ownedRepositories,
+              )}
+              itemHref={record => `/repositories/${record.id}`}
+            />
           </Page.Sider>
           <Page.Content>
             <H5>我的团队成员动态</H5>

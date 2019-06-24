@@ -88,7 +88,6 @@ const EditButton = ({
     setOpen(true);
   };
   const handleSubmit = async (newMod: any) => {
-    await http.put(action, { ...newMod, ...params });
     setValue({ ...newMod, ...params });
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
@@ -96,10 +95,6 @@ const EditButton = ({
       route()
         .merge()
         .replace();
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: successToast || '编辑成功',
-    });
   };
   return (
     <Fragment>
@@ -113,7 +108,9 @@ const EditButton = ({
           <QuickForm
             fields={fields || []}
             defaultValue={value}
-            action={handleSubmit}
+            action={values => http.put(action, { ...values, ...params })}
+            success={handleSubmit}
+            successToast={successToast}
           />
         </LexContent>
       </Drawer>
