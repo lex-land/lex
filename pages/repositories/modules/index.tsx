@@ -17,7 +17,7 @@ export default composePageProps(repo, mods)(() => {
     <Page>
       <Page.Navbar />
       <Repo.SubPage>
-        <Repo.Nav />
+        <Repo.Sider />
         <Page.EmberedError
           visible={mods.length === 0}
           code={404}

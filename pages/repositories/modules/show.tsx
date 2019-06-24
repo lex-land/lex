@@ -1,5 +1,7 @@
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
+import { Flex } from '@components/layout/flex';
+import { H1 } from '@blueprintjs/core';
 import IntePage from './interface';
 import { Interface } from '@server/interface/interface.entity';
 import { Module } from '@server/module/module.entity';
@@ -22,8 +24,12 @@ export default composePageProps(repo, mod, inte)(() => {
     <Page>
       <Page.Navbar />
       <Repo.SubPage>
-        <Repo.Nav />
-        {mod.name}
+        <Flex>
+          <Repo.Sider />
+          <Page.Content>
+            <H1>{mod.name}</H1>
+          </Page.Content>
+        </Flex>
       </Repo.SubPage>
     </Page>
   );
