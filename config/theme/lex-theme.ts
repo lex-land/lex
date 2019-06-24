@@ -1,13 +1,22 @@
+import { createGlobalStyle } from 'styled-components';
+
 // my-theme.ts
-import { DefaultTheme } from 'styled-components';
-
-const lexTheme: DefaultTheme = {
+const lexTheme = {
   borderRadius: '5px',
-
+  defaultBodyBackground: '#f5f8fa',
   colors: {
     main: 'cyan',
     secondary: 'rgba(0,0,0,0.45)',
+    // #f5f8fa
   },
 };
 
+export const GlobalStyle = createGlobalStyle<{ backgroundColor?: string }>`
+  body {
+    background:${props =>
+      props.backgroundColor || lexTheme.defaultBodyBackground};
+  }
+`;
+
+export type LexTheme = typeof lexTheme;
 export { lexTheme };

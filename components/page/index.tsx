@@ -19,6 +19,7 @@ import { LexContainer, LexContent } from '@components/layout/container';
 import React, { Fragment } from 'react';
 import { Avator } from '../avator';
 import { Flex } from '../layout/flex';
+import { GlobalStyle } from '@config/theme/lex-theme';
 import Head from 'next/head';
 import { Logo } from '@components/vi';
 import _ from 'lodash';
@@ -144,10 +145,9 @@ export const Page = _.merge(
         <Head>
           <title>{`Lex-${props.title || '接口文档管理'}`}</title>
           <link href="/stylesheets/main.css" rel="stylesheet" />
-          <style>{`body{ background:${props.backgroundColor ||
-            '#f5f8fa'} }`}</style>
         </Head>
         {props.children}
+        <GlobalStyle backgroundColor={props.backgroundColor} />
       </main>
     );
   },
@@ -157,29 +157,21 @@ export const Page = _.merge(
     // createPageProps: createPageProps,
     Container: LexContainer,
     Sider: styled.aside<{ offset?: number }>`
-      /* overflow: hidden; */
-      min-height: ${props => `calc(100vh - ${props.offset || 50}px)`};
+      min-height: ${props => `calc(100vh - ${props.offset || 64}px)`};
       min-width: 300px;
       padding: 0 24px;
       border-right: 1px solid rgba(16, 22, 26, 0.15);
-      /* background: linear-gradient(to right, #f5f8fa 0, #fff 40%); */
       background: #fff;
-      .bp3-menu {
-        padding: 0;
-        margin-top: 16px;
-        .bp3-menu-item {
-          margin-bottom: 2px;
-        }
-      }
       .bp3-divider {
-        margin-right: 0;
-        margin-left: 0;
         border: 0;
         margin-left: -24px;
+        margin-right: -24px;
+        margin-bottom: 16px;
         background-image: linear-gradient(
           90deg,
           rgba(16, 22, 26, 0) 0,
-          rgba(16, 22, 26, 0.15) 40%
+          rgba(16, 22, 26, 0.15) 20%,
+          rgba(16, 22, 26, 0) 100%
         );
         height: 1px;
         padding: 0;
@@ -203,6 +195,10 @@ export const Page = _.merge(
     `,
     Navbar: styled(WrappedNavbar)`
       padding: 0 24px;
+      height: 64px;
+      .bp3-navbar-group {
+        height: 64px;
+      }
     `,
     // 内容块
     Content: LexContent,
