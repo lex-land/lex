@@ -83,6 +83,7 @@ docker-compose up -d
 - [ ] orgs 页
 - [ ] settings 页
 - [ ] 导航条里的全局搜索
+- [ ] 近期浏览，类似[这样](https://developers.facebook.com/docs/accountkit)
 - [ ] dashboard 页面 仪表盘只做了左侧的导航
 
 ## Maybe Good Idea
