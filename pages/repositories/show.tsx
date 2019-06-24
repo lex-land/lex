@@ -1,6 +1,6 @@
+import { Button, H1 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { Flex } from '@components/layout/flex';
-import { H1 } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
@@ -17,6 +17,11 @@ export default composePageProps(repo)(() => {
           <Repo.Sider />
           <Page.Content>
             <H1>{repo.description}</H1>
+            <Repo.CURD.Update
+              id={repo.id}
+              defaultValue={repo}
+              button={<Button>编辑</Button>}
+            />
             <Page.EmberedError
               visible={repo.modules.length === 0}
               code={404}

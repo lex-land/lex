@@ -1,4 +1,5 @@
 import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
+import { CURD } from '@components/curd';
 import { Inte } from '../inte';
 import { Mod } from '../mod';
 import React from 'react';
@@ -107,6 +108,7 @@ const RepoSider = () => {
                 ))}
                 <li key="create-interface">
                   <Inte.CURD.Create
+                    params={{ repository: repo, module: mod }}
                     button={
                       <ActionLink style={{ marginLeft: 8 }}>
                         <Icon icon="plus" />
@@ -121,6 +123,7 @@ const RepoSider = () => {
         ))}
         <li key="create-module">
           <Mod.CURD.Create
+            params={{ repository: repo }}
             button={
               <ActionLink>
                 <Icon icon="cube-add" />
@@ -134,6 +137,34 @@ const RepoSider = () => {
   );
 };
 
+const RepoCURD = {
+  Create: ({ button }: { button: any }) => (
+    <CURD.Create
+      action="/api/repository"
+      fields={['name', 'description']}
+      button={button}
+      successForceReload
+    />
+  ),
+  Update: ({
+    id,
+    button,
+    defaultValue,
+  }: {
+    id: number;
+    button: any;
+    defaultValue: any;
+  }) => (
+    <CURD.Update
+      action={`/api/repository/${id}`}
+      fields={['name', 'description']}
+      defaultValue={defaultValue}
+      button={button}
+      successForceReload
+    />
+  ),
+};
+
 export const Repo = Object.assign(() => null, {
   Nav: RepoNav,
   Sider: RepoSider,
@@ -141,4 +172,5 @@ export const Repo = Object.assign(() => null, {
     width: 1280px;
     margin: 0 auto;
   `,
+  CURD: RepoCURD,
 });
