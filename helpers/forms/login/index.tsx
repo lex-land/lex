@@ -6,7 +6,7 @@ import { route } from '@helpers/route';
 export const LoginForm = () => {
   return (
     <QuickForm
-      controlLarge
+      large
       action={values => login(values)}
       fields={Object.keys({
         username: '',
@@ -17,7 +17,7 @@ export const LoginForm = () => {
           .merge()
           .replace()
       }
-      submitButton={{ text: 'Log In' }}
+      submitButton={{ text: '登录' }}
     />
   );
 };

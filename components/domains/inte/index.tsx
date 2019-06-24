@@ -23,7 +23,7 @@ import styled from 'styled-components';
 const AlignLeftTable = styled(HTMLTable)`
   width: 100%;
   &.bp3-html-table td {
-    vertical-align: middle;
+    vertical-align: top;
   }
   &.bp3-html-table td:first-child,
   &.bp3-html-table th:first-child {
@@ -63,9 +63,9 @@ export const EditableRow = (props: any) => {
   const rowHasCaret = hasChildren(row.type);
   const rowHasChildren = !!row.children && !!row.children.length;
   return (
-    <tr className="editable-tr">
+    <tr>
       <td>
-        <div className="align-middle">
+        <div>
           <Button
             className="icon-button"
             disabled={rowHasChildren}
@@ -150,12 +150,7 @@ export const ReadableRow = (props: any) => {
   return (
     <tr className="readable-tr">
       <td>
-        {!!row.parent && (
-          <span className="child-line" style={{ marginLeft: row.depth * 16 }}>
-            └
-          </span>
-        )}
-        {/* label */}
+        {!!row.parent && <span style={{ marginLeft: row.depth * 16 }}>└</span>}
         <Code>{row.name}</Code>
       </td>
       <td>
@@ -333,12 +328,26 @@ export const TreeEditor = (props: TreeEditorProps) => {
   );
 };
 
+const StickyContainer = styled.div`
+  position: relative;
+  width: 250px;
+`;
+
+const Sticky = styled.div`
+  position: sticky;
+  top: 0;
+`;
+
 export const InteSider = () => {
-  return <div>本页导航</div>;
+  return (
+    <StickyContainer>
+      <Sticky>本页导航</Sticky>
+    </StickyContainer>
+  );
 };
 
 export const InteCURD = {
-  Create: () => (
+  Create: ({ button }: any) => (
     <CURD.Create
       action={`/api/interface`}
       params={
@@ -348,9 +357,7 @@ export const InteCURD = {
         }
       }
       fields={['method', 'url', 'name', 'description']}
-      button={
-        <CURD.Button minimal intent="success" icon="application" text="新建" />
-      }
+      button={button}
       drawerTitle="新增接口"
       successForceReload
     />
@@ -358,5 +365,6 @@ export const InteCURD = {
 };
 
 export const Inte = {
+  CURD: InteCURD,
   Sider: InteSider,
 };

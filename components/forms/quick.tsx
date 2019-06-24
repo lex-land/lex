@@ -20,7 +20,7 @@ interface QuickFormProps<T> {
   fields: string[];
   footer?: any;
   successToast?: string;
-  controlLarge?: boolean;
+  large?: boolean;
   submitButton?: IButtonProps;
 }
 
@@ -68,7 +68,7 @@ export const QuickForm = (props: QuickFormProps<any>) => {
               label={f}
             >
               <InputGroup
-                large={props.controlLarge}
+                large={props.large}
                 intent={formik.errors[f] ? 'danger' : 'none'}
                 name={f}
                 value={formik.values[f]}
@@ -78,7 +78,7 @@ export const QuickForm = (props: QuickFormProps<any>) => {
           ))}
           {props.footer || (
             <Button
-              large={props.controlLarge}
+              large={props.large}
               intent="primary"
               text="保存"
               {...props.submitButton}

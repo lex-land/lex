@@ -23,7 +23,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
       <Page.Card>
         <Page.Card.Title>Create a New Account</Page.Card.Title>
         <QuickForm
-          controlLarge
+          large
           fields={Object.keys({
             fullname: '',
             email: '',

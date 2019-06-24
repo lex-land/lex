@@ -1,6 +1,6 @@
-import { Button, ButtonGroup, H1, H3, H4 } from '@blueprintjs/core';
+import { Button, ButtonGroup, H1, H3 } from '@blueprintjs/core';
+import { Inte, TreeEditor, TreeUtil } from '@components/domains/inte';
 import React, { Fragment } from 'react';
-import { TreeEditor, TreeUtil } from '@components/domains/inte';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import { Interface } from '@server/interface/interface.entity';
@@ -28,7 +28,7 @@ const TreeEditorHeader = (treeUtil: TreeUtil) => {
 export default () => {
   const { inte } = usePageProps<{ inte: Interface }>();
   return (
-    <Page>
+    <Page backgroundColor="#fff">
       <Page.Navbar />
       <Repo.SubPage>
         <Flex>
@@ -49,7 +49,7 @@ export default () => {
               button={<CURD.Button text="编辑" />}
             />
             <div style={{ padding: '40px 0' }}>
-              <H4>请求参数</H4>
+              <H3>请求参数</H3>
               <TreeEditor
                 header={TreeEditorHeader}
                 inte={inte}
@@ -62,7 +62,7 @@ export default () => {
               />
             </div>
             <div style={{ padding: '40px 0' }}>
-              <H4>响应参数</H4>
+              <H3>响应参数</H3>
               <TreeEditor
                 header={TreeEditorHeader}
                 inte={inte}
@@ -73,10 +73,8 @@ export default () => {
                 )}
               />
             </div>
-            <div>
-              <H3>返回码说明</H3>
-            </div>
           </Page.Content>
+          <Inte.Sider />
         </Flex>
       </Repo.SubPage>
     </Page>

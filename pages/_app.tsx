@@ -28,15 +28,15 @@ const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
 export default composePageProps(initialAppProps)((props: Props) => {
   const { Component, pageProps, statusCode } = props;
   return (
-    <ErrorBoundary statusCode={statusCode}>
+    <ThemeProvider theme={lexTheme}>
       <PagePropsContext.Provider value={pageProps}>
-        <ThemeProvider theme={lexTheme}>
+        <ErrorBoundary statusCode={statusCode}>
           <Container>
             <NProgressContainer />
             <Component />
           </Container>
-        </ThemeProvider>
+        </ErrorBoundary>
       </PagePropsContext.Provider>
-    </ErrorBoundary>
+    </ThemeProvider>
   );
 });

@@ -1,4 +1,6 @@
 import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
+import { Inte } from '../inte';
+import { Mod } from '../mod';
 import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
 import { route } from '@helpers/route';
@@ -104,20 +106,28 @@ const RepoSider = () => {
                   </li>
                 ))}
                 <li key="create-interface">
-                  <ActionLink style={{ marginLeft: 8 }}>
-                    <Icon icon="plus" />
-                    <span>新增</span>
-                  </ActionLink>
+                  <Inte.CURD.Create
+                    button={
+                      <ActionLink style={{ marginLeft: 8 }}>
+                        <Icon icon="plus" />
+                        <span>新增</span>
+                      </ActionLink>
+                    }
+                  />
                 </li>
               </RepoNavList>
             )}
           </li>
         ))}
         <li key="create-module">
-          <ActionLink>
-            <Icon icon="cube-add" />
-            <span>新增</span>
-          </ActionLink>
+          <Mod.CURD.Create
+            button={
+              <ActionLink>
+                <Icon icon="cube-add" />
+                <span>新增</span>
+              </ActionLink>
+            }
+          />
         </li>
       </RepoNavList>
     </RepoSiderContainer>
