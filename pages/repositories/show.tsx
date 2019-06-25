@@ -1,4 +1,4 @@
-import { Button, Callout, H1, H5 } from '@blueprintjs/core';
+import { Callout, H1, H5 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
@@ -30,15 +30,6 @@ export default composePageProps(repo)(() => {
               <H1>
                 <Flex justify="space-between" align="center">
                   <span>{repo.name}</span>
-                  <Repo.CURD.Update
-                    id={repo.id}
-                    defaultValue={repo}
-                    button={
-                      <Button icon="edit" minimal>
-                        编辑仓库信息
-                      </Button>
-                    }
-                  />
                 </Flex>
               </H1>
               <p>{repo.description}</p>

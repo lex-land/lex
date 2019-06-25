@@ -1,5 +1,6 @@
-import { Card, Divider, H4 } from '@blueprintjs/core';
+import { Button, Divider, H4 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
+import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
@@ -14,28 +15,24 @@ export default composePageProps(repo)(() => {
     <Page>
       <Page.Navbar />
       <Repo.SubPage>
-        <Repo.Nav />
-        <Card>
-          <Divider />
-          <H4>转移仓库所属</H4>
-          <Divider />
-          <H4>基本信息</H4>
-          <Divider />
-          <QuickForm
-            action={(newRepo: any) =>
-              http.put(`/api/repository/${repo.id}`, newRepo)
-            }
-            fields={['name', 'description']}
-            defaultValue={repo}
-            successToast="更新仓库信息成功"
-          />
-          {/* <DeleteButton
-            alertWhen={true}
-            icon="trash"
-            action={`/api/repository/${repo.id}`}
-            successGoto="/"
-          /> */}
-        </Card>
+        <Flex>
+          <Repo.Sider />
+          <Page.Content>
+            <H4>转移仓库所属</H4>
+            <Divider />
+            <H4>基本信息</H4>
+            <Divider />
+            <QuickForm
+              action={(newRepo: any) =>
+                http.put(`/api/repository/${repo.id}`, newRepo)
+              }
+              fields={['name', 'description']}
+              defaultValue={repo}
+              successToast="更新仓库信息成功"
+            />
+            <Repo.CURD.Delete button={<Button>删除这个仓库</Button>} />
+          </Page.Content>
+        </Flex>
       </Repo.SubPage>
     </Page>
   );
