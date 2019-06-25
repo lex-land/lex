@@ -1,4 +1,4 @@
-import { QuickForm } from '@components/forms/quick';
+import { QuickForm } from '@components/forms';
 import React from 'react';
 import { login } from '@helpers/service';
 import { route } from '@helpers/route';

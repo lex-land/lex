@@ -1,7 +1,15 @@
-import { Button, Code, H1, HTMLTable } from '@blueprintjs/core';
+import {
+  Button,
+  ButtonGroup,
+  Code,
+  Divider,
+  H1,
+  HTMLTable,
+} from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
 import { Flex } from '@components/layout/flex';
+import { Inte } from '@components/domains/inte';
 import IntePage from './interface';
 import { Mod } from '@components/domains/mod';
 import { Module } from '@server/module/module.entity';
@@ -60,8 +68,9 @@ export default composePageProps(repo, mod, inte)(() => {
             <AlignLeftTable>
               <thead>
                 <tr>
-                  <td>接口</td>
-                  <td>描述</td>
+                  <th>接口</th>
+                  <th>描述</th>
+                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -76,7 +85,20 @@ export default composePageProps(repo, mod, inte)(() => {
                         </a>
                       </Code>
                     </td>
-                    <td>{inte.name}</td>
+                    <td>
+                      <div>{inte.name}</div>
+                    </td>
+                    <td style={{ width: 150 }}>
+                      <ButtonGroup>
+                        <Inte.CURD.Update
+                          id={inte.id}
+                          defaultValue={inte}
+                          button={<a>编辑</a>}
+                        />
+                        <Divider />
+                        <Inte.CURD.Delete id={inte.id} button={<a>删除</a>} />
+                      </ButtonGroup>
+                    </td>
                   </tr>
                 ))}
               </tbody>
