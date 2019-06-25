@@ -56,7 +56,7 @@ node {
               npm run deploy",
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
-              excludes: 'docker/**,node_modules/**',
+              excludes: 'node_modules/**',
               sourceFiles: '**',
               makeEmptyDirs: false
             )
