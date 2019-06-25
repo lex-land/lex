@@ -53,9 +53,7 @@ node {
               cleanRemote: false,
               execCommand: "cd  /root/${PORJECT_NAME} && \
               npm install -g yarn && yarn && \
-              docker-compose pull && \
-              docker-compose down && \
-              BUILD_TAG=${BUILD_TAG} docker-compose up -d",
+              npm run deploy",
               patternSeparator: '[, ]+',
               remoteDirectory: PORJECT_NAME,
               excludes: 'docker/**,node_modules/**',
