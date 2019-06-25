@@ -23,7 +23,7 @@
     "start:dev": "SUNMI_PROD_URL=http://localhost:3000 npx nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "test:watch": "jest --watch",
-    "predeploy": "docker-compose -f ./docker/docker-compose.database.yml pull && docker-compose -f ./docker/docker-compose.database.yml down",
+    "predeploy": "docker-compose -f ./docker/docker-compose.yml pull && docker-compose -f ./docker/docker-compose.yml down",
     "deploy": "docker-compose -f ./docker/docker-compose.yml up -d",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
