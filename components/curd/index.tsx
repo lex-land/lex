@@ -8,7 +8,7 @@ import {
 } from '@blueprintjs/core';
 import React, { Fragment, useState } from 'react';
 import { LexContent } from '@components/layout/container';
-import { QuickForm } from '@components/forms/quick';
+import { QuickForm } from '@components/forms';
 import { http } from '@helpers/fetch';
 import { route } from '@helpers/route';
 

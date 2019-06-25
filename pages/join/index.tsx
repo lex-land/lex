@@ -1,7 +1,7 @@
 import { Logo } from '@components/vi';
 import { NavbarGroup } from '@blueprintjs/core';
 import { Page } from '@components/page';
-import { QuickForm } from '@components/forms/quick';
+import { QuickForm } from '@components/forms';
 import React from 'react';
 import { composePageProps } from '@core/next-compose';
 import { http } from '@helpers/fetch';
