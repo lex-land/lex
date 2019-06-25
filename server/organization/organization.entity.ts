@@ -18,7 +18,7 @@ export class Organization {
   @Column({
     nullable: false,
     type: 'varchar',
-    length: 256,
+    length: 20,
     unique: true,
   })
   name: string;

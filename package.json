@@ -15,6 +15,7 @@
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "prebuild": "rimraf build",
     "build": "npm run build:next",
+    "phpmyadmin":"docker-compose -f ./docker/docker-compose.phpmyadmin.yml up",
     "build:next": "npx next build",
     "build:local": "SUNMI_PROD_URL=http://localhost:3000 npm run build",
     "build:master": "SUNMI_PROD_URL=https://lex.sunmi.com SUNMI_ENV=master npm run build",

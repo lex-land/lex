@@ -11,7 +11,7 @@ export const dbConfig: TypeOrmModuleOptions = {
   entities: [__dirname + '/../**/**.entity{.ts,.js}'],
   // debug: true,
   // dropSchema: true,
-  // synchronize: true,
-  // logging: false,
+  synchronize: true,
+  // logging: true,
   // insecureAuth: true
 };
