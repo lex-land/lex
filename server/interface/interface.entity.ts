@@ -15,6 +15,7 @@ enum InterfaceMethod {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
+  PATCH = 'PATCH',
 }
 
 @Entity()
@@ -50,13 +51,6 @@ export class Interface {
     nullable: true,
   })
   description: string;
-
-  @Column({
-    type: 'bigint',
-    default: 1,
-    nullable: false,
-  })
-  priority: number;
 
   @ManyToOne(() => User)
   creator: User;
