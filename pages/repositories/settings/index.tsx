@@ -1,7 +1,7 @@
 import { Card, Divider, H4 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { Page } from '@components/page';
-import { QuickForm } from '@components/forms/quick';
+import { QuickForm } from '@components/forms';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
