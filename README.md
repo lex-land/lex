@@ -19,26 +19,30 @@ Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的�
 ## Start
 
 ```shell
+# 安装yarn
+npm i -g yarn
+
 # 安装依赖
 yarn
 
-# 运行开发环境，使用本地mysql
-# 使用本地mysql记得要初始化数据库，使用 `server/migration/sql/init-db.sql` 进行数据库的初始化
+# 使用server/migration/sql/init-db.sql进行数据库初始化并启动两个容器
+# 一个是mysql5.6，它会把数据挂载在cache目录做持久化存储
+# 另一个是phpmyadmin，会启动一个数据库管理工具
+npm run database
+
+# 运行开发环境，使用本地docker内的mysql
 npm run start:dev
-
-# 使用docker运行开发环境
-npm run docker:dev
-
 ```
 
-成功运行开发环境后，查看 [http://localhost:3000](http://localhost:3000)
+成功运行开发环境后
+
+- 查看 [http://localhost:3000](http://localhost:3000)
+- 查看 [http://localhost:8080](http://localhost:8080)，可以进入 phpmyadmin 进行数据库管理
 
 ## Deploy
 
 ```shell
-
-docker-compose up -d
-
+npm run deploy
 ```
 
 ## Roadmap
