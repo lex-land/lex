@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
-import { Classes, HTMLTable, ITreeNode } from '@blueprintjs/core';
+import { Button, HTMLTable, ITreeNode } from '@blueprintjs/core';
 import React, { useEffect, useState } from 'react';
 import { EditableRow } from './editable-row';
 import { Interface } from '@server/interface/interface.entity';
 import { Property } from '@server/property/property.entity';
-import { ReadableRow } from './readable-row';
 import _ from 'lodash';
 // TODO: 组件层面去掉HTTP，让此组件保持无状态
 import { http } from '@helpers/fetch';
+import { route } from '@helpers/route';
 import styled from 'styled-components';
 
 const AlignLeftTable = styled(HTMLTable)`
@@ -41,9 +41,7 @@ interface Record extends Property {
 }
 
 export interface TreeUtil {
-  editable: boolean;
   onAppendRootChild: () => void;
-  setEditable: (editable: boolean) => void;
   setRows: (rows: any) => void;
 }
 
@@ -85,20 +83,22 @@ const sortTree = (tree: Property[]) => {
 };
 
 const initialProp = {
-  name: 'test',
+  name: '点击我编辑',
   type: 'String',
-  description: 'test',
-  default: 'test',
+  description: '点击我编辑',
+  default: '点击我编辑',
 };
+const throttledUpdateProp = _.throttle(newRow => {
+  propSchema.isValidSync(newRow) &&
+    http.put(`/api/property/${newRow.id}`, newRow);
+}, 3000);
 
 export const TreeEditor = (props: TreeEditorProps) => {
-  const [editable, setEditable] = useState(props.editable);
   const [rows, setRows] = useState(sortTree(props.defaultValue));
 
   useEffect(() => {
     setRows(sortTree(props.defaultValue));
-    setEditable(props.editable);
-  }, [props.defaultValue, props.editable, props.inte.id]);
+  }, [props.defaultValue, props.inte.id]);
 
   const onAppendChild = async (row: any, index: number) => {
     const newRows = [...rows];
@@ -134,31 +134,37 @@ export const TreeEditor = (props: TreeEditorProps) => {
       row.parent && newRows[newRows.findIndex(r => r.id === row.parent.id)];
     _.remove(newRows, i => i.id === row.id);
     parent && _.remove(parent.children, i => i.id === row.id);
-    setRows(newRows);
     http.delete(`/api/property/${row.id}`);
+    if (row.children && row.children.length > 0) {
+      // reload page
+      route()
+        .merge()
+        .replace();
+    } else {
+      setRows(newRows);
+    }
   };
 
   const onItemChange = ({ depth, children, ...newRow }: any) => {
-    propSchema.isValidSync(newRow) &&
-      http.put(`/api/property/${newRow.id}`, newRow);
     const newRows = [...rows];
     newRows[newRows.findIndex(r => r.id === newRow.id)] = {
       ...newRow,
       depth,
       children,
     };
+    throttledUpdateProp(newRow);
     setRows(newRows);
   };
+
   const treeUtil = {
     onAppendRootChild,
-    setEditable,
     setRows,
-    editable,
   };
+
   return (
     <div>
       {props.header && <div>{props.header(treeUtil)}</div>}
-      <AlignLeftTable className={Classes.RUNNING_TEXT}>
+      <AlignLeftTable>
         <thead>
           <tr>
             <th style={{ width: 220 }}>字段名</th>
@@ -166,24 +172,28 @@ export const TreeEditor = (props: TreeEditorProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((i: any, index: any) =>
-            editable ? (
-              <EditableRow
-                {...props}
-                maxDepth={props.maxDepth || 3}
-                onItemChange={_.throttle(onItemChange, 800)}
-                onDelete={() => deleteItem(i)}
-                onAppendChild={() => onAppendChild(i, index)}
-                index={index}
-                key={i.id}
-                source={i}
-              />
-            ) : (
-              <ReadableRow {...props} key={i.id} source={i} />
-            ),
-          )}
+          {rows.map((i: any, index: any) => (
+            <EditableRow
+              {...props}
+              maxDepth={props.maxDepth || 3}
+              onItemChange={onItemChange}
+              onDelete={() => deleteItem(i)}
+              onAppendChild={() => onAppendChild(i, index)}
+              index={index}
+              key={i.id}
+              source={i}
+            />
+          ))}
         </tbody>
       </AlignLeftTable>
+      <Button
+        minimal
+        fill
+        onClick={() => treeUtil.onAppendRootChild()}
+        icon="plus"
+        intent="success"
+        text="新增"
+      />
       {props.footer && <div>{props.footer(treeUtil)}</div>}
     </div>
   );

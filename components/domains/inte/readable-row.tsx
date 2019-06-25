@@ -18,10 +18,12 @@ export const ReadableRow = (props: any) => {
             </Tag>
           )}
           <div>
-            <strong>{row.type}</strong>
-            {!!row.default && (
-              <span className={Classes.TEXT_MUTED}> = {row.default}</span>
-            )}
+            <code>
+              <strong>{row.type}</strong>
+              {!!row.default && (
+                <span className={Classes.TEXT_MUTED}> = {row.default}</span>
+              )}
+            </code>
           </div>
           <div>{row.description}</div>
         </div>

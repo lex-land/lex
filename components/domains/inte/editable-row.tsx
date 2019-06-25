@@ -1,16 +1,45 @@
 import {
   Button,
+  ButtonGroup,
   Code,
   EditableText,
   HTMLSelect,
-  Icon,
+  Popover,
   Switch,
+  Tag,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { ChildLine } from './depth-line';
+import { Flex } from '@components/layout/flex';
+import styled from 'styled-components';
 
 const hasChildren = (type: string | undefined) =>
   ['Array', 'Object'].includes(type || '');
+
+const TdRow = styled.td``;
+
+const Type = styled(Flex)`
+  /* margin: 4px 0; */
+  .type {
+    font-weight: bold;
+  }
+  .default,
+  .equal {
+    font-style: italic;
+    color: #777;
+    margin: 0 4px;
+  }
+  .default {
+    font-size: 13px;
+  }
+`;
+
+const Description = styled(EditableText)`
+  width: 450px;
+  margin: 4px 0;
+  line-height: 1.5;
+  color: #333;
+`;
 
 export const EditableRow = (props: any) => {
   const [row, setRow] = useState(props.source);
@@ -19,80 +48,112 @@ export const EditableRow = (props: any) => {
     props.onItemChange && props.onItemChange({ ...row, ...newRow });
   };
   const rowHasCaret = hasChildren(row.type);
-  const rowHasChildren = !!row.children && !!row.children.length;
+
   return (
     <tr>
-      <td>
-        <div>
-          <Button
-            className="icon-button"
-            disabled={rowHasChildren}
-            intent={rowHasChildren ? 'danger' : 'none'}
-            onClick={props.onDelete}
-          >
-            <Icon iconSize={20} icon="minus" />
-          </Button>
+      <TdRow>
+        <Flex align="center">
           <ChildLine {...row} />
           <Code>
             <EditableText
+              selectAllOnFocus
               value={row.name}
               onChange={name => mergeRow({ name })}
             />
           </Code>
-          {rowHasCaret && (
-            <Button
-              className="icon-button add"
-              disabled={row.depth >= props.maxDepth}
-              onClick={props.onAppendChild}
-            >
-              <Icon iconSize={20} icon="plus" />
-            </Button>
-          )}
-        </div>
-      </td>
-      <td>
-        <div>
+        </Flex>
+      </TdRow>
+      <TdRow>
+        <Flex justify="space-between" align="flex-start">
           <div>
-            <HTMLSelect
-              value={row.type}
-              onChange={e => mergeRow({ type: e.target.value })}
-            >
-              <option value="String">String</option>
-              <option value="Number">Number</option>
-              <option value="Object">Object</option>
-              <option value="Array">Array</option>
-              <option value="Boolean">Boolean</option>
-            </HTMLSelect>
-            <EditableText
-              placeholder="= 初始值"
-              value={row.default}
-              onChange={d => mergeRow({ default: d })}
-            />
             {props.scope === 'request' && (
-              <div style={{ marginLeft: 16 }} className="align-middle">
-                <Switch
-                  style={{ marginBottom: 0 }}
-                  checked={row.required}
-                  onChange={e =>
-                    mergeRow({ required: e.currentTarget.checked })
-                  }
-                  innerLabelChecked="必填"
-                  innerLabel="可选"
-                />
-              </div>
+              <Popover
+                content={
+                  <div style={{ padding: 10 }}>
+                    <Switch
+                      style={{
+                        marginBottom: 0,
+                      }}
+                      checked={row.required}
+                      onChange={e =>
+                        mergeRow({ required: e.currentTarget.checked })
+                      }
+                      large
+                      innerLabelChecked="必填"
+                      innerLabel="可选"
+                    />
+                  </div>
+                }
+                position="right"
+                interactionKind="hover"
+              >
+                <Tag
+                  style={{ marginBottom: 4 }}
+                  intent={row.required ? 'success' : 'none'}
+                >
+                  {row.required ? '必填' : '可选'}
+                </Tag>
+              </Popover>
             )}
+            <Type align="center">
+              <Popover
+                content={
+                  <HTMLSelect
+                    value={row.type}
+                    minimal
+                    large
+                    onChange={e => mergeRow({ type: e.target.value })}
+                  >
+                    <option value="String">String</option>
+                    <option value="Number">Number</option>
+                    <option value="Object">Object</option>
+                    <option value="Array">Array</option>
+                    <option value="Boolean">Boolean</option>
+                  </HTMLSelect>
+                }
+                position="right"
+                interactionKind="hover"
+              >
+                <code className="type">{row.type}</code>
+              </Popover>
+              <span className="equal">=</span>
+              <EditableText
+                className="default"
+                selectAllOnFocus
+                placeholder="初始值"
+                value={row.default}
+                onChange={d => mergeRow({ default: d })}
+              />
+            </Type>
+            <div>
+              <Description
+                multiline
+                placeholder="描述"
+                value={row.description}
+                maxLength={1000}
+                onChange={description => mergeRow({ description })}
+              />
+            </div>
           </div>
-          <div>
-            <EditableText
-              multiline
-              placeholder="描述, 回车可以换行"
-              value={row.description}
-              maxLength={1000}
-              onChange={description => mergeRow({ description })}
+          <ButtonGroup>
+            <Button
+              intent="danger"
+              onClick={props.onDelete}
+              minimal
+              icon="minus"
             />
-          </div>
-        </div>
-      </td>
+            {rowHasCaret && (
+              <Button
+                minimal
+                intent="primary"
+                disabled={row.depth >= props.maxDepth}
+                onClick={props.onAppendChild}
+                icon="plus"
+              />
+            )}
+          </ButtonGroup>
+        </Flex>
+      </TdRow>
     </tr>
   );
 };
