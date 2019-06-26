@@ -41,6 +41,10 @@ npm run start:dev
 ## Deploy
 
 ```shell
+
+# 目标机器按照nodejs
+# https://github.com/nodesource/distributions/blob/master/README.md
+
 npm run deploy
 ```
 

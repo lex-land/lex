@@ -97,7 +97,7 @@ const AvatorBar = () => {
           <MenuItem text="账户" href={`/users/${user.fullname}`} />
           <MenuItem text="仓库" href={`/users/${user.fullname}/repositories`} />
           <MenuDivider />
-          <MenuItem href="https://github.com/sunmi-web/lex/" text="源代码" />
+          <MenuItem href="https://github.com/lex-land/lex/" text="源代码" />
           <MenuItem text="设置" href={`/settings`} />
           <MenuItem text="退出登录" onClick={logout} href="/login" />
         </Menu>
