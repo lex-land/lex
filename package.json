@@ -313,6 +313,7 @@
     ],
     "verbose": false,
     "debug": false,
+    "delay": "2500",
     "ext": "ts",
     "exec": "node --require ts-node/register --require tsconfig-paths/register --require reflect-metadata server/main.ts",
     "ignore": [
