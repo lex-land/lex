@@ -1,3 +1,4 @@
+import { CreateIntefaceDto } from '@server/interface/dto/create-inte.dto';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateModuDto {
@@ -6,4 +7,6 @@ export class CreateModuDto {
 
   @IsNotEmpty()
   description: string;
+
+  interfaces: CreateIntefaceDto[];
 }

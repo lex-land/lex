@@ -1,3 +1,4 @@
+import { CreatePropDto } from '@server/property/dto/create-prop.dto';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateIntefaceDto {
@@ -9,4 +10,6 @@ export class CreateIntefaceDto {
   name: string;
   @IsNotEmpty()
   description: string;
+
+  properties: CreatePropDto[];
 }
