@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://lex.sunmi.com" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
+  <a href="https://lex-land.online" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
 </p>
 
 <p align="center">
