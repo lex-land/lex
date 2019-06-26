@@ -46,9 +46,11 @@ const RepoSiderContainer = styled.div`
   font-family: Graphik LCG Web, Graphik Arabic Web Regular, -apple-system,
     BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, Lucida Grande,
     Sans-Serif;
-  /* border-right: 1px solid #ddd; */
+  .sider-item {
+    margin: 5px 0;
+  }
   .sider-title {
-    color: ${props => (props['aria-selected'] ? '#106ba3' : '#1c1e21')};
+    color: #1c1e21;
   }
 `;
 
@@ -79,7 +81,7 @@ const RepoSider = () => {
         <TextLink
           aria-selected={+query.repository_id === repo.id}
           href={`/repositories/${repo.id}`}
-          className="sider-title"
+          className="sider-item sider-title"
         >
           {/* <Icon icon="git-repo" /> */}
           {repo.name}
@@ -133,13 +135,24 @@ const RepoSider = () => {
           }
         />
       </RepoNavList>
-      <TextLink
-        aria-selected={router.asPath === `/repositories/${repo.id}/settings`}
-        href={`/repositories/${repo.id}/settings`}
-      >
-        {/* <Icon icon="cog" /> */}
-        <span>设置</span>
-      </TextLink>
+      <div>
+        <TextLink
+          className="sider-item"
+          aria-selected={router.asPath === `/repositories/${repo.id}/members`}
+          href={`/repositories/${repo.id}/members`}
+        >
+          <span>成员</span>
+        </TextLink>
+      </div>
+      <div>
+        <TextLink
+          className="sider-item"
+          aria-selected={router.asPath === `/repositories/${repo.id}/settings`}
+          href={`/repositories/${repo.id}/settings`}
+        >
+          <span>设置</span>
+        </TextLink>
+      </div>
     </RepoSiderContainer>
   );
 };
@@ -171,7 +184,12 @@ const RepoCURD = {
     />
   ),
   Delete: ({ id, button }: any) => (
-    <CURD.Delete action={`/api/repository/${id}`} button={button} />
+    <CURD.Delete
+      successGoto="/"
+      action={`/api/repository/${id}`}
+      button={button}
+      alertWhen
+    />
   ),
 };
 
