@@ -6,7 +6,7 @@ node {
   SUNMI_ENV = "${env.BRANCH_NAME}"
   BUILD_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
   IMAGE_TAG = "latest"
-  SSH_DEPLOY_CONFIGNAME = "lex.sunmi.com"
+  SSH_DEPLOY_CONFIGNAME = "lex-land.online"
 
   // 整理环境变量
   stage('Prepare SCM') {
