@@ -50,3 +50,13 @@ services:
       MYSQL_ROOT_PASSWORD: '123456'
     ports:
       - 3306:3306
+
+  nginx:
+    image: nginx:latest
+    container_name: lex-nginx
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 80:80
+      - 443:443
