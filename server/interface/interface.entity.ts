@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Module } from '../module/module.entity';
 import { Property } from '../property/property.entity';
@@ -68,4 +70,10 @@ export class Interface {
 
   @OneToMany(() => Property, prop => prop.interface)
   properties: Property[];
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }

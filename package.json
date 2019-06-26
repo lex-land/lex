@@ -18,7 +18,7 @@
     "database": "docker-compose -f ./docker/docker-compose.database.yml up -d",
     "build:next": "npx next build",
     "build:local": "SUNMI_PROD_URL=http://localhost:3000 npm run build",
-    "build:master": "SUNMI_PROD_URL=https://lex.sunmi.com SUNMI_ENV=master npm run build",
+    "build:master": "SUNMI_PROD_URL=https://lex-land.onlone SUNMI_ENV=master npm run build",
     "start": "NODE_ENV=production npx ts-node --require tsconfig-paths/register --require reflect-metadata server/main.ts",
     "start:dev": "SUNMI_PROD_URL=http://localhost:3000 npx nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
