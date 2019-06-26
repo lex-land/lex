@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Interface } from '../interface/interface.entity';
 import { Repository } from '../repository/repository.entity';
@@ -37,4 +39,10 @@ export class Module {
 
   @OneToMany(() => Interface, inte => inte.module)
   interfaces: Interface[];
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }
