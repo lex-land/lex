@@ -24,7 +24,7 @@ services:
     depends_on:
       - lex-mysql
     ports:
-      - "13000:3000"
+      - '13000:3000'
 
   # https://github.com/typeorm/typeorm/issues/2093
   # https://github.com/mysqljs/mysql/issues/2013
@@ -36,9 +36,17 @@ services:
       # https://stackoverflow.com/questions/38504257/mysql-scripts-in-docker-entrypoint-initdb-are-not-executed
       - ../server/migration/sql:/docker-entrypoint-initdb.d
       - /data/docker/mysql:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+    # 添加默认排序规则
+    # https://stackoverflow.com/questions/45729326/how-to-change-the-default-character-set-of-mysql-using-docker-compose
+    command:
+      [
+        'mysqld',
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-authentication-plugin=mysql_native_password',
+      ]
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_ROOT_PASSWORD: '123456'
     ports:
       - 3306:3306
