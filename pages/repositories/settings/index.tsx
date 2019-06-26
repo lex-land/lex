@@ -27,7 +27,9 @@ export default composePageProps(repo, user.all)(() => {
               defaultValue={repo}
               successToast="更新仓库信息成功"
             />
-            <H4>转移仓库所属</H4>
+            <br />
+            <br />
+            <Button>转移仓库所属</Button>
             <Repo.CURD.Delete
               id={repo.id}
               button={<Button>删除这个仓库</Button>}

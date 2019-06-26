@@ -138,6 +138,15 @@ const RepoSider = () => {
       <div>
         <TextLink
           className="sider-item"
+          aria-selected={router.asPath === `/repositories/${repo.id}/codes`}
+          href={`/repositories/${repo.id}/codes`}
+        >
+          <span>公共返回码</span>
+        </TextLink>
+      </div>
+      <div>
+        <TextLink
+          className="sider-item"
           aria-selected={router.asPath === `/repositories/${repo.id}/members`}
           href={`/repositories/${repo.id}/members`}
         >
