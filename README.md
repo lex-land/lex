@@ -14,6 +14,7 @@ Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的�
 - docker
 - docker-compose
 - mysql
+- nginx
 
 ## Start
 
