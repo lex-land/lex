@@ -26,6 +26,7 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.useStaticAssets(join(__dirname, '..', 'node_modules'));
   app.setGlobalPrefix('api');
   app.useGlobalFilters(new NextHandlerFilter(nextApp));
 

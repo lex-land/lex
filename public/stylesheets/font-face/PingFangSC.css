@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'PingFang SC';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/PingFangHeiTC-W4-Proportional.eot?#iefix')
+    format('embedded-opentype'),
+    url('/fonts/PingFangHeiTC-W4-Proportional.woff') format('woff'),
+    url('/fonts/PingFangHeiTC-W4-Proportional.ttf') format('truetype'),
+    url('/fonts/PingFangHeiTC-W4-Proportional.svg#PingFangHeiTC-W4-Proportional')
+    format('svg');
+}

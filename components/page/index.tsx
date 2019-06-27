@@ -144,7 +144,6 @@ export const Page = _.merge(
       <Fragment>
         <Head>
           <title>{`Lex-${props.title || '接口文档管理'}`}</title>
-          <link href="/stylesheets/main.css" rel="stylesheet" />
         </Head>
         <main className={props.className} style={props.style}>
           {props.children}
