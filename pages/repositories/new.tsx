@@ -12,7 +12,7 @@ export default () => {
       <Page.Content>
         <Callout intent="primary">
           <span>之前用 Rap2 ？可以试试 </span>
-          <a href="/migrations/rap2">从 Rap2 新建</a>
+          <a href="/migrations/json">从 JSON 新建</a>
         </Callout>
         <br />
         <H1>创建一个仓库</H1>

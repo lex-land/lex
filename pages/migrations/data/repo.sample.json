@@ -1,0 +1,86 @@
+{
+  "data": {
+    "id": 117,
+    "name": "示例",
+    "description": "",
+    "logo": null,
+    "visibility": true,
+    "ownerId": 100000013,
+    "organizationId": null,
+    "creatorId": 100000013,
+    "lockerId": null,
+    "createdAt": "2019-03-20T07:03:15.000Z",
+    "updatedAt": "2019-03-25T02:52:35.000Z",
+    "deletedAt": null,
+    "creator": {
+      "id": 100000013,
+      "fullname": "郭永杰",
+      "email": "gyj9094@gmail.com"
+    },
+    "owner": {
+      "id": 100000013,
+      "fullname": "郭永杰",
+      "email": "gyj9094@gmail.com"
+    },
+    "members": [
+      {
+        "id": 100000023,
+        "fullname": "arcado",
+        "email": "zhangshiqiang@sunmi.com"
+      }
+    ],
+    "organization": null,
+    "modules": [
+      {
+        "id": 420,
+        "name": "运费计算器相关",
+        "description": "运费计算器相关",
+        "priority": 1,
+        "creatorId": 100000013,
+        "repositoryId": 117,
+        "createdAt": "2019-03-20T07:03:15.000Z",
+        "updatedAt": "2019-03-20T07:36:16.000Z",
+        "deletedAt": null,
+        "interfaces": [
+          {
+            "id": 2158,
+            "name": "计算运费",
+            "url": "/count",
+            "method": "POST",
+            "description": "计算运费",
+            "priority": 1,
+            "creatorId": 100000013,
+            "lockerId": null,
+            "moduleId": 420,
+            "repositoryId": 117,
+            "createdAt": "2019-03-20T07:03:15.000Z",
+            "updatedAt": "2019-03-27T09:03:58.000Z",
+            "deletedAt": null,
+            "locker": null,
+            "properties": [
+              {
+                "id": 34932,
+                "scope": "request",
+                "type": "String",
+                "name": "country_id",
+                "rule": "",
+                "value": "@ctitle",
+                "description": "请求属性示例",
+                "parentId": -1,
+                "priority": 1,
+                "interfaceId": 2158,
+                "creatorId": 100000013,
+                "moduleId": 420,
+                "repositoryId": 117,
+                "createdAt": "2019-03-20T07:03:15.000Z",
+                "updatedAt": "2019-03-27T09:03:58.000Z",
+                "deletedAt": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "collaborators": []
+  }
+}
