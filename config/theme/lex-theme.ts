@@ -18,5 +18,7 @@ export const GlobalStyle = createGlobalStyle<{ backgroundColor?: string }>`
   }
 `;
 
+// https://www.styled-components.com/docs/tooling#styled-theming
+
 export type LexTheme = typeof lexTheme;
 export { lexTheme };
