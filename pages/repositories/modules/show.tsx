@@ -1,17 +1,9 @@
-import {
-  Button,
-  ButtonGroup,
-  Code,
-  Divider,
-  H1,
-  HTMLTable,
-} from '@blueprintjs/core';
+import { Button, Code, H1, HTMLTable } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
 import { Flex } from '@components/layout/flex';
 import { Inte } from '@components/domains/inte';
 import IntePage from './interface';
-import { Mod } from '@components/domains/mod';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
 import React from 'react';
@@ -52,15 +44,6 @@ export default composePageProps(repo, mod, inte)(() => {
               <H1>
                 <Flex justify="space-between" align="center">
                   <span>{mod.name}</span>
-                  <Mod.CURD.Update
-                    id={mod.id}
-                    defaultValue={mod}
-                    button={
-                      <Button icon="edit" minimal>
-                        编辑模块信息
-                      </Button>
-                    }
-                  />
                 </Flex>
               </H1>
               <p>{mod.description}</p>
@@ -89,15 +72,14 @@ export default composePageProps(repo, mod, inte)(() => {
                       <div>{inte.name}</div>
                     </td>
                     <td style={{ width: 150 }}>
-                      <ButtonGroup>
-                        <Inte.CURD.Update
-                          id={inte.id}
-                          defaultValue={inte}
-                          button={<a>编辑</a>}
-                        />
-                        <Divider />
-                        <Inte.CURD.Delete id={inte.id} button={<a>删除</a>} />
-                      </ButtonGroup>
+                      <Inte.CURD.Delete
+                        id={inte.id}
+                        button={
+                          <Button intent="danger" minimal>
+                            Delete
+                          </Button>
+                        }
+                      />
                     </td>
                   </tr>
                 ))}

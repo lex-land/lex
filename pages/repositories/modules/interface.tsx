@@ -1,17 +1,12 @@
 import { Callout, H1, H4 } from '@blueprintjs/core';
-import React, { Fragment } from 'react';
-import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import { Inte } from '@components/domains/inte';
 import { Interface } from '@server/interface/interface.entity';
 import { Page } from '@components/page';
+import React from 'react';
 import { Repo } from '@components/domains/repo';
 import styled from 'styled-components';
 import { usePageProps } from '@core/next-compose';
-
-const TreeEditorHeader = (treeUtil: any) => {
-  return <Fragment></Fragment>;
-};
 
 const RequestURL = styled.code`
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -30,15 +25,6 @@ export default () => {
               <H1>
                 <Flex justify="space-between" align="center">
                   <span>{inte.name}</span>
-                  <CURD.Update
-                    action={`/api/interface/${inte.id}`}
-                    defaultValue={inte}
-                    fields={['name', 'description', 'method', 'url']}
-                    successForceReload
-                    button={
-                      <CURD.Button icon="edit" minimal text="编辑接口信息" />
-                    }
-                  />
                 </Flex>
               </H1>
               <p>{inte.description && <span> {inte.description}</span>}</p>
@@ -56,7 +42,6 @@ export default () => {
                 <div id="请求参数" style={{ padding: '40px 0' }}>
                   <H4>请求参数</H4>
                   <Inte.TreeEditor
-                    header={TreeEditorHeader}
                     inte={inte}
                     scope="request"
                     maxDepth={1}
@@ -69,7 +54,6 @@ export default () => {
                 <div id="响应参数" style={{ padding: '40px 0' }}>
                   <H4>响应参数</H4>
                   <Inte.TreeEditor
-                    header={TreeEditorHeader}
                     inte={inte}
                     scope="response"
                     editable={true}

@@ -12,11 +12,11 @@ export default () => {
       <Page.Navbar />
       <Page.Content>
         <Callout intent="primary">
-          <span>之前用 Rap2 ？可以试试 </span>
-          <a href="/migrations/json">从 JSON 新建</a>
+          <span>Migrate from Rap2? Try </span>
+          <a href="/migrations/json">Migrate from JSON</a>
         </Callout>
         <br />
-        <H1>创建一个仓库</H1>
+        <H1>Create A FreeStyle Repository</H1>
         <QuickForm
           action={newValue => http.post('/api/repository', newValue)}
           defaultValue={formDefaultValues}
