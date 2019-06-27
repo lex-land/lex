@@ -75,31 +75,28 @@ npm run deploy
 
 ## Tooling
 
-vscode
-eslint
-stylelint https://www.styled-components.com/docs/tooling#stylelint
-babel
-commitlint
-husky
-nodemonConfig
-prettier
-lint-staged
-jest
+- vscode
+- eslint
+- [stylelint](https://www.styled-components.com/docs/tooling#stylelint)
+- babel
+- commitlint
+- husky
+- nodemonConfig
+- prettier
+- lint-staged
+- jest
 
 ## Progress
 
-- [ ] 异常页面，包含 401、403、404、500、503 等，现阶段已经一致化，还待风格化 （完成度 80%）
-- [ ] join 页面 全名重复待校验 （完成度 70%）
-- [ ] login 页面，登录页面已完成，待风格化 （完成度 80%）
+- [x] 异常页面，包含 401、403、404、500、503 等
+- [x] join 页面
+- [x] login 页面
 - [ ] 优先完成 repo 仓库模块
-  - [ ] repo/new 页，
-  - [ ] repo/show 页，
-  - [ ] repo/members 页，
-  - [ ] repo/modules 页，
-  - [ ] repo/modules/show 页，
-  - [ ] repo/modules/edit 页，
-  - [ ] repo/settings 页，
-  - [ ] repo/wiki 页，
+  - [x] repo/new 页
+  - [x] repo/show 页
+  - [x] repo/modules 页
+  - [x] repo/settings 页
+  - [ ] repo/members 页
 - [ ] users 页
 - [ ] orgs 页
 - [ ] settings 页
@@ -110,7 +107,7 @@ jest
 ## Next Feature
 
 - [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
-  - [x] 仓库迁移
+  - [x] 新增从 JSON 创建仓库
 - [ ] 添加接口操作日志
 - [ ] 添加接口返回码
 - [ ] 添加仓库内公共内容
@@ -141,3 +138,5 @@ jest
 
 - Q: macOS 下，docker 启动开发环境比直接用 node 启动慢
 - A: [修改 host](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
+
+<!-- https://github.com/Microsoft/TypeScript/issues/29045 -->
