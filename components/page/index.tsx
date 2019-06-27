@@ -1,10 +1,10 @@
 import {
   Alignment,
+  Button,
   Card,
   Classes,
   H3,
   IconName,
-  InputGroup,
   Menu,
   MenuDivider,
   MenuItem,
@@ -17,12 +17,12 @@ import {
 } from '@blueprintjs/core';
 import { LexContainer, LexContent } from '@components/layout/container';
 import React, { Fragment } from 'react';
-import { Avator } from '../avator';
 import { Flex } from '../layout/flex';
 import { GlobalStyle } from '@config/theme/lex-theme';
 import Head from 'next/head';
 import { Logo } from '@components/vi';
 import _ from 'lodash';
+import constants from '@config/constants';
 import { http } from '@helpers/fetch';
 import { logout } from '@helpers/service';
 import styled from 'styled-components';
@@ -84,35 +84,6 @@ const EmberedError = ({ className, ...props }: ErrorProps) =>
     </ErrorContainer>
   ) : null;
 
-const AvatorBar = () => {
-  const { value: session } = useAsync(() => http.get(`/api/session`));
-  const user = Object.assign({ fullname: '-' }, session);
-  return (
-    <Popover
-      content={
-        <Menu>
-          <li className={Classes.MENU_HEADER}>
-            <h6 className={Classes.HEADING}>{user.fullname}已登录</h6>
-          </li>
-          <MenuItem text="账户" href={`/users/${user.fullname}`} />
-          <MenuItem text="仓库" href={`/users/${user.fullname}/repositories`} />
-          <MenuDivider />
-          <MenuItem href="https://github.com/lex-land/lex/" text="源代码" />
-          <MenuItem
-            href="https://github.com/lex-land/lex/issues/new"
-            text="问题反馈"
-          />
-          <MenuItem text="设置" href={`/settings`} />
-          <MenuItem text="退出登录" onClick={logout} href="/login" />
-        </Menu>
-      }
-      position={Position.BOTTOM_RIGHT}
-    >
-      <Avator arrow text={user.fullname} />
-    </Popover>
-  );
-};
-
 const WrappedNavbar = ({
   children,
   className,
@@ -120,6 +91,8 @@ const WrappedNavbar = ({
   className?: string;
   children?: React.ReactNode;
 }) => {
+  const { value: session } = useAsync(() => http.get(`/api/session`));
+  const user = Object.assign({ fullname: '-' }, session);
   return (
     <Navbar className={Classes.DARK + ' ' + className}>
       {children || (
@@ -128,13 +101,55 @@ const WrappedNavbar = ({
             <NavbarHeading>
               <Logo size={30} />
             </NavbarHeading>
-            <InputGroup
-              leftIcon="search"
-              placeholder="全局搜索，正在开发中..."
-            />
           </NavbarGroup>
           <NavbarGroup align={Alignment.RIGHT}>
-            <AvatorBar />
+            <Popover
+              content={
+                <Menu>
+                  <MenuItem
+                    href="https://github.com/lex-land/lex/"
+                    text="Github"
+                  />
+                  <MenuItem
+                    href="https://github.com/lex-land/lex/issues/new"
+                    text="New Issue"
+                  />
+                  <MenuItem
+                    href="https://github.com/lex-land/lex/blob/master/README.md"
+                    text="About Lex"
+                  />
+                </Menu>
+              }
+              position={Position.BOTTOM_RIGHT}
+            >
+              <Button minimal icon="help" />
+            </Popover>
+            <Button minimal icon="notifications" />
+            <Popover
+              content={
+                <Menu>
+                  <li className={Classes.MENU_HEADER}>
+                    <h6 className={Classes.HEADING}>
+                      Signed in as {user.fullname}
+                    </h6>
+                  </li>
+                  <MenuItem
+                    text="Your profile"
+                    href={`/users/${user.fullname}`}
+                  />
+                  <MenuItem
+                    text="Your repositories"
+                    href={`/users/${user.fullname}/repositories`}
+                  />
+                  <MenuDivider />
+                  <MenuItem text="Settings" href={`/settings`} />
+                  <MenuItem text="Sign out" onClick={logout} href="/login" />
+                </Menu>
+              }
+              position={Position.BOTTOM_RIGHT}
+            >
+              <Button minimal icon="user" rightIcon="caret-down" />
+            </Popover>
           </NavbarGroup>
         </Fragment>
       )}
@@ -144,10 +159,11 @@ const WrappedNavbar = ({
 
 export const Page = _.merge(
   (props: PageProps) => {
+    const title = props.title || constants.PROJECT_DESCRIPTION;
     return (
       <Fragment>
         <Head>
-          <title>{`Lex-${props.title || '接口文档管理'}`}</title>
+          <title>{`Lex - ${title}`}</title>
         </Head>
         <main className={props.className} style={props.style}>
           {props.children}
