@@ -4,17 +4,14 @@ import CryptoJS from 'crypto-js';
 import md5 from 'md5';
 
 const ENV = {
-  DES: {
-    Key: '666',
-    Iv: '666',
-  },
+  DES: { Key: '666', Iv: '666' },
   isEncrypted: 0,
   md5Key: '666',
 };
 
 const tripledes = CryptoJS.TripleDES;
-const IV = CryptoJS.enc.Utf8.parse(ENV.DES.Iv || 'xxx');
-const KEY = CryptoJS.enc.Utf8.parse(ENV.DES.Key || 'xxx');
+const IV = CryptoJS.enc.Utf8.parse(ENV.DES.Iv);
+const KEY = CryptoJS.enc.Utf8.parse(ENV.DES.Key);
 
 export const Des = {
   encrypt(message: string | null) {
