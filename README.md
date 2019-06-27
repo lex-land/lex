@@ -62,6 +62,7 @@ npm run deploy
 - [x] 使用 docker 运行项目的生产环境
 - [x] 使用 styled-component 进行组件样式重构，移除已有 less
 - [ ] 不断优化页面异常处理
+- [ ] 支持类 Swagger 的测试功能
 - [ ] 不断优化 helpers、components、core、pages 之间的关系
 - [ ] 重新思考 UI 呈现，使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
 - [ ] 完成与 Rap 的功能
