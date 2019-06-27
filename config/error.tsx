@@ -41,13 +41,6 @@ export const onWindowError = (e: any) => {
   }
 };
 
-export const catchError = () => {
-  if (typeof window !== 'undefined') {
-    window.onerror = onWindowError;
-    window.addEventListener('unhandledrejection', onUnhandledrejection);
-  }
-};
-
 // https://reactjs.org/docs/error-boundaries.html
 
 class ErrorBoundary extends React.Component<{ statusCode: CatchedCode }> {

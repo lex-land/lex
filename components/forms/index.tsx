@@ -1,7 +1,6 @@
 import {
   Button,
   IButtonProps,
-  Intent,
   Position,
   Toaster,
 } from '@blueprintjs/core';
@@ -44,7 +43,7 @@ export const QuickForm = (props: QuickFormProps<any>) => {
       props.success && props.success(values, json);
       props.successToast &&
         Toaster.create({ position: Position.TOP_RIGHT }).show({
-          intent: Intent.SUCCESS,
+          icon: 'tick',
           message: props.successToast,
         });
     }

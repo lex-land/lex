@@ -1,5 +1,6 @@
-import { Controller, Post, Session } from '@nestjs/common';
+import { Body, Controller, Post, Session } from '@nestjs/common';
 import { InterfaceService } from '@server/interface/interface.service';
+import { MigrateRepoDto } from './dto/migrate-repo.dto';
 import { ModuleService } from '@server/module/module.service';
 import { PropertyService } from '@server/property/property.service';
 import { RepositoryService } from '@server/repository/repository.service';
@@ -13,13 +14,16 @@ export class MigrationController {
     private readonly propService: PropertyService,
   ) {}
   @Post('repo')
-  public async migrationRepo(@Session() session: any) {
-    const { data: repoJson } = await import('./data/repo.json');
+  public async migrationRepo(
+    @Body('data') repoJson: MigrateRepoDto,
+    @Session() session: any,
+  ) {
     const repo = await this.repoService.create({
       name: repoJson.name,
       description: repoJson.description,
       creator: session.user,
       owner: session.user,
+      members: [session.user],
     });
     for (const repoMod of repoJson.modules) {
       const mod = await this.modService.create({

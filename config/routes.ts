@@ -30,6 +30,8 @@ add(get('settings'));
 add(get('login'));
 add(get('join'));
 
+add(get('migrations/json'));
+
 add(root('dashboard'));
 
 // 打印对应关系

@@ -1,87 +1,63 @@
-import {
-  Button,
-  Card,
-  Classes,
-  ControlGroup,
-  Divider,
-  H5,
-  InputGroup,
-  Intent,
-  Popover,
-  Position,
-  Toaster,
-} from '@blueprintjs/core';
+import { H1, MenuItem } from '@blueprintjs/core';
+import React, { useState } from 'react';
 import { composePageProps, usePageProps } from '@core/next-compose';
+import { repo, user } from '@helpers/page-props';
+import { Flex } from '@components/layout/flex';
+import { MultiSelect } from '@blueprintjs/select';
 import { Page } from '@components/page';
-import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
-import { http } from '@helpers/fetch';
-import { repo } from '@helpers/page-props';
+import { User } from '@server/user/user.entity';
 
-export default composePageProps(repo)(() => {
-  const { repo } = usePageProps<{ repo: Repository }>();
-  const handleSubmit = (newRepo: any) => {
-    http.post(`/api/repository/${repo.id}/members`, newRepo);
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
-      message: '已成功添加成员',
-    });
-  };
+const MemberMultiSelect = MultiSelect.ofType<any>();
+
+export default composePageProps(repo, user.all)(() => {
+  const { repo, users } = usePageProps<{ repo: Repository; users: User[] }>();
+  const [selectedItems, setSelectedItems] = useState(
+    repo.members.map(i => ({ name: i.fullname })),
+  );
   return (
     <Page>
       <Page.Navbar />
-      <Repo.Nav />
       <Repo.SubPage>
-        <form onSubmit={handleSubmit}>
-          <Card>
-            {repo.members.map(m => (
-              <div key={m.id}>
-                <span>{m.fullname}</span>
-                <Popover
-                  position="auto"
-                  content={
-                    <div style={{ padding: 20 }}>
-                      <H5>移除成员</H5>
-                      <p>
-                        你确认要踢掉 <strong>{m.fullname}</strong>
-                      </p>
-                      <div
-                        style={{
-                          display: 'flex',
-                          justifyContent: 'flex-end',
-                          marginTop: 15,
-                        }}
-                      >
-                        <Button
-                          className={Classes.POPOVER_DISMISS}
-                          style={{ marginRight: 10 }}
-                        >
-                          取消
-                        </Button>
-                        <Button
-                          intent={Intent.DANGER}
-                          className={Classes.POPOVER_DISMISS}
-                        >
-                          删除
-                        </Button>
-                      </div>
-                    </div>
-                  }
-                >
-                  <Button intent="danger" icon="trash" />
-                </Popover>
-                <Divider />
-              </div>
-            ))}
-            <div style={{ flex: '1 1', marginTop: 24, textAlign: 'right' }}>
-              <ControlGroup>
-                <InputGroup />
-                <Button intent="success" text="添加成员" />
-              </ControlGroup>
-            </div>
-          </Card>
-        </form>
+        <Flex>
+          <Repo.Sider />
+          <Page.Content>
+            <H1>成员</H1>
+            <MemberMultiSelect
+              itemRenderer={(item, { handleClick }) => (
+                <MenuItem
+                  icon={item.checked && 'tick'}
+                  key={item.name}
+                  onClick={handleClick}
+                  label={item.name}
+                />
+              )}
+              items={users.map(user => ({
+                name: user.fullname,
+                checked: selectedItems.map(i => i.name).includes(user.fullname),
+              }))}
+              noResults={<MenuItem disabled={true} text="No results." />}
+              onItemSelect={item => {
+                item.checked = !item.checked;
+                if (selectedItems.map(i => i.name).includes(item.name)) {
+                  // remove
+                  selectedItems.splice(
+                    selectedItems.findIndex(i => i.name === item.name),
+                    1,
+                  );
+                  setSelectedItems([...selectedItems]);
+                } else {
+                  // add
+                  selectedItems.push(item);
+                  setSelectedItems([...selectedItems]);
+                }
+              }}
+              tagRenderer={item => <span>{item.name}</span>}
+              selectedItems={selectedItems}
+            />
+          </Page.Content>
+        </Flex>
       </Repo.SubPage>
     </Page>
   );

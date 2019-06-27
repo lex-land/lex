@@ -1,4 +1,4 @@
-import { Button, H1 } from '@blueprintjs/core';
+import { Callout, H1 } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
@@ -11,6 +11,11 @@ export default () => {
     <Page>
       <Page.Navbar />
       <Page.Content>
+        <Callout intent="primary">
+          <span>之前用 Rap2 ？可以试试 </span>
+          <a href="/migrations/json">从 JSON 新建</a>
+        </Callout>
+        <br />
         <H1>创建一个仓库</H1>
         <QuickForm
           action={newValue => http.post('/api/repository', newValue)}
@@ -20,8 +25,6 @@ export default () => {
           }
           successToast="成功创建仓库"
         />
-        <Page.EmberedError visible code={503} />
-        <Button onClick={() => http.post('/api/migration/repo')}>迁移</Button>
       </Page.Content>
     </Page>
   );

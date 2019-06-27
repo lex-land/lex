@@ -1,8 +1,16 @@
-import Document, { NextDocumentContext } from 'next/document';
+// _document is only rendered on the server side and not on the client side
+// Event handlers like onClick can't be added to this file
+// https://nextjs.org/docs#custom-document
+
+// ./pages/_document.js
+
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React, { Fragment } from 'react';
+import { NextDocumentContext } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-export default class MyDocument extends Document {
+class MyDocument extends Document {
+  // https://github.com/zeit/next.js/blob/master/examples/with-styled-components/pages/_document.js
   static async getInitialProps(ctx: NextDocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
@@ -27,4 +35,20 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link href="/stylesheets/main.css" rel="stylesheet" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
 }
+
+export default MyDocument;

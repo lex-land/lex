@@ -28,9 +28,7 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
             </Flex>
             <Dashboard.Navlist
               icon="git-repo"
-              dataSource={user.joinedRepositories.concat(
-                user.ownedRepositories,
-              )}
+              dataSource={user.joinedRepositories}
               itemHref={record => `/repositories/${record.id}`}
             />
           </Page.Sider>

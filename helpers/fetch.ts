@@ -7,12 +7,6 @@ import { logger } from '@core/logger';
 import path from 'path';
 import qs from 'qs';
 
-export interface FetchResponse<D> {
-  code: number;
-  data: D;
-  msg: string;
-}
-
 let token: string;
 
 export const getToken = () => token || getCookie(CONSTANTS.KEYOF_TOKEN);
@@ -22,7 +16,7 @@ export const setToken = (t: string) => {
 
 export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理URL
-  const url = api.startsWith('/') ? `${CONSTANTS.SUNMI_PROD_URL}${api}` : api;
+  const url = api.startsWith('/') ? `${process.env.SUNMI_PROD_URL}${api}` : api;
   const options = {
     method: 'GET',
     ...opts,
@@ -89,6 +83,6 @@ export const fetchMock = async (url: string, opts?: RequestInit) => {
   return json;
 };
 
-export function mock<D = any>(url: string): Promise<FetchResponse<D>> {
+export function mock<D = any>(url: string): Promise<D> {
   return fetchMock(url.replace('/apis', ''), {});
 }

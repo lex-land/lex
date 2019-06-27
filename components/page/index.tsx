@@ -97,7 +97,11 @@ const AvatorBar = () => {
           <MenuItem text="账户" href={`/users/${user.fullname}`} />
           <MenuItem text="仓库" href={`/users/${user.fullname}/repositories`} />
           <MenuDivider />
-          <MenuItem href="https://github.com/sunmi-web/lex/" text="源代码" />
+          <MenuItem href="https://github.com/lex-land/lex/" text="源代码" />
+          <MenuItem
+            href="https://github.com/lex-land/lex/issues/new"
+            text="问题反馈"
+          />
           <MenuItem text="设置" href={`/settings`} />
           <MenuItem text="退出登录" onClick={logout} href="/login" />
         </Menu>
@@ -141,14 +145,15 @@ const WrappedNavbar = ({
 export const Page = _.merge(
   (props: PageProps) => {
     return (
-      <main className={props.className} style={props.style}>
+      <Fragment>
         <Head>
           <title>{`Lex-${props.title || '接口文档管理'}`}</title>
-          <link href="/stylesheets/main.css" rel="stylesheet" />
         </Head>
-        {props.children}
+        <main className={props.className} style={props.style}>
+          {props.children}
+        </main>
         <GlobalStyle backgroundColor={props.backgroundColor} />
-      </main>
+      </Fragment>
     );
   },
   {

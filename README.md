@@ -1,10 +1,9 @@
 <p align="center">
-  <a href="https://lex.sunmi.com" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
+  <a href="https://lex-land.online" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
 </p>
 
 <p align="center">
 <a href="http://jenkins-hlcx.sunmi.com/job/lex/job/master/" target="_blank"><img src="http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster" alt="Jenkins" /></a>
-<a href="https://circleci.com/gh/sunmi-web/lex/tree/master" target="_blank"><img src="https://circleci.com/gh/sunmi-web/lex/tree/master.svg?style=svg" alt="CircleCI" /></a>
 </p>
 
 Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的一个产品。相比 Swagger UI、sosoApi、showDoc 等工具，Lex 主要做的不仅仅把接口呈现出来，更多的是提供结构化的接口定义去为前端的 mock 数据、自动化接口测试、批量测试用例覆盖等一系列配合上下游的协作。
@@ -15,6 +14,7 @@ Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的�
 - docker
 - docker-compose
 - mysql
+- nginx
 
 ## Start
 
@@ -42,6 +42,10 @@ npm run start:dev
 ## Deploy
 
 ```shell
+
+# 目标机器按照nodejs
+# https://github.com/nodesource/distributions/blob/master/README.md
+
 npm run deploy
 ```
 
@@ -56,11 +60,10 @@ npm run deploy
 - [x] 轻状态管理，使用 hooks 进行状态逻辑复用
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [x] 使用 docker 运行项目的生产环境
+- [x] 使用 styled-component 进行组件样式重构，移除已有 less
 - [ ] 不断优化页面异常处理
 - [ ] 不断优化 helpers、components、core、pages 之间的关系
 - [ ] 重新思考 UI 呈现，使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 优先完成 repo 仓库模块
-- [ ] 使用 styled-component 进行组件样式重构
 - [ ] 完成与 Rap 的功能
 - [ ] 完成 Next Feature
 - [ ] 表单完全校验
@@ -70,25 +73,48 @@ npm run deploy
 - [ ] SEO
 - [ ] 支持[GraphQL](https://nec.is/writing/next-js-apollo-graphql-performance-tuning-from-lists-to-details/)
 
+## Tooling
+
+- vscode
+- eslint
+- [stylelint](https://www.styled-components.com/docs/tooling#stylelint)
+- babel
+- commitlint
+- husky
+- nodemonConfig
+- prettier
+- lint-staged
+- jest
+
 ## Progress
 
-- [ ] 异常页面，包含 401、403、404、500、503 等，现阶段已经一致化，还待风格化 （完成度 80%）
-- [ ] join 页面 全名重复待校验 （完成度 70%）
-- [ ] login 页面，登录页面已完成，待风格化 （完成度 80%）
-- [ ] repo/new 页，
-- [ ] repo/show 页，
-- [ ] repo/members 页，
-- [ ] repo/modules 页，
-- [ ] repo/modules/show 页，
-- [ ] repo/modules/edit 页，
-- [ ] repo/settings 页，
-- [ ] repo/wiki 页，
+- [x] 异常页面，包含 401、403、404、500、503 等
+- [x] join 页面
+- [x] login 页面
+- [ ] 优先完成 repo 仓库模块
+  - [x] repo/new 页
+  - [x] repo/show 页
+  - [x] repo/modules 页
+  - [x] repo/settings 页
+  - [ ] repo/members 页
 - [ ] users 页
 - [ ] orgs 页
 - [ ] settings 页
 - [ ] 导航条里的全局搜索
 - [ ] 近期浏览，类似[这样](https://developers.facebook.com/docs/accountkit)
 - [ ] dashboard 页面 仪表盘只做了左侧的导航
+
+## Next Feature
+
+- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
+  - [x] 新增从 JSON 创建仓库
+- [ ] 添加接口操作日志
+- [ ] 添加接口返回码
+- [ ] 添加仓库内公共内容
+- [ ] 添加仓库 Wiki
+- [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
+- [ ] 添加用户角色，前端、后端、测试
+- [ ] 添加 mock 数据和接口数据的匹配
 
 ## Maybe Good Idea
 
@@ -108,18 +134,9 @@ npm run deploy
   - [with-recompose](https://github.com/zeit/next.js/tree/canary/examples/with-recompose)
   - [next-compose-initial-props](https://www.npmjs.com/package/next-compose-initial-props)
 
-## Next Feature
-
-- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
-- [ ] 添加接口操作日志
-- [ ] 添加接口返回码
-- [ ] 添加仓库内公共内容
-- [ ] 添加仓库 Wiki
-- [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
-- [ ] 添加用户角色，前端、后端、测试
-- [ ] 添加 mock 数据和接口数据的匹配
-
 ## Troubleshooting
 
 - Q: macOS 下，docker 启动开发环境比直接用 node 启动慢
 - A: [修改 host](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
+
+<!-- https://github.com/Microsoft/TypeScript/issues/29045 -->
