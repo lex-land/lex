@@ -1,35 +1,30 @@
 {
   "private": true,
-  "author": " <郭永杰 guoyongjie@sunmi.com>",
-  "license": "MIT",
-  "name": "lex",
   "version": "1.0.0",
-  "description": "sunmi,shopbi,next",
+  "name": "lex",
+  "description": "一个接口文档管理工具",
   "main": "server/main.ts",
-  "repository": "git@github.com:sunmi-web/lex.git",
+  "repository": "git@github.com:lex-land/lex.git",
+  "author": "briefguo <gyj9094@gmail.com>",
   "keywords": [
-    "sunmi"
+    "react",
+    "nestjs",
+    "nextjs",
+    "typeorm",
+    "typescript"
   ],
+  "license": "MIT",
   "scripts": {
     "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-    "prebuild": "rimraf build",
-    "build": "npm run build:next",
     "predatabase": "docker-compose -f ./docker/docker-compose.database.yml down",
     "database": "docker-compose -f ./docker/docker-compose.database.yml up -d",
-    "build:next": "npx next build",
-    "build:local": "SUNMI_PROD_URL=http://localhost:3000 npm run build",
+    "prebuild:master": "rimraf build && npx next build",
     "build:master": "SUNMI_PROD_URL=https://lex-land.online SUNMI_ENV=master npm run build",
     "start": "NODE_ENV=production npx ts-node --require tsconfig-paths/register --require reflect-metadata server/main.ts",
     "start:dev": "SUNMI_PROD_URL=http://localhost:3000 npx nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
-    "test:watch": "jest --watch",
     "predeploy": "docker-compose -f ./docker/docker-compose.yml pull && docker-compose -f ./docker/docker-compose.yml down",
-    "deploy": "docker-compose -f ./docker/docker-compose.yml up -d",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test": "jest --forceExit --coverage --verbose",
-    "debug": "npm run build && npm run watch-debug"
+    "deploy": "docker-compose -f ./docker/docker-compose.yml up -d"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.15.1",
@@ -41,6 +36,8 @@
     "@nestjs/platform-express": "^6.0.0",
     "@nestjs/typeorm": "^6.1.1",
     "body-parser": "^1.19.0",
+    "cache-manager": "^2.9.1",
+    "cache-manager-redis-store": "^1.5.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
     "classnames": "^2.2.6",
@@ -71,6 +68,7 @@
     "react-scrollspy": "^3.4.0",
     "react-sticky": "^6.0.3",
     "react-use": "^9.0.0",
+    "redis": "^2.8.0",
     "reflect-metadata": "0.1.12",
     "rxjs": "^6.3.3",
     "typeorm": "0.2.17",
@@ -83,8 +81,10 @@
     "@babel/plugin-proposal-decorators": "^7.4.4",
     "@commitlint/cli": "^7.6.1",
     "@commitlint/config-conventional": "^7.6.0",
+    "@nestjs/cli": "^6.5.0",
     "@nestjs/testing": "^6.0.0",
     "@types/body-parser": "^1.17.0",
+    "@types/cache-manager": "^1.2.7",
     "@types/classnames": "^2.2.7",
     "@types/crypto-js": "^3.1.43",
     "@types/csurf": "^1.9.35",
@@ -107,6 +107,7 @@
     "@types/react-scrollspy": "^3.3.0",
     "@types/react-sticky": "^6.0.3",
     "@types/react-wait": "^0.3.0",
+    "@types/redis": "^2.8.13",
     "@types/shelljs": "^0.8.5",
     "@types/styled-components": "^4.1.14",
     "@types/supertest": "^2.0.7",
@@ -355,9 +356,7 @@
   "lint-staged": {
     "linters": {
       "*.{ts,tsx}": [
-        "eslint"
-      ],
-      "*.{css,less}": [
+        "eslint",
         "stylelint"
       ]
     },
@@ -379,7 +378,6 @@
       "<rootDir>/jest.setup.js"
     ],
     "moduleNameMapper": {
-      "\\.(css|less)$": "identity-obj-proxy",
       "^@core/(.*)$": "<rootDir>/core/$1",
       "^@components/(.*)$": "<rootDir>/components/$1",
       "^@config/(.*)$": "<rootDir>/config/$1",
