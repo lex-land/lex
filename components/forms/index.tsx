@@ -1,41 +1,37 @@
 import {
   Button,
-  FormGroup,
   IButtonProps,
-  InputGroup,
   Intent,
   Position,
   Toaster,
 } from '@blueprintjs/core';
-import { Form, Formik, FormikActions } from 'formik';
+import { Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Field } from './Field';
 import React from 'react';
 import { ValidationError } from 'class-validator';
-import _ from 'lodash';
-import { initObjectByKeys } from '@core/transformer';
 
 interface QuickFormProps<T> {
   defaultValue?: object;
   action: (value: T) => any;
   success?: (value: T, json: any) => any;
-  fields: string[];
+  failure?: (value: T, json: any) => any;
   footer?: any;
+  render?: (formik: FormikProps<any>) => any;
   successToast?: string;
   large?: boolean;
   submitButton?: IButtonProps;
 }
 
 export const QuickForm = (props: QuickFormProps<any>) => {
-  const targetValue = _.pick(
-    props.defaultValue || initObjectByKeys(props.fields),
-    props.fields,
-  ) as any;
+  const { defaultValue, render } = props;
+  if (!defaultValue && !render) {
+    throw new Error('render 和 defaultValue不能同时为空');
+  }
   const handleSubmit = async (
     values: any,
     formikActions: FormikActions<any>,
   ) => {
-    const { error = '', message, ...json } = await props.action(
-      _.pick(values, props.fields),
-    );
+    const { error = '', message, ...json } = await props.action(values);
     if (error) {
       const errorMsg: ValidationError[] = message;
       errorMsg.forEach(e => {
@@ -56,29 +52,19 @@ export const QuickForm = (props: QuickFormProps<any>) => {
 
   return (
     <Formik
-      initialValues={targetValue}
+      initialValues={defaultValue}
       onSubmit={handleSubmit}
       render={formik => (
         <Form>
-          {props.fields.map(f => (
-            <FormGroup
-              intent={formik.errors[f] ? 'danger' : 'none'}
-              helperText={formik.errors[f]}
-              key={f}
-              label={f}
-            >
-              <InputGroup
-                large={props.large}
-                intent={formik.errors[f] ? 'danger' : 'none'}
-                name={f}
-                value={formik.values[f]}
-                onChange={formik.handleChange}
-              />
-            </FormGroup>
-          ))}
+          {render
+            ? render(formik)
+            : Object.keys(defaultValue || {}).map(
+                (field: string, index: number) => (
+                  <Field.Input key={index} name={field} />
+                ),
+              )}
           {props.footer || (
             <Button
-              large={props.large}
               intent="primary"
               text="保存"
               {...props.submitButton}

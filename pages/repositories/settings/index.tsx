@@ -9,6 +9,7 @@ import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
 import { repo } from '@helpers/page-props';
 
+const formDefaultValues = { name: '', description: '' };
 export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   return (
@@ -26,8 +27,7 @@ export default composePageProps(repo)(() => {
               action={(newRepo: any) =>
                 http.put(`/api/repository/${repo.id}`, newRepo)
               }
-              fields={['name', 'description']}
-              defaultValue={repo}
+              defaultValue={formDefaultValues}
               successToast="更新仓库信息成功"
             />
             <Repo.CURD.Delete button={<Button>删除这个仓库</Button>} />

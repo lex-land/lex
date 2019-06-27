@@ -10,6 +10,7 @@ import React, { Fragment, useState } from 'react';
 import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms';
 import { http } from '@helpers/fetch';
+import { initObjectByKeys } from '@core/transformer';
 import { route } from '@helpers/route';
 
 interface CurdButtonProps {
@@ -60,7 +61,7 @@ const CreateButton = ({
       >
         <LexContent>
           <QuickForm
-            fields={defaultKeys}
+            defaultValue={initObjectByKeys(defaultKeys)}
             action={values => http.post(action, { ...values, ...params })}
             success={success}
             successToast={successToast || '新增成功'}
@@ -72,7 +73,6 @@ const CreateButton = ({
 };
 
 const EditButton = ({
-  fields,
   action,
   params,
   defaultValue,
@@ -106,7 +106,6 @@ const EditButton = ({
       >
         <LexContent>
           <QuickForm
-            fields={fields || []}
             defaultValue={value}
             action={values => http.put(action, { ...values, ...params })}
             success={handleSubmit}
