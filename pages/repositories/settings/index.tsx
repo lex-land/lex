@@ -10,6 +10,7 @@ import { repo } from '@helpers/page-props';
 
 export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
+  const formDefaultValues = { name: '', description: '' };
   return (
     <Page>
       <Page.Navbar />
@@ -25,8 +26,7 @@ export default composePageProps(repo)(() => {
             action={(newRepo: any) =>
               http.put(`/api/repository/${repo.id}`, newRepo)
             }
-            fields={['name', 'description']}
-            defaultValue={repo}
+            defaultValue={formDefaultValues}
             successToast="更新仓库信息成功"
           />
           {/* <DeleteButton

@@ -10,6 +10,7 @@ import { repo } from '@helpers/page-props';
 import { route } from '@helpers/route';
 
 export default composePageProps(repo)(() => {
+  const formDefaultValues = { name: '', description: '' };
   return (
     <Page>
       <Page.Navbar />
@@ -20,7 +21,7 @@ export default composePageProps(repo)(() => {
             <H1>创建一个模块</H1>
             <QuickForm
               action={newValue => http.post('/api/repository', newValue)}
-              fields={['name', 'description']}
+              defaultValue={formDefaultValues}
               success={(values, json) =>
                 route('repositories/show').replace({ repository_id: json.id })
               }
