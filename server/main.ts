@@ -1,9 +1,7 @@
 import * as bodyParser from 'body-parser';
-import {
-  ExpressAdapter,
-  NestExpressApplication,
-} from '@nestjs/platform-express';
 import { AppModule } from './app.module';
+import { ExpressAdapter } from '@nestjs/platform-express';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import { NextHandlerFilter } from '@helpers/filters/next-handler';
 import { ValidationPipe } from '@nestjs/common';
@@ -32,7 +30,7 @@ async function bootstrap() {
   app.useGlobalFilters(new NextHandlerFilter(nextApp));
 
   app.use(bodyParser.json({ limit: '10mb' }));
-  app.use(bodyParser.urlencoded({ limit: '10mb' }));
+  app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
   // 会话设置
   app.use(
     session({
@@ -52,7 +50,6 @@ async function bootstrap() {
       // store: ,
     }),
   );
-  // somewhere in your initialization file
   app.use(helmet());
   // app.use(csurf());
   app.use(
@@ -63,7 +60,7 @@ async function bootstrap() {
   );
   // 跨域安全
   app.enableCors({
-    origin: [/\.sunmi\.com$/],
+    origin: [/\.lex-land\.online$/, /\.lex-land\.io$/, /\.lex-land\.cloud$/],
   });
   const PORT = process.env.PORT || 3000;
   await app.listen(PORT, () => {
