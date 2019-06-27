@@ -1,3 +1,4 @@
+import { Field } from 'components/forms/Field';
 import { Logo } from '@components/vi';
 import { NavbarGroup } from '@blueprintjs/core';
 import { Page } from '@components/page';
@@ -9,6 +10,13 @@ import { login } from '@helpers/service';
 import md5 from 'md5';
 import { route } from '@helpers/route';
 import { signedUser } from '@helpers/page-props';
+
+const emailValidate = (value: string) => {
+  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+    return 'Invalid email address';
+  }
+  return '';
+};
 
 export default composePageProps(signedUser.redirect('/'))(() => {
   return (
@@ -24,11 +32,24 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         <Page.Card.Title>Create a New Account</Page.Card.Title>
         <QuickForm
           large
-          fields={Object.keys({
+          defaultValue={{
             fullname: '',
             email: '',
             password: '',
-          })}
+          }}
+          render={() => {
+            return (
+              <>
+                <Field.Input name="fullname" />
+                <Field.Input
+                  name="email"
+                  component="input"
+                  validate={emailValidate}
+                />
+                <Field.Input name="password" type="password" />
+              </>
+            );
+          }}
           submitButton={{
             intent: 'success',
             className: 'login-button',

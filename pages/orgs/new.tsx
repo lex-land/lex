@@ -6,15 +6,15 @@ import { http } from '@helpers/fetch';
 import { route } from '@helpers/route';
 
 export default () => {
+  const formValues = { name: '', description: '' };
   return (
     <Page>
       <Page.Navbar />
       <Page.Content>
         <H1>创建一个组织</H1>
         <QuickForm
-          defaultValue={{ name: '', description: '' }}
+          defaultValue={formValues}
           action={newValue => http.post('/api/organization', newValue)}
-          fields={['name', 'description']}
           success={(values, json) =>
             route('orgs/show').replace({ org_id: json.name })
           }

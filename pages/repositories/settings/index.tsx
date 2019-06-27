@@ -9,6 +9,7 @@ import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { http } from '@helpers/fetch';
 
+const formDefaultValues = { name: '', description: '' };
 export default composePageProps(repo, user.all)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   return (
@@ -24,8 +25,7 @@ export default composePageProps(repo, user.all)(() => {
               action={(newRepo: any) =>
                 http.put(`/api/repository/${repo.id}`, newRepo)
               }
-              fields={['name', 'description']}
-              defaultValue={repo}
+              defaultValue={formDefaultValues}
               successToast="更新仓库信息成功"
             />
             <br />
