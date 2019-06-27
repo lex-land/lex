@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Module } from '../module/module.entity';
 import { Property } from '../property/property.entity';
@@ -15,6 +17,7 @@ enum InterfaceMethod {
   POST = 'POST',
   PUT = 'PUT',
   DELETE = 'DELETE',
+  PATCH = 'PATCH',
 }
 
 @Entity()
@@ -51,13 +54,6 @@ export class Interface {
   })
   description: string;
 
-  @Column({
-    type: 'bigint',
-    default: 1,
-    nullable: false,
-  })
-  priority: number;
-
   @ManyToOne(() => User)
   creator: User;
 
@@ -74,4 +70,10 @@ export class Interface {
 
   @OneToMany(() => Property, prop => prop.interface)
   properties: Property[];
+
+  @CreateDateColumn()
+  createdAt: string;
+
+  @UpdateDateColumn()
+  updatedAt: string;
 }

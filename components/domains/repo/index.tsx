@@ -1,5 +1,6 @@
 import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
 import { CURD } from '@components/curd';
+import { Flex } from '@components/layout/flex';
 import { Inte } from '../inte';
 import { Mod } from '../mod';
 import React from 'react';
@@ -39,12 +40,13 @@ const RepoNav = () => {
 };
 
 const RepoSiderContainer = styled.div`
-  width: 18%;
-  padding: 24px 0;
+  width: 20%;
+  padding: 24px 32px;
   font-size: 15px;
   font-family: Graphik LCG Web, Graphik Arabic Web Regular, -apple-system,
     BlinkMacSystemFont, Helvetica Neue, Helvetica, Arial, Lucida Grande,
     Sans-Serif;
+  /* border-right: 1px solid #ddd; */
   .sider-title {
     color: ${props => (props['aria-selected'] ? '#106ba3' : '#1c1e21')};
   }
@@ -55,17 +57,12 @@ const TextLink = styled.a`
   margin: 2px 0;
   display: inline-block;
   font-weight: 500;
-`;
-
-const ActionLink = styled(TextLink)`
-  color: #0d8050;
-  &:hover {
-    color: #0d8050;
-  }
   svg {
     margin-right: 5px;
   }
 `;
+
+const ActionLink = styled(TextLink)``;
 
 const RepoNavList = styled(UL)`
   padding-left: 0;
@@ -74,16 +71,20 @@ const RepoNavList = styled(UL)`
 
 const RepoSider = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
+  const router = useRouter();
   const query = useQuery();
   return (
     <RepoSiderContainer>
-      <TextLink
-        aria-selected={+query.repository_id === repo.id}
-        href={`/repositories/${repo.id}`}
-        className="sider-title"
-      >
-        {repo.name}
-      </TextLink>
+      <Flex justify="space-between" align="center">
+        <TextLink
+          aria-selected={+query.repository_id === repo.id}
+          href={`/repositories/${repo.id}`}
+          className="sider-title"
+        >
+          {/* <Icon icon="git-repo" /> */}
+          {repo.name}
+        </TextLink>
+      </Flex>
       <RepoNavList>
         {repo.modules.map(mod => (
           <li key={mod.id}>
@@ -91,6 +92,7 @@ const RepoSider = () => {
               aria-selected={+query.module_id === mod.id}
               href={`/repositories/${repo.id}/modules/${mod.id}`}
             >
+              {/* <Icon icon="cube" /> */}
               {mod.name}
             </TextLink>
             {+query.module_id === mod.id && (
@@ -102,6 +104,7 @@ const RepoSider = () => {
                       aria-selected={+query.interface_id === inte.id}
                       href={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
                     >
+                      {/* <Icon icon="application" /> */}
                       {inte.name}
                     </TextLink>
                   </li>
@@ -111,8 +114,8 @@ const RepoSider = () => {
                     params={{ repository: repo, module: mod }}
                     button={
                       <ActionLink style={{ marginLeft: 8 }}>
-                        <Icon icon="plus" />
-                        <span>新增</span>
+                        <Icon intent="success" icon="plus" />
+                        {/* <span>新增</span> */}
                       </ActionLink>
                     }
                   />
@@ -121,18 +124,22 @@ const RepoSider = () => {
             )}
           </li>
         ))}
-        <li key="create-module">
-          <Mod.CURD.Create
-            params={{ repository: repo }}
-            button={
-              <ActionLink>
-                <Icon icon="cube-add" />
-                <span>新增</span>
-              </ActionLink>
-            }
-          />
-        </li>
+        <Mod.CURD.Create
+          params={{ repository: repo }}
+          button={
+            <ActionLink>
+              <Icon intent="success" icon="plus" />
+            </ActionLink>
+          }
+        />
       </RepoNavList>
+      <TextLink
+        aria-selected={router.asPath === `/repositories/${repo.id}/settings`}
+        href={`/repositories/${repo.id}/settings`}
+      >
+        {/* <Icon icon="cog" /> */}
+        <span>设置</span>
+      </TextLink>
     </RepoSiderContainer>
   );
 };
@@ -162,6 +169,9 @@ const RepoCURD = {
       button={button}
       successForceReload
     />
+  ),
+  Delete: ({ id, button }: any) => (
+    <CURD.Delete action={`/api/repository/${id}`} button={button} />
   ),
 };
 

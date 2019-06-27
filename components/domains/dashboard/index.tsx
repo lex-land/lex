@@ -68,6 +68,7 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
 };
 
 const DashboardNavListItem = styled.li`
+  margin: 8px 0;
   .link {
     font-weight: 500;
     font-size: 15px;

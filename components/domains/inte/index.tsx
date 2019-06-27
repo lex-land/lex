@@ -14,6 +14,24 @@ export const InteCURD = {
       successForceReload
     />
   ),
+  Update: ({ id, button, defaultValue }: any) => (
+    <CURD.Update
+      action={`/api/interface/${id}`}
+      fields={['method', 'url', 'name', 'description']}
+      defaultValue={defaultValue}
+      drawerTitle="编辑接口"
+      button={button}
+      successForceReload
+    />
+  ),
+  Delete: ({ id, button }: any) => (
+    <CURD.Delete
+      action={`/api/interface/${id}`}
+      button={button}
+      alertWhen
+      successForceReload
+    />
+  ),
 };
 
 export const Inte = {
