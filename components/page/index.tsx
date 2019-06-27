@@ -141,14 +141,16 @@ const WrappedNavbar = ({
 export const Page = _.merge(
   (props: PageProps) => {
     return (
-      <main className={props.className} style={props.style}>
+      <Fragment>
         <Head>
           <title>{`Lex-${props.title || '接口文档管理'}`}</title>
           <link href="/stylesheets/main.css" rel="stylesheet" />
         </Head>
-        {props.children}
+        <main className={props.className} style={props.style}>
+          {props.children}
+        </main>
         <GlobalStyle backgroundColor={props.backgroundColor} />
-      </main>
+      </Fragment>
     );
   },
   {
