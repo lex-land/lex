@@ -41,14 +41,14 @@ export default () => {
         <Callout
           style={{ marginBottom: 24 }}
           intent="warning"
-          title="从JSON新建，会有一些自动变更"
+          title="Something strange about Migrate from JSON"
         >
           <UL>
             <li>仓库的拥有者会自动变更为当前登录用户</li>
             <li>仓库的成员也会自动清空</li>
           </UL>
         </Callout>
-        <H1>从JSON新建</H1>
+        <H1>Migrate from JSON</H1>
         <Flex style={{ margin: '24px 0' }}>
           <Flex.Auto>
             {loading && <ProgressBar />}
@@ -65,7 +65,7 @@ export default () => {
                 intent="primary"
                 onClick={() => handleSubmit()}
               >
-                迁移
+                Create
               </Button>
             </ControlGroup>
           </Flex.Auto>

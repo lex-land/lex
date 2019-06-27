@@ -1,6 +1,6 @@
+import { Button, NavbarGroup } from '@blueprintjs/core';
 import { Field } from 'components/forms/Field';
 import { Logo } from '@components/vi';
-import { NavbarGroup } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
@@ -37,24 +37,25 @@ export default composePageProps(signedUser.redirect('/'))(() => {
             email: '',
             password: '',
           }}
-          render={() => {
-            return (
-              <>
-                <Field.Input name="fullname" />
-                <Field.Input
-                  name="email"
-                  component="input"
-                  validate={emailValidate}
-                />
-                <Field.Input name="password" type="password" />
-              </>
-            );
-          }}
-          submitButton={{
-            intent: 'success',
-            className: 'login-button',
-            text: 'Sign Up',
-          }}
+          render={() => (
+            <>
+              <Field.Input
+                large
+                name="email"
+                component="input"
+                validate={emailValidate}
+              />
+              <Field.Input large name="fullname" />
+              <Field.Input large name="password" type="password" />
+              <Button
+                intent="success"
+                className="login-button"
+                type="submit"
+                large
+                text="Sign Up"
+              />
+            </>
+          )}
           action={values =>
             http.post(`/api/user`, {
               ...values,

@@ -18,12 +18,12 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
             <Dashboard.Switcher name={user.fullname} />
             <Divider />
             <Flex align="center" justify="space-between">
-              <H5 style={{ marginBottom: 0 }}>仓库</H5>
+              <H5 style={{ marginBottom: 0 }}>Repositories</H5>
               <AnchorButton
                 icon="git-repo"
                 intent="success"
                 href="/repositories/new"
-                text="新增"
+                text="New"
               />
             </Flex>
             <Dashboard.Navlist
