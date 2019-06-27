@@ -10,7 +10,7 @@ import { createField } from '../Field/util';
 
 type Props = IHTMLSelectProps & FieldConfig;
 
-export const SelectItem = createField<Props>((props: Props) => {
+export const Select = createField<Props>((props: Props) => {
   const { field, form, ...otherProps } = props as any;
   const error = form.errors && form.errors[field.name];
 

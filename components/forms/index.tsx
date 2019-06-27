@@ -1,10 +1,5 @@
-import {
-  Button,
-  IButtonProps,
-  Position,
-  Toaster,
-} from '@blueprintjs/core';
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Position, Toaster } from '@blueprintjs/core';
 import { Field } from './Field';
 import React from 'react';
 import { ValidationError } from 'class-validator';
@@ -14,11 +9,9 @@ interface QuickFormProps<T> {
   action: (value: T) => any;
   success?: (value: T, json: any) => any;
   failure?: (value: T, json: any) => any;
-  footer?: any;
   render?: (formik: FormikProps<any>) => any;
   successToast?: string;
   large?: boolean;
-  submitButton?: IButtonProps;
 }
 
 export const QuickForm = (props: QuickFormProps<any>) => {
@@ -62,14 +55,6 @@ export const QuickForm = (props: QuickFormProps<any>) => {
                   <Field.Input key={index} name={field} />
                 ),
               )}
-          {props.footer || (
-            <Button
-              intent="primary"
-              text="保存"
-              {...props.submitButton}
-              type="submit"
-            />
-          )}
         </Form>
       )}
     />

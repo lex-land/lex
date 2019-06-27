@@ -8,13 +8,13 @@ import {
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { FieldConfig } from 'formik';
-import { createField } from 'components/forms/Field/util';
+import { createField } from '@components/forms/Field/util';
 
 const LockButton = ({ showPassword, onClick }: any) => {
   return (
     <Tooltip content={`${showPassword ? 'Hide' : 'Show'} Password`}>
       <Button
-        icon={showPassword ? 'unlock' : 'lock'}
+        icon={showPassword ? 'eye-off' : 'eye-open'}
         intent={Intent.WARNING}
         minimal={true}
         onClick={() => onClick()}
@@ -39,6 +39,7 @@ export const InputItem = createField<InputItemProps>(
         intent={error ? Intent.DANGER : Intent.NONE}
       >
         <InputGroup
+          intent={error ? Intent.DANGER : Intent.NONE}
           {...field}
           {...otherProps}
           type={!showPassword && isPassword ? 'password' : 'text'}

@@ -1,10 +1,10 @@
-import { InputItem } from '@components/forms/InputItem';
-import { SelectItem } from '../Select';
+import { InputItem } from '../InputItem';
+import { Select } from '../Select';
 
 export const Field = Object.assign(
   {},
   {
     Input: InputItem,
-    Select: SelectItem,
+    Select: Select,
   },
 );
