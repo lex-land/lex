@@ -12,7 +12,7 @@ services:
       MYSQL_ROOT_PASSWORD: '123456'
       MYSQL_DATABASE: 'Lex'
     volumes:
-      - ../cache/mysql:/var/lib/mysql
+      - ../temp/mysql:/var/lib/mysql
     # 添加默认排序规则
     # https://stackoverflow.com/questions/45729326/how-to-change-the-default-character-set-of-mysql-using-docker-compose
     command:
