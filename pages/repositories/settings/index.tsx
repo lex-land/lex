@@ -1,4 +1,4 @@
-import { Button, H4 } from '@blueprintjs/core';
+import { Button, H1, H4 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { repo, user } from '@helpers/page-props';
 import { Flex } from '@components/layout/flex';
@@ -18,6 +18,7 @@ export default composePageProps(repo, user.all)(() => {
         <Flex>
           <Repo.Sider />
           <Page.Content>
+            <H1>设置</H1>
             <H4>基本信息</H4>
             <QuickForm
               action={(newRepo: any) =>

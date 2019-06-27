@@ -1,4 +1,4 @@
-import { H4, MenuItem } from '@blueprintjs/core';
+import { H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { repo, user } from '@helpers/page-props';
@@ -23,7 +23,7 @@ export default composePageProps(repo, user.all)(() => {
         <Flex>
           <Repo.Sider />
           <Page.Content>
-            <H4>成员</H4>
+            <H1>成员</H1>
             <MemberMultiSelect
               itemRenderer={(item, { handleClick }) => (
                 <MenuItem
