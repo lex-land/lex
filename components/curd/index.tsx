@@ -7,10 +7,10 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import React, { Fragment, useState } from 'react';
+import { FormikProps } from 'formik';
 import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms';
 import { http } from '@helpers/fetch';
-import { initObjectByKeys } from '@core/transformer';
 import { route } from '@helpers/route';
 
 interface CurdButtonProps {
@@ -24,12 +24,13 @@ interface CurdButtonProps {
   successGoto?: string;
   defaultValue?: any;
   onChange?: any;
+  render?: (formik: FormikProps<any>) => any;
   drawerTitle?: string;
   button?: React.ReactNode;
 }
 
 const CreateButton = ({
-  fields,
+  defaultValue,
   action,
   params,
   onChange,
@@ -50,7 +51,7 @@ const CreateButton = ({
         .merge()
         .replace();
   };
-  const defaultKeys = fields || [];
+  // const defaultKeys = fields || [];
   return (
     <Fragment>
       {button && <span onClick={onAddClick}>{button}</span>}
@@ -61,7 +62,7 @@ const CreateButton = ({
       >
         <LexContent>
           <QuickForm
-            defaultValue={initObjectByKeys(defaultKeys)}
+            defaultValue={defaultValue}
             action={values => http.post(action, { ...values, ...params })}
             success={success}
             successToast={successToast || '新增成功'}
@@ -177,49 +178,6 @@ const DeleteButton = ({
     </Fragment>
   );
 };
-
-{
-  /* <td>
-                  <ButtonGroup>
-                    <EditButton
-                      fields={['method', 'url', 'name', 'description']}
-                      defaultValue={inte}
-                      icon="edit"
-                    />
-                    <Popover
-                      position="auto"
-                      content={
-                        <div style={{ padding: 20 }}>
-                          <H5>删除确认</H5>
-                          <p>你确认要删除这个接口吗？这个动作将不能撤销</p>
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'flex-end',
-                              marginTop: 15,
-                            }}
-                          >
-                            <Button
-                              className={Classes.POPOVER_DISMISS}
-                              style={{ marginRight: 10 }}
-                            >
-                              取消
-                            </Button>
-                            <Button
-                              intent={Intent.DANGER}
-                              className={Classes.POPOVER_DISMISS}
-                            >
-                              删除
-                            </Button>
-                          </div>
-                        </div>
-                      }
-                    >
-                      <Button intent="danger" icon="trash" />
-                    </Popover>
-                  </ButtonGroup>
-                </td> */
-}
 
 export const CURD = Object.assign(
   {},
