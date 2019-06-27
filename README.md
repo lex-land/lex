@@ -60,11 +60,10 @@ npm run deploy
 - [x] 轻状态管理，使用 hooks 进行状态逻辑复用
 - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
 - [x] 使用 docker 运行项目的生产环境
+- [x] 使用 styled-component 进行组件样式重构，移除已有 less
 - [ ] 不断优化页面异常处理
 - [ ] 不断优化 helpers、components、core、pages 之间的关系
 - [ ] 重新思考 UI 呈现，使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 优先完成 repo 仓库模块
-- [ ] 使用 styled-component 进行组件样式重构
 - [ ] 完成与 Rap 的功能
 - [ ] 完成 Next Feature
 - [ ] 表单完全校验
@@ -74,25 +73,51 @@ npm run deploy
 - [ ] SEO
 - [ ] 支持[GraphQL](https://nec.is/writing/next-js-apollo-graphql-performance-tuning-from-lists-to-details/)
 
+## Tooling
+
+vscode
+eslint
+stylelint https://www.styled-components.com/docs/tooling#stylelint
+babel
+commitlint
+husky
+nodemonConfig
+prettier
+lint-staged
+jest
+
 ## Progress
 
 - [ ] 异常页面，包含 401、403、404、500、503 等，现阶段已经一致化，还待风格化 （完成度 80%）
 - [ ] join 页面 全名重复待校验 （完成度 70%）
 - [ ] login 页面，登录页面已完成，待风格化 （完成度 80%）
-- [ ] repo/new 页，
-- [ ] repo/show 页，
-- [ ] repo/members 页，
-- [ ] repo/modules 页，
-- [ ] repo/modules/show 页，
-- [ ] repo/modules/edit 页，
-- [ ] repo/settings 页，
-- [ ] repo/wiki 页，
+- [ ] 优先完成 repo 仓库模块
+  - [ ] repo/new 页，
+  - [ ] repo/show 页，
+  - [ ] repo/members 页，
+  - [ ] repo/modules 页，
+  - [ ] repo/modules/show 页，
+  - [ ] repo/modules/edit 页，
+  - [ ] repo/settings 页，
+  - [ ] repo/wiki 页，
 - [ ] users 页
 - [ ] orgs 页
 - [ ] settings 页
 - [ ] 导航条里的全局搜索
 - [ ] 近期浏览，类似[这样](https://developers.facebook.com/docs/accountkit)
 - [ ] dashboard 页面 仪表盘只做了左侧的导航
+
+## Next Feature
+
+- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
+  - [x] 仓库迁移
+- [ ] 添加接口操作日志
+- [ ] 添加接口返回码
+- [ ] 添加仓库内公共内容
+- [ ] 添加仓库 Wiki
+- [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
+- [ ] 添加用户角色，前端、后端、测试
+- [ ] 添加 mock 数据和接口数据的匹配
 
 ## Maybe Good Idea
 
@@ -111,17 +136,6 @@ npm run deploy
   - [一些想法](https://github.com/zeit/next.js/issues/186)
   - [with-recompose](https://github.com/zeit/next.js/tree/canary/examples/with-recompose)
   - [next-compose-initial-props](https://www.npmjs.com/package/next-compose-initial-props)
-
-## Next Feature
-
-- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
-- [ ] 添加接口操作日志
-- [ ] 添加接口返回码
-- [ ] 添加仓库内公共内容
-- [ ] 添加仓库 Wiki
-- [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
-- [ ] 添加用户角色，前端、后端、测试
-- [ ] 添加 mock 数据和接口数据的匹配
 
 ## Troubleshooting
 
