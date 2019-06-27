@@ -8,7 +8,12 @@ export const InteCURD = {
     <CURD.Create
       action={`/api/interface`}
       params={params}
-      fields={['method', 'url', 'name', 'description']}
+      defaultValue={{
+        method: 'GET',
+        url: '',
+        name: '',
+        description: '',
+      }}
       button={button}
       drawerTitle="新增接口"
       successForceReload

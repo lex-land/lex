@@ -6,7 +6,7 @@ export const ModCURD = {
     <CURD.Create
       action={`/api/module`}
       params={params}
-      fields={['name', 'description']}
+      defaultValue={{ name: '', description: '' }}
       button={button}
       drawerTitle="新建模块"
       successForceReload

@@ -35,11 +35,11 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
         content={
           <Menu>
             <li className={Classes.MENU_HEADER}>
-              <h6 className={Classes.HEADING}>切换视图</h6>
+              <h6 className={Classes.HEADING}>Switch dashboard context</h6>
             </li>
             <Menu.Divider />
             <Fragment>
-              <MenuItem href="/" icon="person" text={user.fullname} />
+              <MenuItem href="/" icon="user" text={user.fullname} />
               {orgs.map((org: any) => (
                 <MenuItem
                   href={`/orgs/${encodeURIComponent(org.name)}`}
@@ -52,11 +52,11 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
             </Fragment>
             {orgs.length > 0 && (
               <Fragment>
-                <MenuItem href="/orgs" icon="cog" text="管理组织" />
+                <MenuItem href="/orgs" icon="cog" text="Manage orgnizations" />
                 <Menu.Divider />
               </Fragment>
             )}
-            <MenuItem href="/orgs/new" icon="plus" text="添加组织" />
+            <MenuItem href="/orgs/new" icon="plus" text="Create orgnizations" />
           </Menu>
         }
         position={Position.BOTTOM_LEFT}

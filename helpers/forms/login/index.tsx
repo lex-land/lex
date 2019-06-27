@@ -1,33 +1,26 @@
-import React, { Fragment } from 'react';
+import { Button } from '@blueprintjs/core';
 import { Field } from 'components/forms/Field';
 import { QuickForm } from '@components/forms';
+import React from 'react';
 import { login } from '@helpers/service';
 import { route } from '@helpers/route';
-import styled from 'styled-components';
-
-const PasswordComponet = styled(Field.Input)`
-  /* margin: 30px 0 60px 0; */
-`;
 
 export const LoginForm = () => {
   return (
     <QuickForm
       action={values => login(values)}
       render={() => (
-        <Fragment>
+        <>
           <Field.Input large name="username" />
-          {/* <Field.Input large name="username" /> */}
-          <PasswordComponet large name="password" type="password" />
-          {/* <SelectField large name="dd" options={['1', '2']} /> */}
-          {/*  */}
-        </Fragment>
+          <Field.Input large name="password" type="password" />
+          <Button intent="primary" type="submit" large text="Log in" />
+        </>
       )}
       success={() =>
         route()
           .merge()
           .replace()
       }
-      submitButton={{ text: '登录', large: true }}
     />
   );
 };
