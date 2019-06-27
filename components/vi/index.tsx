@@ -1,4 +1,3 @@
-// import './index.less';
 import { Link } from '@helpers/route';
 import React from 'react';
 
