@@ -3,10 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ViIcon = styled.svg`
-  color: #a7b6c2;
   cursor: pointer;
   transition: 0.25s;
-  /* vertical-align: middle; */
   &:hover {
     color: #a7b6c2;
   }

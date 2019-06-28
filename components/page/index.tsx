@@ -100,7 +100,7 @@ const WrappedNavbar = ({
         <Fragment>
           <NavbarGroup align={Alignment.LEFT}>
             <NavbarHeading>
-              <Logo size={30} />
+              <Logo size={36} />
             </NavbarHeading>
           </NavbarGroup>
           <NavbarGroup align={Alignment.RIGHT}>
@@ -119,6 +119,17 @@ const WrappedNavbar = ({
                     href="https://github.com/lex-land/lex/blob/master/README.md"
                     text="About Lex"
                   />
+                  <li className={Classes.MENU_HEADER}>
+                    <h6 className={Classes.HEADING}>
+                      <Flex justify="space-between" align="center">
+                        <Logo size={24} />
+                        <img
+                          src="http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster"
+                          alt="Jenkins"
+                        />
+                      </Flex>
+                    </h6>
+                  </li>
                 </Menu>
               }
               position={Position.BOTTOM_RIGHT}
