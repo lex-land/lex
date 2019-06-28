@@ -5,6 +5,7 @@ import { ModuleService } from '@server/module/module.service';
 import { OrganizationService } from '@server/organization/organization.service';
 import { PropertyService } from '@server/property/property.service';
 import { RepositoryService } from '@server/repository/repository.service';
+import { User } from '@server/user/user.entity';
 import { UserService } from '@server/user/user.service';
 import md5 from 'md5';
 
@@ -64,38 +65,35 @@ export class MigrationController {
         );
       }
     }
-
-    return Promise.all(
-      orgJson.map(async (org: any) =>
+    for (const org of orgJson) {
+      if (!(await this.orgService.findOneByName(org.name))) {
         this.orgService.create({
           name: org.name,
           description: org.description,
           creator: userObject[org.creator.email],
           owner: userObject[org.owner.email],
           members: org.members.map((m: any) => userObject[m.email]),
-        }),
-      ),
-    );
+        });
+      }
+    }
+    return {};
   }
 
   @Post('user')
   public async migrateUser(@Body('data') orgJson: any) {
-    const userObject: any = {};
+    const userObject: { [key: string]: User } = {};
     for (const { members } of orgJson) {
       for (const user of members) {
-        if (userObject[user.email]) {
-          userObject[user.email] = user;
-        } else {
-          if (await this.userService.isExist(user.email)) {
-            userObject[user.email] = user;
-          } else {
-            userObject[user.email] = await this.userService.create({
-              fullname: user.fullname,
-              email: user.email,
-              password: md5('sunmi388'),
-            });
-          }
-        }
+        userObject[user.email] = user;
+      }
+    }
+    for (const user of Object.values(userObject)) {
+      if (!(await this.userService.isExist(user.email))) {
+        userObject[user.email] = await this.userService.create({
+          fullname: user.fullname,
+          email: user.email,
+          password: md5('sunmi388'),
+        });
       }
     }
     return userObject;

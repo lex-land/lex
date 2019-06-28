@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { CreateOrgDto } from './dto/create-org.dto';
 import { OrganizationService } from './organization.service';
+import { ValidatorError } from '@helpers/validation/error';
 
 @Controller('organization')
 @UseGuards(AuthGuard('jwt'))
@@ -23,9 +24,13 @@ export class OrganizationController {
 
   @Post()
   public async create(@Body() body: CreateOrgDto, @Session() session: any) {
-    return this.orgService.create(
-      Object.assign(body, { creator: session.user, owner: session.user }),
-    );
+    if (!(await this.orgService.findOneByName(body.name))) {
+      return this.orgService.create(
+        Object.assign(body, { creator: session.user, owner: session.user }),
+      );
+    } else {
+      return ValidatorError({ name: 'name is exsit' });
+    }
   }
 
   @Get(':name')
