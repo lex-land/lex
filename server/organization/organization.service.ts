@@ -1,4 +1,3 @@
-import { CreateOrgDto } from './dto/create-org.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { Organization } from './organization.entity';
@@ -12,10 +11,10 @@ export class OrganizationService {
   ) {}
 
   async findAll(): Promise<Organization[]> {
-    return await this.orgRepository.find();
+    return await this.orgRepository.find({ relations: ['members'] });
   }
 
-  async create(createOrgDto: CreateOrgDto): Promise<Organization> {
+  async create(createOrgDto: any): Promise<Organization> {
     return await this.orgRepository.save(createOrgDto);
   }
   async delete(id: string) {

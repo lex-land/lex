@@ -13,7 +13,7 @@ import { LoginDto } from './dto/login.dto';
 import { SessionService } from './session.service';
 import { Token } from '@helpers/decorators/token.decorator';
 import { UserService } from '@server/user/user.service';
-import { ValidationError } from 'class-validator';
+import { ValidatorError } from '@helpers/validation/error';
 
 @Controller('session')
 export class SessionController {
@@ -23,34 +23,21 @@ export class SessionController {
   ) {}
   @Post()
   public async login(@Body() loginDto: LoginDto) {
-    const message: ValidationError[] = [];
-    const expection = {
-      error: '',
-      message,
-    };
     if (await this.userService.isExist(loginDto.username)) {
       try {
         const user = await this.userService.findOneByLoginDto(loginDto);
         return this.sessionService.genToken(user);
       } catch (error) {
         // 密码错误
-        expection.error = '密码错误';
-        expection.message.push({
-          property: 'password',
-          constraints: { passwordError: 'password is not correct' },
-          children: [],
+        return ValidatorError({
+          password: 'password is not correct',
         });
-        return expection;
       }
     } else {
       // 用户不存在
-      expection.error = '用户不存在';
-      expection.message.push({
-        property: 'username',
-        constraints: { usernameError: 'username is not exist' },
-        children: [],
+      return ValidatorError({
+        username: 'username is not exist',
       });
-      return expection;
     }
   }
 

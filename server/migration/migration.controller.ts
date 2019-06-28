@@ -2,19 +2,24 @@ import { Body, Controller, Post, Session } from '@nestjs/common';
 import { InterfaceService } from '@server/interface/interface.service';
 import { MigrateRepoDto } from './dto/migrate-repo.dto';
 import { ModuleService } from '@server/module/module.service';
+import { OrganizationService } from '@server/organization/organization.service';
 import { PropertyService } from '@server/property/property.service';
 import { RepositoryService } from '@server/repository/repository.service';
+import { UserService } from '@server/user/user.service';
+import md5 from 'md5';
 
 @Controller('migration')
 export class MigrationController {
   constructor(
+    private readonly userService: UserService,
+    private readonly orgService: OrganizationService,
     private readonly repoService: RepositoryService,
     private readonly modService: ModuleService,
     private readonly inteService: InterfaceService,
     private readonly propService: PropertyService,
   ) {}
   @Post('repo')
-  public async migrationRepo(
+  public async migrateRepo(
     @Body('data') repoJson: MigrateRepoDto,
     @Session() session: any,
   ) {
@@ -48,70 +53,47 @@ export class MigrationController {
     }
     return repo;
   }
-  // @Get('sync')
-  // public async sync() {
-  //   const json = await import('./data/org.json');
-  //   return Promise.all(
-  //     json.data.map(async org =>
-  //       this.orgService.create({
-  //         name: org.name,
-  //         description: org.description,
-  //         creator: await this.userService.getUserByName(org.creator.fullname),
-  //         owner: await this.userService.getUserByName(org.owner.fullname),
-  //         members: await Promise.all(
-  //           org.members.map(m => this.userService.getUserByName(m.fullname)),
-  //         ),
-  //       } as any),
-  //     ),
-  //   );
-  // }
-  // @Get('sync')
-  // @UseGuards(AuthGuard('jwt'))
-  // public async sync() {
-  //   const json = await import('./data/user.json');
-  //   return Promise.all(
-  //     json.data.map(user =>
-  //       this.service.create({
-  //         fullname: user.fullname,
-  //         email: `${user.fullname}@sunmi.com`,
-  //         password: 'sunmi388',
-  //       }),
-  //     ),
-  //   );
-  // }
-  // @Get('sync')
-  // public async findRap2() {
-  // const json = await import('./data/manage.json');
-  // const repo = json.data;
-  // return this.repoService.create({
-  //   name: repo.name,
-  //   description: repo.description,
-  //   creator: await this.userService.getUserByName(repo.creator.fullname),
-  //   owner: await this.userService.getUserByName(repo.owner.fullname),
-  //   members: await Promise.all(
-  //     repo.members.map(m => this.userService.getUserByName(m.fullname)),
-  //   ),
-  //   modules: await Promise.all(
-  //     repo.modules.map(async mod =>
-  //       this.modService.create({
-  //         name: mod.name,
-  //         description: mod.description,
-  //         // interfaces: await Promise.all(
-  //         //   mod.interfaces.map(async inte =>
-  //         //     this.inteService.create({
-  //         //       name: inte.name,
-  //         //       description: inte.description,
-  //         //       url: inte.url,
-  //         //       method: inte.method,
-  //         //       properties: await this.propService.createSome(
-  //         //         inte.properties,
-  //         //       ),
-  //         //     }),
-  //         //   ),
-  //         // ),
-  //       } as any),
-  //     ),
-  //   ),
-  // } as any);
-  // }
+
+  @Post('org')
+  public async migrateOrgs(@Body('data') orgJson: any) {
+    const userObject: any = {};
+    for (const { members } of orgJson) {
+      for (const user of members) {
+        userObject[user.email] = await this.userService.findOneByEmail(
+          user.email,
+        );
+      }
+    }
+
+    return Promise.all(
+      orgJson.map(async (org: any) =>
+        this.orgService.create({
+          name: org.name,
+          description: org.description,
+          creator: userObject[org.creator.email],
+          owner: userObject[org.owner.email],
+          members: org.members.map((m: any) => userObject[m.email]),
+        }),
+      ),
+    );
+  }
+
+  @Post('user')
+  public async migrateUser(@Body('data') orgJson: any) {
+    const userObject: any = {};
+    for (const { members } of orgJson) {
+      for (const user of members) {
+        if (userObject[user.email]) {
+          userObject[user.email] = user;
+        } else {
+          userObject[user.email] = await this.userService.create({
+            fullname: user.fullname,
+            email: user.email,
+            password: md5('sunmi388'),
+          });
+        }
+      }
+    }
+    return userObject;
+  }
 }

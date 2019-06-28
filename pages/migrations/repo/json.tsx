@@ -13,11 +13,10 @@ import React, { useState } from 'react';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import { http } from '@helpers/fetch';
-import repoSample from './data/repo.sample.json';
 import { route } from '@helpers/route';
 
 export default () => {
-  const [repo, setRepo] = useState(JSON.stringify(repoSample, null, 2));
+  const [repo, setRepo] = useState();
   const [loading, setLoading] = useState(false);
   const handleSubmit = async () => {
     setLoading(true);
@@ -48,7 +47,7 @@ export default () => {
             <li>仓库的成员也会自动清空</li>
           </UL>
         </Callout>
-        <H1>Migrate from JSON</H1>
+        <H1>Migrate Repo from JSON</H1>
         <Flex style={{ margin: '24px 0' }}>
           <Flex.Auto>
             {loading && <ProgressBar />}
