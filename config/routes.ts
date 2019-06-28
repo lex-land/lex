@@ -1,4 +1,4 @@
-import Routes, { add, get, resources, root } from '@core/next-routes';
+import Routes, { add, resources, root } from '@core/next-routes';
 
 add(
   resources('repositories').nest(
@@ -9,6 +9,7 @@ add(
     resources('settings'),
     resources('members'),
     resources('wiki'),
+    resources('codes'),
   ),
 );
 
@@ -25,12 +26,6 @@ add(
     resources('repositories'),
   ),
 );
-
-add(get('settings'));
-add(get('login'));
-add(get('join'));
-
-add(get('migrations/json'));
 
 add(root('dashboard'));
 
