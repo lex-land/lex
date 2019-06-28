@@ -11,13 +11,6 @@ import md5 from 'md5';
 import { route } from '@helpers/route';
 import { signedUser } from '@helpers/page-props';
 
-const emailValidate = (value: string) => {
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-    return 'Invalid email address';
-  }
-  return '';
-};
-
 export default composePageProps(signedUser.redirect('/'))(() => {
   return (
     <Page backgroundColor="#e9ebee">
@@ -31,7 +24,6 @@ export default composePageProps(signedUser.redirect('/'))(() => {
       <Page.Card>
         <Page.Card.Title>Create a New Account</Page.Card.Title>
         <QuickForm
-          large
           defaultValue={{
             fullname: '',
             email: '',
@@ -39,12 +31,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
           }}
           render={() => (
             <>
-              <Field.Input
-                large
-                name="email"
-                component="input"
-                validate={emailValidate}
-              />
+              <Field.Input large name="email" component="input" />
               <Field.Input large name="fullname" />
               <Field.Input large name="password" type="password" />
               <Button

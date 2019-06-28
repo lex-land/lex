@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from '../user/user.service';
+import { ValidatorError } from '@helpers/validation/error';
 
 @Controller('user')
 export class UserController {
@@ -24,7 +25,12 @@ export class UserController {
 
   @Post()
   public async create(@Body() body: CreateUserDto) {
-    return await this.service.create(body);
+    const user = await this.service.findOneByEmail(body.email);
+    if (user) {
+      return ValidatorError({ email: 'email already registered' });
+    } else {
+      return await this.service.create(body);
+    }
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
