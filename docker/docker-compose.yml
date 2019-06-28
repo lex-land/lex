@@ -7,7 +7,7 @@ services:
     volumes:
       - ./nginx/certs:/etc/nginx/certs
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./html:/usr/share/nginx/html
+      - ./nginx/html:/usr/share/nginx/html
     links:
       - lex-node
     depends_on:
