@@ -12,7 +12,7 @@ export default () => {
       <Page.Navbar />
       <Page.Content>
         <Callout intent="primary">
-          <span>Migrate from Rap2? Try </span>
+          <span>Migrate from Rap2. Try </span>
           <a href="/migrations/json">Migrate from JSON</a>
         </Callout>
         <br />

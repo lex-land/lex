@@ -1,5 +1,6 @@
 import {
   Alignment,
+  AnchorButton,
   Button,
   Card,
   Classes,
@@ -124,7 +125,7 @@ const WrappedNavbar = ({
             >
               <Button minimal icon="help" />
             </Popover>
-            <Button minimal icon="notifications" />
+            <AnchorButton href="/notifications" minimal icon="notifications" />
             <Popover
               content={
                 <Menu>
