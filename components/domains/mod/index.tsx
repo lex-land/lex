@@ -7,7 +7,7 @@ export const ModCURD = {
       action={`/api/module`}
       params={params}
       defaultValue={{ name: '', description: '' }}
-      button={button}
+      actionRenderer={button}
       drawerTitle="新建模块"
       successForceReload
     />
@@ -25,7 +25,7 @@ export const ModCURD = {
       defaultValue={defaultValue}
       fields={['name', 'description']}
       action={`/api/module/${id}`}
-      button={button}
+      actionRenderer={button}
       successForceReload
     />
   ),

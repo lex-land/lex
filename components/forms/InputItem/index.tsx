@@ -8,7 +8,7 @@ import {
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { FieldConfig } from 'formik';
-import { createField } from '@components/forms/Field/util';
+import { createField } from '../createField';
 
 const LockButton = ({ showPassword, onClick }: any) => {
   return (

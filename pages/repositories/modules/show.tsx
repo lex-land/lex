@@ -1,8 +1,8 @@
 import { Button, Code, H1, HTMLTable } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
+import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
-import { Inte } from '@components/domains/inte';
 import IntePage from './interface';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
@@ -72,13 +72,13 @@ export default composePageProps(repo, mod, inte)(() => {
                       <div>{inte.name}</div>
                     </td>
                     <td style={{ width: 150 }}>
-                      <Inte.CURD.Delete
-                        id={inte.id}
-                        button={
-                          <Button intent="danger" minimal>
+                      <CURD.Delete
+                        action={`/api/interface/${inte.id}`}
+                        actionRenderer={({ handleClick }) => (
+                          <Button onClick={handleClick} intent="danger" minimal>
                             Delete
                           </Button>
-                        }
+                        )}
                       />
                     </td>
                   </tr>

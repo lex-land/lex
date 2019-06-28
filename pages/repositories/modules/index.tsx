@@ -28,9 +28,9 @@ export default composePageProps(repo, mods)(() => {
               params={{ repository: query.repository_id }}
               fields={['name', 'description']}
               drawerTitle="新建模块"
-              button={
-                <CURD.Button icon="cube" minimal intent="success" text="新建" />
-              }
+              // actionRenderer={
+              //   <CURD.Button icon="cube" minimal intent="success" text="新建" />
+              // }
               successForceReload
             />
           }

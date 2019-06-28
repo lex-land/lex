@@ -14,7 +14,7 @@ export const InteCURD = {
         name: '',
         description: '',
       }}
-      button={button}
+      actionRenderer={button}
       drawerTitle="新增接口"
       successForceReload
     />
@@ -25,14 +25,14 @@ export const InteCURD = {
       fields={['method', 'url', 'name', 'description']}
       defaultValue={defaultValue}
       drawerTitle="编辑接口"
-      button={button}
+      actionRenderer={button}
       successForceReload
     />
   ),
   Delete: ({ id, button }: any) => (
     <CURD.Delete
       action={`/api/interface/${id}`}
-      button={button}
+      actionRenderer={button}
       alertWhen
       successForceReload
     />

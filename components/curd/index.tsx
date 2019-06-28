@@ -6,7 +6,7 @@ import {
   Position,
   Toaster,
 } from '@blueprintjs/core';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { FormikProps } from 'formik';
 import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms';
@@ -26,7 +26,7 @@ interface CurdButtonProps {
   onChange?: any;
   render?: (formik: FormikProps<any>) => any;
   drawerTitle?: string;
-  button?: React.ReactNode;
+  actionRenderer?: (action: { handleClick: any }) => React.ReactNode;
 }
 
 const CreateButton = ({
@@ -36,7 +36,8 @@ const CreateButton = ({
   onChange,
   successForceReload,
   successToast,
-  button,
+  actionRenderer,
+  render,
   drawerTitle,
 }: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
@@ -51,10 +52,9 @@ const CreateButton = ({
         .merge()
         .replace();
   };
-  // const defaultKeys = fields || [];
   return (
-    <Fragment>
-      {button && <span onClick={onAddClick}>{button}</span>}
+    <>
+      {actionRenderer && actionRenderer({ handleClick: onAddClick })}
       <Drawer
         title={drawerTitle}
         onClose={() => setOpen(false)}
@@ -65,11 +65,17 @@ const CreateButton = ({
             defaultValue={defaultValue}
             action={values => http.post(action, { ...values, ...params })}
             success={success}
+            render={render}
+            button={
+              <Button type="submit" intent="success">
+                Create
+              </Button>
+            }
             successToast={successToast || '新增成功'}
           />
         </LexContent>
       </Drawer>
-    </Fragment>
+    </>
   );
 };
 
@@ -81,7 +87,7 @@ const EditButton = ({
   successToast,
   successForceReload,
   drawerTitle,
-  button,
+  actionRenderer: button,
 }: CurdButtonProps) => {
   const [drawerOpen, setOpen] = useState(false);
   const [value, setValue] = useState(defaultValue);
@@ -98,7 +104,7 @@ const EditButton = ({
         .replace();
   };
   return (
-    <Fragment>
+    <>
       {button && <span onClick={onAddClick}>{button}</span>}
       <Drawer
         title={drawerTitle}
@@ -114,7 +120,7 @@ const EditButton = ({
           />
         </LexContent>
       </Drawer>
-    </Fragment>
+    </>
   );
 };
 
@@ -125,7 +131,7 @@ const DeleteButton = ({
   alertStrongText,
   alertWhen,
   successGoto,
-  button,
+  actionRenderer,
 }: CurdButtonProps) => {
   const [alertOpen, setOpen] = useState(false);
   const afterDelete = () => {
@@ -160,8 +166,8 @@ const DeleteButton = ({
   };
 
   return (
-    <Fragment>
-      <span onClick={check}>{button}</span>
+    <>
+      {actionRenderer && actionRenderer({ handleClick: check })}
       <Alert
         isOpen={alertOpen}
         cancelButtonText="取消"
@@ -175,7 +181,7 @@ const DeleteButton = ({
           您确定要将<b>{alertStrongText}</b>删除吗？这个动作无法被撤销。
         </p>
       </Alert>
-    </Fragment>
+    </>
   );
 };
 

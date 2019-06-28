@@ -41,9 +41,14 @@ export default composePageProps(org)(() => {
               alertWhen
               successGoto="/"
               action={`/api/organization/${org.id}`}
-              button={
-                <Button intent="danger" minimal text="退出并删除这个组织" />
-              }
+              actionRenderer={({ handleClick }) => (
+                <Button
+                  onClick={handleClick}
+                  intent="danger"
+                  minimal
+                  text="退出并删除这个组织"
+                />
+              )}
             />
             <Page.EmberedError visible code={503} />
           </Page.Content>

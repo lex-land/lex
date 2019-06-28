@@ -1,4 +1,4 @@
-import { Callout, H1 } from '@blueprintjs/core';
+import { Button, Callout, H1 } from '@blueprintjs/core';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
@@ -6,7 +6,6 @@ import { http } from '@helpers/fetch';
 import { route } from '@helpers/route';
 
 export default () => {
-  const formDefaultValues = { name: '', description: '' };
   return (
     <Page>
       <Page.Navbar />
@@ -19,7 +18,13 @@ export default () => {
         <H1>Create A FreeStyle Repository</H1>
         <QuickForm
           action={newValue => http.post('/api/repository', newValue)}
-          defaultValue={formDefaultValues}
+          render={() => (
+            <>
+              <QuickForm.Input name="name" />
+              <QuickForm.Input name="description" />
+              <Button type="submit" intent="success" text="Create" />
+            </>
+          )}
           success={(values, json) =>
             route('repositories/show').replace({ repository_id: json.id })
           }

@@ -1,8 +1,6 @@
 import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
-import { Inte } from '../inte';
-import { Mod } from '../mod';
 import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
 import { route } from '@helpers/route';
@@ -112,27 +110,38 @@ const RepoSider = () => {
                   </li>
                 ))}
                 <li key="create-interface">
-                  <Inte.CURD.Create
+                  <CURD.Create
+                    action="/api/interface"
+                    defaultValue={{
+                      method: '',
+                      url: '',
+                      name: '',
+                      description: '',
+                    }}
                     params={{ repository: repo, module: mod }}
-                    button={
-                      <ActionLink style={{ marginLeft: 8 }}>
+                    actionRenderer={({ handleClick }) => (
+                      <ActionLink
+                        style={{ marginLeft: 8 }}
+                        onClick={handleClick}
+                      >
                         <Icon intent="success" icon="plus" />
-                        {/* <span>新增</span> */}
                       </ActionLink>
-                    }
+                    )}
                   />
                 </li>
               </RepoNavList>
             )}
           </li>
         ))}
-        <Mod.CURD.Create
+        <CURD.Create
+          action="/api/module"
+          defaultValue={{ name: '', description: '' }}
           params={{ repository: repo }}
-          button={
-            <ActionLink>
+          actionRenderer={({ handleClick }) => (
+            <ActionLink onClick={handleClick}>
               <Icon intent="success" icon="plus" />
             </ActionLink>
-          }
+          )}
         />
       </RepoNavList>
       <div>
@@ -166,42 +175,6 @@ const RepoSider = () => {
   );
 };
 
-const RepoCURD = {
-  Create: ({ button }: { button: any }) => (
-    <CURD.Create
-      action="/api/repository"
-      fields={['name', 'description']}
-      button={button}
-      successForceReload
-    />
-  ),
-  Update: ({
-    id,
-    button,
-    defaultValue,
-  }: {
-    id: number;
-    button: any;
-    defaultValue: any;
-  }) => (
-    <CURD.Update
-      action={`/api/repository/${id}`}
-      fields={['name', 'description']}
-      defaultValue={defaultValue}
-      button={button}
-      successForceReload
-    />
-  ),
-  Delete: ({ id, button }: any) => (
-    <CURD.Delete
-      successGoto="/"
-      action={`/api/repository/${id}`}
-      button={button}
-      alertWhen
-    />
-  ),
-};
-
 export const Repo = Object.assign(() => null, {
   Nav: RepoNav,
   Sider: RepoSider,
@@ -209,5 +182,4 @@ export const Repo = Object.assign(() => null, {
     width: 1280px;
     margin: 0 auto;
   `,
-  CURD: RepoCURD,
 });
