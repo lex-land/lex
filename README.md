@@ -51,89 +51,47 @@ npm run deploy
 
 ## Roadmap
 
-- [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
-- [x] 重新设计 logo
-- [x] 使用 nestjs 代替 koa
-- [x] 使用 nextjs 作为写 React 的姿势，代替 create-react-app
-- [x] 使用 typeorm 代替 sequelize-typescript
-- [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
-- [x] 轻状态管理，使用 hooks 进行状态逻辑复用
-- [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
-- [x] 使用 docker 运行项目的生产环境
-- [x] 使用 styled-component 进行组件样式重构，移除已有 less
-- [ ] 不断优化页面异常处理
-- [ ] 支持类 Swagger 的测试功能
-- [ ] 不断优化 helpers、components、core、pages 之间的关系
-- [ ] 重新思考 UI 呈现，使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
-- [ ] 完成与 Rap 的功能
-- [ ] 完成 Next Feature
-- [ ] 表单完全校验
-- [ ] 风格化
-- [ ] 使用 algolia 全局接口搜索
-- [ ] 支持 CicleCI
-- [ ] SEO
-- [ ] 支持[GraphQL](https://nec.is/writing/next-js-apollo-graphql-performance-tuning-from-lists-to-details/)
-
-## Tooling
-
-- vscode
-- eslint
-- [stylelint](https://www.styled-components.com/docs/tooling#stylelint)
-- babel
-- commitlint
-- husky
-- nodemonConfig
-- prettier
-- lint-staged
-- jest
-
-## Progress
-
-- [x] 异常页面，包含 401、403、404、500、503 等
-- [x] join 页面
-- [x] login 页面
-- [ ] 优先完成 repo 仓库模块
-  - [x] repo/new 页
-  - [x] repo/show 页
-  - [x] repo/modules 页
-  - [x] repo/settings 页
-  - [ ] repo/members 页
-- [ ] users 页
-- [ ] orgs 页
-- [ ] settings 页
-- [ ] 导航条里的全局搜索
-- [ ] 近期浏览，类似[这样](https://developers.facebook.com/docs/accountkit)
-- [ ] dashboard 页面 仪表盘只做了左侧的导航
-
-## Next Feature
-
-- [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
-  - [x] 新增从 JSON 创建仓库
-- [ ] 添加接口操作日志
-- [ ] 添加接口返回码
-- [ ] 添加仓库内公共内容
-- [ ] 添加仓库 Wiki
-- [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
-- [ ] 添加用户角色，前端、后端、测试
-- [ ] 添加 mock 数据和接口数据的匹配
-
-## Maybe Good Idea
-
-- 提取 quickform 组件用于表单的提交
-
-  - 与 Button 组合产生 CURD
-  - 与 Page.Card 组合产生 登录、注册、重新验证等 页面
-
-- 使用 styled-components 基于模块进行组件拆分
-
-  - 当我写页面的时候，就用 Page 上的组件进行页面布局，比如<Page.Container/>
-  - 当我写 Repo 子页面的时候，就用 Repo 上的组件进行子页面布局，比如<Repo.SubPage/>
-  - 相关样式基于上面的原则就会跟着模块走
-
-- getInitialProps 的逻辑复用
-  - [一些想法](https://github.com/zeit/next.js/issues/186)
-  - [with-recompose](https://github.com/zeit/next.js/tree/canary/examples/with-recompose)
-  - [next-compose-initial-props](https://www.npmjs.com/package/next-compose-initial-props)
+- [ ] Brand/UI/VI
+  - [x] 使用[blueprint](https://blueprintjs.com/docs/#core)代替 bootstrap
+  - [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
+  - [x] 重新设计 logo
+- [ ] Tech/Arch
+  - [x] 使用 nestjs 代替 koa
+  - [x] 使用 nextjs 作为写 React 的姿势，代替 create-react-app
+  - [x] 使用 typeorm 代替 sequelize-typescript
+  - [x] 轻状态管理，使用 hooks 进行状态逻辑复用
+  - [x] 使用 styled-component 进行组件样式重构，移除已有 less
+  - [ ] 不断优化 helpers、components、core、pages 之间的关系
+- [ ] Pruduct
+  - [ ] 完成与 Rap 的功能
+    - [x] 页面异常处理。
+      - [x] 异常页面，包含 401、403、404、500、503 等
+      - [x] nginx 的 502 页面
+    - [x] join 页面
+    - [x] login 页面
+    - [ ] 优先完成 repo 仓库模块
+      - [x] repo/new 页
+        - [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
+          - [x] 新增从 JSON 创建仓库
+      - [x] repo/show 页
+      - [x] repo/modules 页
+      - [ ] repo/settings 页
+      - [ ] repo/members 页
+      - [ ] 添加仓库 Wiki
+        - [ ] 添加接口操作日志
+        - [ ] 添加 mock 数据和接口数据的匹配
+        - [ ] 添加接口返回码
+        - [ ] 添加仓库内公共内容
+        - [ ] 添加接口类型，用于复用那些[复杂数据接口](https://blueprintjs.com/docs/#core/components/control-group.props)
+    - [ ] users 页
+      - [ ] 添加用户角色，前端、后端、测试
+    - [ ] orgs 页
+    - [ ] settings 页
+- [ ] CI/CD
+  - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
+  - [x] 支持 Jenkins 的 Pipeline 进行 CI/CD
+  - [x] 使用 docker 运行项目的生产环境
+  - [ ] 支持 CicleCI
 
 ## Troubleshooting
 
