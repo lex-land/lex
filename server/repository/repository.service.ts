@@ -55,6 +55,23 @@ export class RepositoryService {
   ) {
     return await this.repoRepository.update(id, createRepositoryDto);
   }
+
+  public async addMember(id: number, member: any) {
+    return await this.repoRepository
+      .createQueryBuilder()
+      .relation(RepositoryEntity, 'members')
+      .of({ id })
+      .add(member);
+  }
+
+  public async removeMember(id: number, member: any) {
+    return await this.repoRepository
+      .createQueryBuilder()
+      .relation(RepositoryEntity, 'members')
+      .of({ id })
+      .remove(member);
+  }
+
   public async delete(id: number) {
     return await this.repoRepository.delete(id);
   }

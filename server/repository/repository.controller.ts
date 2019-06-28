@@ -37,6 +37,18 @@ export class RepositoryController {
     return this.repoService.update(+id, body);
   }
 
+  @Post(':id/members')
+  public async addMember(@Body() body: any, @Param('id') id: string) {
+    const result = await this.repoService.addMember(+id, body);
+    return { result };
+  }
+
+  @Delete(':id/members')
+  public async updateMembers(@Body() body: any, @Param('id') id: string) {
+    const result = this.repoService.removeMember(+id, body);
+    return { result };
+  }
+
   @Delete(':id')
   public async delete(@Param('id') id: string) {
     return this.repoService.delete(+id);

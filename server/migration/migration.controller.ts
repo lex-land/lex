@@ -23,7 +23,6 @@ export class MigrationController {
       description: repoJson.description,
       creator: session.user,
       owner: session.user,
-      members: [session.user],
     });
     for (const repoMod of repoJson.modules) {
       const mod = await this.modService.create({
