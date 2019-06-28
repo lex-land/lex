@@ -86,11 +86,15 @@ export class MigrationController {
         if (userObject[user.email]) {
           userObject[user.email] = user;
         } else {
-          userObject[user.email] = await this.userService.create({
-            fullname: user.fullname,
-            email: user.email,
-            password: md5('sunmi388'),
-          });
+          if (await this.userService.isExist(user.email)) {
+            userObject[user.email] = user;
+          } else {
+            userObject[user.email] = await this.userService.create({
+              fullname: user.fullname,
+              email: user.email,
+              password: md5('sunmi388'),
+            });
+          }
         }
       }
     }
