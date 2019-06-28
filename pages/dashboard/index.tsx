@@ -35,9 +35,6 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
             />
           </Page.Sider>
           <Page.Content>
-            <H5>我的团队成员动态</H5>
-            <Page.EmberedError visible code={503} />
-            <H5>我加入仓库的动态</H5>
             <Page.EmberedError visible code={503} />
           </Page.Content>
         </Flex>

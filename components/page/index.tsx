@@ -49,7 +49,7 @@ const ErrorContainer = styled(Flex.Auto)`
   }
   .description {
     margin-bottom: 16px;
-    color: rgba(0, 0, 0, 0.45);
+    color: #394b59;
     font-size: 20px;
     line-height: 28px;
   }

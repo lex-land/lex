@@ -38,9 +38,17 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
           <link href="/stylesheets/main.css" rel="stylesheet" />
+          <meta
+            name="description"
+            content="A Collaboration Tool for API documentation"
+          />
+          <meta
+            name="keywords"
+            content="react,nestjs,nextjs,typeorm,typescript,api-documentation,collaboration"
+          />
         </Head>
         <body>
           <Main />
