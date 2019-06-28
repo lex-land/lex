@@ -94,8 +94,3 @@ npm run deploy
   - [ ] 支持 CicleCI
 
 ## Troubleshooting
-
-- Q: macOS 下，docker 启动开发环境比直接用 node 启动慢
-- A: [修改 host](https://www.google.com/search?newwindow=1&ei=WLj_XKKmN5Lj-Aa6k4GQAw&q=docker-compose+up+%E6%85%A2&oq=docker-compose+up+%E6%85%A2&gs_l=psy-ab.3..35i39.19786.20372..20872...0.0..0.608.1075.4-1j1......0....1..gws-wiz.nQxEVscW-Q4)
-
-<!-- https://github.com/Microsoft/TypeScript/issues/29045 -->
