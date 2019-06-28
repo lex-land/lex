@@ -12,7 +12,7 @@ export default () => {
       <Page.Content>
         <Callout intent="primary">
           <span>Migrate from Rap2. Try </span>
-          <a href="/migrations/json">Migrate from JSON</a>
+          <a href="/migrations/repo/json">Migrate from JSON</a>
         </Callout>
         <br />
         <H1>Create A FreeStyle Repository</H1>

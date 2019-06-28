@@ -4,7 +4,7 @@ import routes from '@config/routes';
 
 const { Router, Link } = routes;
 
-export const route = (route: string = Router.route.substr(1), params?: any) => {
+export const route = (route: string = Router.route, params?: any) => {
   const replace = (state: any = {}) => {
     Router.replaceRoute(route, _.pickBy(state, Boolean));
   };

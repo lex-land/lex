@@ -12,8 +12,12 @@ import { http } from '@helpers/fetch';
 
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
-export default composePageProps(repo, user.all)(() => {
-  const { repo, users } = usePageProps<{ repo: Repository; users: User[] }>();
+export default composePageProps(repo, user.all, user.session)(() => {
+  const { repo, users, user: session } = usePageProps<{
+    repo: Repository;
+    users: User[];
+    user: User;
+  }>();
   const [selectedItems, setSelectedItems] = useState(
     repo.members.map(i => ({ ...i, name: i.fullname })),
   );
@@ -34,11 +38,13 @@ export default composePageProps(repo, user.all)(() => {
                   label={item.name}
                 />
               )}
-              items={users.map(user => ({
-                id: user.id,
-                name: user.fullname,
-                checked: selectedItems.map(i => i.id).includes(user.id),
-              }))}
+              items={users
+                .filter(user => user.id !== session.id)
+                .map(user => ({
+                  id: user.id,
+                  name: user.fullname,
+                  checked: selectedItems.map(i => i.id).includes(user.id),
+                }))}
               noResults={<MenuItem disabled={true} text="No results." />}
               onItemSelect={item => {
                 item.checked = !item.checked;
