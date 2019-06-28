@@ -36,7 +36,7 @@ export class Repository {
 
   @Column({
     type: 'varchar',
-    default: 'https://work.alibaba-inc.com/photo/undefined.220x220.jpg',
+    default: 'https://lex-land.online/images/logo.svg',
     length: 256,
   })
   logo: string;
