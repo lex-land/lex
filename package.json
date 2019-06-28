@@ -2,7 +2,7 @@
   "private": true,
   "version": "1.0.0",
   "name": "lex",
-  "description": "一个接口文档管理工具",
+  "description": "A Collaboration Tool for API documentation",
   "main": "server/main.ts",
   "repository": "git@github.com:lex-land/lex.git",
   "author": "briefguo <gyj9094@gmail.com>",
@@ -282,8 +282,7 @@
             "@core": "./core",
             "@config": "./config",
             "@helpers": "./helpers",
-            "@server": "./server",
-            "@layout": "./layout"
+            "@server": "./server"
           },
           "extensions": [
             ".ts",
@@ -313,9 +312,7 @@
     "watch": [
       "next.config.js",
       "server",
-      "config",
-      "core",
-      "helpers"
+      "config"
     ],
     "verbose": false,
     "debug": false,
