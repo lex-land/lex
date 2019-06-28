@@ -1,5 +1,4 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
-import { Field } from 'components/forms/Field';
 import { Logo } from '@components/vi';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
@@ -31,9 +30,9 @@ export default composePageProps(signedUser.redirect('/'))(() => {
           }}
           render={() => (
             <>
-              <Field.Input large name="email" component="input" />
-              <Field.Input large name="fullname" />
-              <Field.Input large name="password" type="password" />
+              <QuickForm.Input large name="email" component="input" />
+              <QuickForm.Input large name="fullname" />
+              <QuickForm.Input large name="password" type="password" />
               <Button
                 intent="success"
                 className="login-button"
