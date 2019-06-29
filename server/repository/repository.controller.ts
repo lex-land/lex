@@ -12,6 +12,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { CreateRepositoryDto } from './dto/create-repo.dto';
 import { RepositoryService } from './repository.service';
+import { ValidatorError } from '@helpers/validation/error';
 
 @Controller('repository')
 @UseGuards(AuthGuard('jwt'))
@@ -27,9 +28,15 @@ export class RepositoryController {
     @Body() body: CreateRepositoryDto,
     @Session() session: any,
   ) {
-    return this.repoService.create(
-      Object.assign(body, { creator: session.user, owner: session.user }),
-    );
+    if (await this.repoService.findOne({ where: { name: body.name } })) {
+      return ValidatorError({
+        name: 'repo name is exist',
+      });
+    } else {
+      return this.repoService.create(
+        Object.assign(body, { creator: session.user, owner: session.user }),
+      );
+    }
   }
 
   @Put(':id')

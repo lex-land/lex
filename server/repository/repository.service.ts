@@ -1,7 +1,7 @@
+import { FindManyOptions, Repository } from 'typeorm';
 import { CreateRepositoryDto } from './dto/create-repo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { Repository as RepositoryEntity } from './repository.entity';
 
 @Injectable()
@@ -39,9 +39,14 @@ export class RepositoryService {
     return repo.modules;
   }
 
-  public async findAll() {
+  public async findOne(options?: FindManyOptions<RepositoryEntity>) {
+    return await this.repoRepository.findOne(options);
+  }
+
+  public async findAll(options?: FindManyOptions<RepositoryEntity>) {
     return await this.repoRepository.find({
       relations: ['owner', 'organization'],
+      ...options,
     });
   }
 
