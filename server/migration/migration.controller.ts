@@ -1,4 +1,5 @@
-import { Body, Controller, Post, Session } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CacheService } from '@server/cache/cache.service';
 import { InterfaceService } from '@server/interface/interface.service';
 import { MigrateRepoDto } from './dto/migrate-repo.dto';
 import { ModuleService } from '@server/module/module.service';
@@ -18,17 +19,16 @@ export class MigrationController {
     private readonly modService: ModuleService,
     private readonly inteService: InterfaceService,
     private readonly propService: PropertyService,
+    private readonly cacheService: CacheService,
   ) {}
   @Post('repo')
-  public async migrateRepo(
-    @Body('data') repoJson: MigrateRepoDto,
-    @Session() session: any,
-  ) {
+  public async migrateRepo(@Body('data') repoJson: MigrateRepoDto) {
+    const sessionUser = await this.cacheService.get('SESSION_USER');
     const repo = await this.repoService.create({
       name: repoJson.name,
       description: repoJson.description,
-      creator: session.user,
-      owner: session.user,
+      creator: sessionUser,
+      owner: sessionUser,
     });
     for (const repoMod of repoJson.modules) {
       const mod = await this.modService.create({

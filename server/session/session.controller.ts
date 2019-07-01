@@ -4,7 +4,6 @@ import {
   Controller,
   Get,
   Post,
-  Session,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,8 +24,8 @@ export class SessionController {
   public async login(@Body() loginDto: LoginDto) {
     if (await this.userService.isExist(loginDto.username)) {
       try {
-        const user = await this.userService.findOneByLoginDto(loginDto);
-        return this.sessionService.genToken(user);
+        const session = await this.userService.findOneByLoginDto(loginDto);
+        return this.sessionService.genToken(session);
       } catch (error) {
         // 密码错误
         return ValidatorError({
@@ -56,7 +55,8 @@ export class SessionController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  public async session(@Token() token: string, @Session() session: any) {
-    return (session.user = await this.sessionService.findUserByToken(token));
+  public async session(@Token() token: string) {
+    const session = await this.sessionService.findUserByToken(token);
+    return session;
   }
 }

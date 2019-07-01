@@ -12,6 +12,6 @@ export const ormConfig: TypeOrmModuleOptions = {
   // debug: true,
   // dropSchema: true,
   synchronize: true,
-  logging: true,
+  // logging: true,
   // insecureAuth: true
 };

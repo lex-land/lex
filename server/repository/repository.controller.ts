@@ -6,10 +6,10 @@ import {
   Param,
   Post,
   Put,
-  Session,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { CacheService } from '@server/cache/cache.service';
 import { CreateRepositoryDto } from './dto/create-repo.dto';
 import { RepositoryService } from './repository.service';
 import { ValidatorError } from '@helpers/validation/error';
@@ -17,24 +17,25 @@ import { ValidatorError } from '@helpers/validation/error';
 @Controller('repository')
 @UseGuards(AuthGuard('jwt'))
 export class RepositoryController {
-  constructor(private readonly repoService: RepositoryService) {}
+  constructor(
+    private readonly repoService: RepositoryService,
+    private readonly cacheService: CacheService,
+  ) {}
   @Get()
   public async findAll() {
     return this.repoService.findAll();
   }
 
   @Post()
-  public async create(
-    @Body() body: CreateRepositoryDto,
-    @Session() session: any,
-  ) {
+  public async create(@Body() body: CreateRepositoryDto) {
+    const sessionUser = await this.cacheService.get('SESSION_USER');
     if (await this.repoService.findOne({ where: { name: body.name } })) {
       return ValidatorError({
         name: 'repo name is exist',
       });
     } else {
       return this.repoService.create(
-        Object.assign(body, { creator: session.user, owner: session.user }),
+        Object.assign(body, { creator: sessionUser, owner: sessionUser }),
       );
     }
   }

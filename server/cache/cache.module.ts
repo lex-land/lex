@@ -1,4 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Global, Module, CacheModule as NestCacheModule } from '@nestjs/common';
+import { CacheService } from './cache.service';
+import cache from '@config/cache';
 
-@Module({})
+@Global()
+@Module({
+  imports: [
+    // enable Redis
+    // https://docs.nestjs.com/techniques/caching#different-stores
+    NestCacheModule.register(cache),
+  ],
+  providers: [CacheService],
+  exports: [CacheService],
+})
 export class CacheModule {}
