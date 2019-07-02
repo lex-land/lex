@@ -1,6 +1,7 @@
 import {
   Button,
   FormGroup,
+  IFormGroupProps,
   IInputGroupProps,
   InputGroup,
   Intent,
@@ -23,12 +24,14 @@ const LockButton = ({ showPassword, onClick }: any) => {
   );
 };
 
-export type InputItemProps = IInputGroupProps & FieldConfig;
+export type InputItemProps = IInputGroupProps &
+  FieldConfig &
+  IFormGroupProps & { fill?: boolean };
 
 export const InputItem = createField<InputItemProps>(
   (props: InputItemProps) => {
     const [showPassword, setShowPassword] = useState(false);
-    const { field, form, ...otherProps } = props as any;
+    const { field, form, inline, fill, ...otherProps } = props as any;
     const onClick = () => setShowPassword(!showPassword);
     const isPassword = props.type === 'password';
     const error = form.errors && form.errors[field.name];
@@ -36,6 +39,8 @@ export const InputItem = createField<InputItemProps>(
       <FormGroup
         label={field.name}
         helperText={error}
+        inline={inline}
+        style={{ flex: fill ? '1 1' : '' }}
         intent={error ? Intent.DANGER : Intent.NONE}
       >
         <InputGroup
