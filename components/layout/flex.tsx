@@ -8,6 +8,7 @@ interface StyledFlexProps {
     | 'flex-start'
     | 'space-between'
     | 'space-around';
+  gutter?: number;
 }
 
 const StyledFlex = styled.div<StyledFlexProps>`
@@ -15,6 +16,10 @@ const StyledFlex = styled.div<StyledFlexProps>`
   align-items: ${props => props.align};
   justify-content: ${props => props.justify};
   flex-wrap: wrap;
+  margin: ${props => (props.gutter ? `0 -${props.gutter / 2}px` : 'inherit')};
+  & > * {
+    margin: ${props => (props.gutter ? `0 ${props.gutter / 2}px` : 'inherit')};
+  }
 `;
 
 const Justified = styled(StyledFlex)`
