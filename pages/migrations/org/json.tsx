@@ -39,6 +39,7 @@ export default () => {
                 disabled={loading}
                 rows={15}
                 value={repo}
+                placeholder="支持的JSON格式：[GET] http://<rap_server_url>/organization/list?name=&cursor=1&limit=100"
                 onChange={e => setRepo(e.target.value)}
               />
               <Button

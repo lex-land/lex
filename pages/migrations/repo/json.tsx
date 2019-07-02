@@ -13,25 +13,38 @@ import React, { useState } from 'react';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import { http } from '@helpers/fetch';
+import repoSample from './data/repo.sample.json';
 import { route } from '@helpers/route';
+import styled from 'styled-components';
+
+const ToastProgressBar = styled(ProgressBar)`
+  display: inline-flex;
+`;
 
 export default () => {
-  const [repo, setRepo] = useState();
+  const [repo, setRepo] = useState(JSON.stringify(repoSample, null, 2));
   const [loading, setLoading] = useState(false);
   const handleSubmit = async () => {
+    const toast = Toaster.create({ position: Position.TOP });
     setLoading(true);
-    const repoRes = await http.post('/api/migration/repo', JSON.parse(repo));
-    route('repositories/show')
-      .merge({ repository_id: repoRes.id })
-      .replace();
-    Toaster.create({ position: Position.TOP }).show({
-      icon: 'tick',
-      message: (
-        <span>
-          成功创建仓库<strong>{repoRes.name}</strong>
-        </span>
-      ),
-    });
+    try {
+      toast.show({
+        icon: 'swap-horizontal',
+        message: <ToastProgressBar intent="primary" />,
+      });
+      const repoRes = await http.post('/api/migration/repo', JSON.parse(repo));
+      route('repositories/show')
+        .merge({ repository_id: repoRes.id })
+        .replace();
+      toast.clear();
+    } catch (error) {
+      toast.show({
+        intent: 'danger',
+        icon: 'error',
+        message: error.message,
+      });
+    }
+    setLoading(false);
   };
   return (
     <Page>
@@ -47,10 +60,9 @@ export default () => {
             <li>仓库的成员也会自动清空</li>
           </UL>
         </Callout>
-        <H1>Migrate Repo from JSON</H1>
+        <H1>New Repository Migrate From JSON</H1>
         <Flex style={{ margin: '24px 0' }}>
           <Flex.Auto>
-            {loading && <ProgressBar />}
             <ControlGroup vertical>
               <TextArea
                 disabled={loading}

@@ -1,0 +1,87 @@
+{
+  "data": {
+    "name": "Sample",
+    "description": "Sample description",
+    "logo": null,
+    "visibility": true,
+    "ownerId": 100000013,
+    "organizationId": null,
+    "creatorId": 100000013,
+    "lockerId": null,
+    "createdAt": "2019-04-25T03:26:38.000Z",
+    "updatedAt": "2019-06-17T05:47:43.000Z",
+    "deletedAt": null,
+    "creator": {
+      "fullname": "creator fullname",
+      "email": "xxx@gmail.com"
+    },
+    "owner": {
+      "fullname": "owner fullname",
+      "email": "xxx@gmail.com"
+    },
+    "locker": null,
+    "members": [
+      {
+        "fullname": "xxx",
+        "email": "xxx@sunmi.com"
+      }
+    ],
+    "organization": null,
+    "modules": [
+      {
+        "id": 455,
+        "name": "商户管理",
+        "description": "商户管理所有TAB切换页",
+        "priority": 1,
+        "creatorId": 100000013,
+        "repositoryId": 124,
+        "createdAt": "2019-04-25T03:26:38.000Z",
+        "updatedAt": "2019-06-14T08:34:25.000Z",
+        "deletedAt": null,
+        "interfaces": [
+          {
+            "id": 2511,
+            "name": "GET /stores 获取商户管理列表",
+            "url": "/stores",
+            "method": "GET",
+            "description": "GET方式，参数为 ？params1=1&params2=2 格式",
+            "priority": 1,
+            "creatorId": 100000013,
+            "lockerId": 100000013,
+            "moduleId": 455,
+            "repositoryId": 124,
+            "createdAt": "2019-04-25T03:26:38.000Z",
+            "updatedAt": "2019-06-18T02:22:55.000Z",
+            "deletedAt": null,
+            "locker": {
+              "id": 100000013,
+              "fullname": "郭永杰",
+              "email": "gyj9094@gmail.com"
+            },
+            "properties": [
+              {
+                "id": 40181,
+                "scope": "request",
+                "type": "String",
+                "name": "store_name",
+                "rule": "",
+                "value": "",
+                "description": "商户名称",
+                "parentId": -1,
+                "priority": 1,
+                "interfaceId": 2511,
+                "creatorId": 100000013,
+                "moduleId": 455,
+                "repositoryId": 124,
+                "createdAt": "2019-04-25T03:26:38.000Z",
+                "updatedAt": "2019-05-16T08:26:30.000Z",
+                "deletedAt": null
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "collaborators": []
+  }
+}
