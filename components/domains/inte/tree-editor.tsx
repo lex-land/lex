@@ -167,8 +167,8 @@ export const TreeEditor = (props: TreeEditorProps) => {
       <AlignLeftTable>
         <thead>
           <tr>
-            <th style={{ width: 220 }}>字段名</th>
-            <th>描述</th>
+            <th style={{ width: 220 }}>Props</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
@@ -186,14 +186,16 @@ export const TreeEditor = (props: TreeEditorProps) => {
           ))}
         </tbody>
       </AlignLeftTable>
-      <Button
-        minimal
-        fill
-        onClick={() => treeUtil.onAppendRootChild()}
-        icon="plus"
-        intent="success"
-        text="新增"
-      />
+      <div style={{ marginTop: 16 }}>
+        <Button
+          minimal
+          fill
+          onClick={() => treeUtil.onAppendRootChild()}
+          icon="plus"
+          intent="success"
+          text="新增"
+        />
+      </div>
       {props.footer && <div>{props.footer(treeUtil)}</div>}
     </div>
   );

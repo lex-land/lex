@@ -71,10 +71,10 @@ export const signedUser = {
 
 export const user = {
   session: createPageProps(async () => ({
-    user: await session.user(),
+    session: await session.user(),
   })),
   all: createPageProps(async ctx => {
-    return { users: await ctx.http.get<User[]>(`/api/user`) };
+    return { allUsers: await ctx.http.get<User[]>(`/api/user`) };
   }),
 };
 

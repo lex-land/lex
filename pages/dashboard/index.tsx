@@ -9,13 +9,13 @@ import { User } from '@server/user/user.entity';
 
 export default composePageProps(newComer.redirect('/login'), user.session)(
   () => {
-    const { user } = usePageProps<{ user: User }>();
+    const { session } = usePageProps<{ session: User }>();
     return (
       <Page>
         <Page.Navbar />
         <Flex>
           <Page.Sider>
-            <Dashboard.Switcher name={user.fullname} />
+            <Dashboard.Switcher name={session.fullname} />
             <Divider />
             <Flex align="center" justify="space-between">
               <H5 style={{ marginBottom: 0 }}>Repositories</H5>
@@ -28,8 +28,8 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
             </Flex>
             <Dashboard.Navlist
               icon="git-repo"
-              dataSource={user.ownedRepositories.concat(
-                user.joinedRepositories,
+              dataSource={session.ownedRepositories.concat(
+                session.joinedRepositories,
               )}
               itemHref={record => `/repositories/${record.id}`}
             />
