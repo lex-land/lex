@@ -217,6 +217,7 @@
       ],
       "spaced-comment": "off",
       "camelcase": "off",
+      "react/no-unescaped-entities": "off",
       "react/prop-types": "off",
       "react/display-name": "off",
       "react-hooks/rules-of-hooks": "error",
