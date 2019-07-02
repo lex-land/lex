@@ -1,49 +1,42 @@
-import { Button, H1, H4 } from '@blueprintjs/core';
+import { Button, H1, H4, H5 } from '@blueprintjs/core';
 import { composePageProps, usePageProps } from '@core/next-compose';
-import { repo, user } from '@helpers/page-props';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
-import { QuickForm } from '@components/forms';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
-import _ from 'lodash';
-import { http } from '@helpers/fetch';
+import { repo } from '@helpers/page-props';
+import { route } from '@helpers/route';
 
-export default composePageProps(repo, user.all)(() => {
+export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
   return (
-    <Page>
+    <Page backgroundColor="#fff">
       <Page.Navbar />
       <Repo.SubPage>
         <Flex>
           <Repo.Sider />
           <Page.Content>
-            <H1>设置</H1>
-            <H4>基本信息</H4>
-            <QuickForm
-              defaultValue={_.pick(repo, ['name', 'description'])}
-              action={(newRepo: any) =>
-                http.put(`/api/repository/${repo.id}`, newRepo)
-              }
-              render={() => (
-                <>
-                  <QuickForm.Input name="name" />
-                  <QuickForm.Input name="description" />
-                  <Button type="submit" intent="primary" text="Update" />
-                </>
-              )}
-            />
-            <br />
-            <br />
-            <Button>转移仓库所属</Button>
-            <CURD.Delete
-              action={`/api/repository/${repo.id}`}
-              actionRenderer={({ handleClick }) => (
-                <Button onClick={handleClick}>删除这个仓库</Button>
-              )}
-            />
+            <H1>Settings</H1>
+            <div style={{ marginTop: 40 }}>
+              <H4>Danger Zone</H4>
+              <H5>Transfer ownership</H5>
+              Transfer this repository to another user or to an organization
+              where you have the ability to create repositories.
+              <Button>Transfer</Button>
+              <H5>Delete this repository</H5>
+              Once you delete a repository, there is no going back. Please be
+              certain.
+              <CURD.Delete
+                alertWhen
+                success={() => route(`/`).replace()}
+                action={`/api/repository/${repo.id}`}
+                actionRenderer={({ handleClick }) => (
+                  <Button onClick={handleClick}>Delete this repository</Button>
+                )}
+              />
+            </div>
           </Page.Content>
         </Flex>
       </Repo.SubPage>

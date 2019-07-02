@@ -1,9 +1,9 @@
 import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
+import { Link, route } from '@helpers/route';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
-import { route } from '@helpers/route';
 import styled from 'styled-components';
 import { usePageProps } from '@core/next-compose';
 import { useQuery } from '@helpers/hooks';
@@ -76,37 +76,40 @@ const RepoSider = () => {
   return (
     <RepoSiderContainer>
       <Flex justify="space-between" align="center">
-        <TextLink
-          aria-selected={+query.repository_id === repo.id}
-          href={`/repositories/${repo.id}`}
-          className="sider-item sider-title"
-        >
-          {/* <Icon icon="git-repo" /> */}
-          {repo.name}
-        </TextLink>
+        <Link route={`/repositories/${repo.id}`}>
+          <TextLink
+            aria-selected={+query.repository_id === repo.id}
+            className="sider-item sider-title"
+          >
+            {/* <Icon icon="git-repo" /> */}
+            {repo.name}
+          </TextLink>
+        </Link>
       </Flex>
       <RepoNavList>
         {repo.modules.map(mod => (
           <li key={mod.id}>
-            <TextLink
-              aria-selected={+query.module_id === mod.id}
-              href={`/repositories/${repo.id}/modules/${mod.id}`}
-            >
-              {/* <Icon icon="cube" /> */}
-              {mod.name}
-            </TextLink>
+            <Link route={`/repositories/${repo.id}/modules/${mod.id}`}>
+              <TextLink aria-selected={+query.module_id === mod.id}>
+                {/* <Icon icon="cube" /> */}
+                {mod.name}
+              </TextLink>
+            </Link>
             {+query.module_id === mod.id && (
               <RepoNavList>
                 {mod.interfaces.map(inte => (
                   <li className={Classes.TEXT_OVERFLOW_ELLIPSIS} key={inte.id}>
-                    <TextLink
-                      style={{ marginLeft: 8 }}
-                      aria-selected={+query.interface_id === inte.id}
-                      href={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
+                    <Link
+                      route={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
                     >
-                      {/* <Icon icon="application" /> */}
-                      {inte.name}
-                    </TextLink>
+                      <TextLink
+                        style={{ marginLeft: 8 }}
+                        aria-selected={+query.interface_id === inte.id}
+                      >
+                        {/* <Icon icon="application" /> */}
+                        {inte.name}
+                      </TextLink>
+                    </Link>
                   </li>
                 ))}
                 <li key="create-interface">
@@ -118,6 +121,12 @@ const RepoSider = () => {
                       name: '',
                       description: '',
                     }}
+                    success={(values, json) =>
+                      route(
+                        `/repositories/${repo.id}/modules/${mod.id}?interface_id=${json.id}`,
+                      ).replace()
+                    }
+                    drawerTitle={`New Interface In ${mod.name}`}
                     params={{ repository: repo, module: mod }}
                     actionRenderer={({ handleClick }) => (
                       <ActionLink
@@ -137,6 +146,10 @@ const RepoSider = () => {
           action="/api/module"
           defaultValue={{ name: '', description: '' }}
           params={{ repository: repo }}
+          success={(values, json) =>
+            route(`/repositories/${repo.id}/modules/${json.id}`).replace()
+          }
+          drawerTitle={`New Module In ${repo.name}`}
           actionRenderer={({ handleClick }) => (
             <ActionLink onClick={handleClick}>
               <Icon intent="success" icon="plus" />
@@ -145,31 +158,48 @@ const RepoSider = () => {
         />
       </RepoNavList>
       <div>
-        <TextLink
-          className="sider-item"
-          aria-selected={router.asPath === `/repositories/${repo.id}/codes`}
-          href={`/repositories/${repo.id}/codes`}
-        >
-          <span>公共返回码</span>
-        </TextLink>
+        <Link route={`/repositories/${repo.id}/modules`}>
+          <TextLink
+            className="sider-item"
+            aria-selected={router.asPath === `/repositories/${repo.id}/modules`}
+          >
+            <span>Modules</span>
+          </TextLink>
+        </Link>
       </div>
       <div>
-        <TextLink
-          className="sider-item"
-          aria-selected={router.asPath === `/repositories/${repo.id}/members`}
-          href={`/repositories/${repo.id}/members`}
-        >
-          <span>成员</span>
-        </TextLink>
+        <Link route={`/repositories/${repo.id}/status-codes`}>
+          <TextLink
+            className="sider-item"
+            aria-selected={
+              router.asPath === `/repositories/${repo.id}/status-codes`
+            }
+          >
+            <span>Status Codes</span>
+          </TextLink>
+        </Link>
       </div>
       <div>
-        <TextLink
-          className="sider-item"
-          aria-selected={router.asPath === `/repositories/${repo.id}/settings`}
-          href={`/repositories/${repo.id}/settings`}
-        >
-          <span>设置</span>
-        </TextLink>
+        <Link route={`/repositories/${repo.id}/members`}>
+          <TextLink
+            className="sider-item"
+            aria-selected={router.asPath === `/repositories/${repo.id}/members`}
+          >
+            <span>Members</span>
+          </TextLink>
+        </Link>
+      </div>
+      <div>
+        <Link route={`/repositories/${repo.id}/settings`}>
+          <TextLink
+            className="sider-item"
+            aria-selected={
+              router.asPath === `/repositories/${repo.id}/settings`
+            }
+          >
+            <span>Settings</span>
+          </TextLink>
+        </Link>
       </div>
     </RepoSiderContainer>
   );

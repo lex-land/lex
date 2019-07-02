@@ -1,4 +1,6 @@
-import { Button, Code, H1, HTMLTable } from '@blueprintjs/core';
+import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
+import { Link, route } from '@helpers/route';
+import React, { useState } from 'react';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
 import { CURD } from '@components/curd';
@@ -6,10 +8,11 @@ import { Flex } from '@components/layout/flex';
 import IntePage from './interface';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
-import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
+import { http } from '@helpers/fetch';
 import styled from 'styled-components';
+import { throttle } from 'lodash';
 import { useQuery } from '@helpers/hooks';
 
 interface PageProps {
@@ -20,7 +23,7 @@ interface PageProps {
 const AlignLeftTable = styled(HTMLTable)`
   width: 100%;
   &.bp3-html-table td {
-    vertical-align: top;
+    vertical-align: middle;
   }
   &.bp3-html-table td:first-child,
   &.bp3-html-table th:first-child {
@@ -28,10 +31,23 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
+const updateMod = throttle((modId: number, mod: any) => {
+  http.put(`/api/module/${modId}`, mod);
+}, 3000);
+
+const updateInte = throttle((inteId: number, inte) => {
+  http.put(`/api/interface/${inteId}`, inte);
+}, 3000);
+
 export default composePageProps(repo, mod, inte)(() => {
   const { repo, mod } = usePageProps<PageProps>();
-  const query = useQuery();
-  return query.interface_id ? (
+  const { interface_id: inteId } = useQuery();
+  const [modInfo, setModInfo] = useState(mod);
+  const changeModInfo = (value: Partial<Module>) => {
+    updateMod(mod.id, value);
+    setModInfo({ ...modInfo, ...value });
+  };
+  return inteId ? (
     <IntePage />
   ) : (
     <Page backgroundColor="#fff">
@@ -40,51 +56,109 @@ export default composePageProps(repo, mod, inte)(() => {
         <Flex>
           <Repo.Sider />
           <Page.Content>
-            <div>
+            <div style={{ marginBottom: 40 }}>
               <H1>
-                <Flex justify="space-between" align="center">
-                  <span>{mod.name}</span>
+                <Flex justify="space-between" align="flex-end">
+                  <EditableText
+                    value={modInfo.name}
+                    onChange={name => changeModInfo({ name })}
+                  />
                 </Flex>
               </H1>
-              <p>{mod.description}</p>
+              <EditableText
+                minLines={2}
+                multiline
+                value={modInfo.description}
+                onChange={description => changeModInfo({ description })}
+              />
             </div>
-            <AlignLeftTable>
-              <thead>
-                <tr>
-                  <th>接口</th>
-                  <th>描述</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mod.interfaces.map(inte => (
-                  <tr key={inte.id}>
-                    <td>
-                      <Code>
-                        <a
-                          href={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
-                        >
-                          [{inte.method}]{inte.url}
-                        </a>
-                      </Code>
-                    </td>
-                    <td>
-                      <div>{inte.name}</div>
-                    </td>
-                    <td style={{ width: 150 }}>
-                      <CURD.Delete
-                        action={`/api/interface/${inte.id}`}
-                        actionRenderer={({ handleClick }) => (
-                          <Button onClick={handleClick} intent="danger" minimal>
-                            Delete
-                          </Button>
-                        )}
-                      />
-                    </td>
+            {mod.interfaces.length !== 0 && (
+              <AlignLeftTable>
+                <thead>
+                  <tr>
+                    <th>URL</th>
+                    <th>Description</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </AlignLeftTable>
+                </thead>
+                <tbody>
+                  {mod.interfaces.map(inte => (
+                    <tr key={inte.id}>
+                      <td>
+                        <Code>
+                          <Link
+                            route={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
+                          >
+                            <a>
+                              [{inte.method}]{inte.url}
+                            </a>
+                          </Link>
+                        </Code>
+                      </td>
+                      <td>
+                        <EditableText
+                          onChange={name => updateInte(inte.id, { name })}
+                          defaultValue={inte.name}
+                        />
+                      </td>
+                      <td style={{ width: 150 }}>
+                        <CURD.Delete
+                          alertWhen
+                          success={() =>
+                            route(
+                              `/repositories/${repo.id}/modules/${mod.id}`,
+                            ).replace()
+                          }
+                          action={`/api/interface/${inte.id}`}
+                          actionRenderer={({ handleClick }) => (
+                            <Button
+                              onClick={handleClick}
+                              intent="danger"
+                              minimal
+                            >
+                              Delete
+                            </Button>
+                          )}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </AlignLeftTable>
+            )}
+            <Page.EmberedError
+              visible={mod.interfaces.length === 0}
+              code={404}
+              icon="clean"
+              description="当前模块没有任何接口，可以新建一个看看"
+              action={
+                <CURD.Create
+                  action="/api/interface"
+                  defaultValue={{
+                    method: '',
+                    url: '',
+                    name: '',
+                    description: '',
+                  }}
+                  success={(values, json) =>
+                    route(
+                      `/repositories/${repo.id}/modules/${mod.id}?interface_id=${json.id}`,
+                    ).replace()
+                  }
+                  drawerTitle={`New Interface In ${mod.name}`}
+                  params={{ repository: repo, module: mod }}
+                  actionRenderer={({ handleClick }) => (
+                    <Button
+                      intent="success"
+                      icon="application"
+                      style={{ marginLeft: 8 }}
+                      onClick={handleClick}
+                      text="New"
+                    />
+                  )}
+                />
+              }
+            />
           </Page.Content>
         </Flex>
       </Repo.SubPage>

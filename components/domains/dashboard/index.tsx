@@ -10,6 +10,7 @@ import {
 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
 import { Avator } from '@components/avator';
+import { Link } from '@helpers/route';
 import { http } from '@helpers/fetch';
 import styled from 'styled-components';
 import { useAsync } from '@helpers/hooks';
@@ -19,6 +20,23 @@ const defaultUser = {
   joinedOrganizations: [],
   ownedOrganizations: [],
 };
+
+const NavMenu = styled(Menu)`
+  .bp3-menu-divider {
+    border: 0;
+    margin-left: -5px;
+    margin-right: -5px;
+    /* margin-bottom: 16px; */
+    background-image: linear-gradient(
+      90deg,
+      rgba(16, 22, 26, 0) 0,
+      rgba(16, 22, 26, 0.15) 20%,
+      rgba(16, 22, 26, 0) 100%
+    );
+    height: 1px;
+    padding: 0;
+  }
+`;
 
 const Container = styled.div`
   margin: 24px 0;
@@ -33,11 +51,10 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
     <Container>
       <Popover
         content={
-          <Menu>
+          <NavMenu className="dashboard-switcher__menu">
             <li className={Classes.MENU_HEADER}>
               <h6 className={Classes.HEADING}>Switch dashboard context</h6>
             </li>
-            <Menu.Divider />
             <Fragment>
               <MenuItem href="/" icon="user" text={user.fullname} />
               {orgs.map((org: any) => (
@@ -56,8 +73,8 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
                 <Menu.Divider />
               </Fragment>
             )}
-            <MenuItem href="/orgs/new" icon="plus" text="Create orgnizations" />
-          </Menu>
+            <MenuItem href="/orgs/new" icon="plus" text="Create orgnization" />
+          </NavMenu>
         }
         position={Position.BOTTOM_LEFT}
       >
@@ -88,16 +105,18 @@ export const DashboardNavlist = ({
 }: {
   dataSource: any;
   icon: IconName;
-  itemHref?: (record: any) => string;
+  itemHref: (record: any) => string;
 }) => {
   return (
     <UL style={{ listStyle: 'none', padding: 0 }}>
       {dataSource.map((record: any) => (
         <DashboardNavListItem key={record.id}>
-          <a className="link" href={itemHref && itemHref(record)}>
-            {icon && <Icon className="icon" icon={icon} />}
-            <span className="name">{record.name}</span>
-          </a>
+          <Link route={itemHref(record)}>
+            <a className="link">
+              {icon && <Icon className="icon" icon={icon} />}
+              <span className="name">{record.name}</span>
+            </a>
+          </Link>
         </DashboardNavListItem>
       ))}
     </UL>

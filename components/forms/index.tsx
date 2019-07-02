@@ -1,5 +1,4 @@
 import { Form, Formik, FormikActions, FormikProps } from 'formik';
-// import { Position, Toaster } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { InputItem } from './InputItem';
 import { Select } from './Select';
@@ -15,7 +14,6 @@ interface QuickFormProps<T> {
   success?: (value: T, json: any) => any;
   failure?: (value: T, json: any) => any;
   render?: (formik: FormikProps<any>, state: QuickFormState) => any;
-  successToast?: string;
   large?: boolean;
   button?: React.ReactNode;
 }
@@ -44,11 +42,6 @@ export const QuickForm = Object.assign(
         });
       } else {
         props.success && props.success(values, json);
-        // props.successToast &&
-        //   Toaster.create({ position: Position.TOP_RIGHT }).show({
-        //     icon: 'tick',
-        //     message: props.successToast,
-        //   });
       }
     };
 

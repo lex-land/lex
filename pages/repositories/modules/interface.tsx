@@ -1,19 +1,37 @@
-import { Callout, H1, H4 } from '@blueprintjs/core';
+import {
+  Callout,
+  EditableText,
+  H1,
+  H4,
+  HTMLSelect,
+  Popover,
+} from '@blueprintjs/core';
+import React, { useState } from 'react';
 import { Flex } from '@components/layout/flex';
 import { Inte } from '@components/domains/inte';
 import { Interface } from '@server/interface/interface.entity';
 import { Page } from '@components/page';
-import React from 'react';
 import { Repo } from '@components/domains/repo';
+import { http } from '@helpers/fetch';
 import styled from 'styled-components';
+import { throttle } from 'lodash';
 import { usePageProps } from '@core/next-compose';
 
 const RequestURL = styled.code`
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
 
+const updateInte = throttle((inteId: number, inte) => {
+  http.put(`/api/interface/${inteId}`, inte);
+}, 3000);
+
 export default () => {
   const { inte } = usePageProps<{ inte: Interface }>();
+  const [inteInfo, setInteInfo] = useState(inte);
+  const changeInteInfo = (value: Partial<Interface>) => {
+    updateInte(inte.id, value);
+    setInteInfo({ ...inteInfo, ...value });
+  };
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
@@ -23,11 +41,18 @@ export default () => {
           <Page.Content>
             <div>
               <H1>
-                <Flex justify="space-between" align="center">
-                  <span>{inte.name}</span>
-                </Flex>
+                <EditableText
+                  value={inteInfo.name}
+                  onChange={name => changeInteInfo({ name })}
+                />
               </H1>
-              <p>{inte.description && <span> {inte.description}</span>}</p>
+              <EditableText
+                minLines={2}
+                placeholder="Click to add description"
+                multiline
+                onChange={description => changeInteInfo({ description })}
+                value={inteInfo.description}
+              />
             </div>
             <Flex>
               <Flex.Auto>
@@ -35,7 +60,34 @@ export default () => {
                   <H4>请求地址</H4>
                   <Callout>
                     <RequestURL>
-                      [{inte.method}] {inte.url}
+                      <Popover
+                        content={
+                          <HTMLSelect
+                            value={inteInfo.method}
+                            minimal
+                            large
+                            onChange={e =>
+                              changeInteInfo({ method: e.target.value })
+                            }
+                          >
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                            <option value="PATCH">PATCH</option>
+                          </HTMLSelect>
+                        }
+                        position="right"
+                        interactionKind="hover"
+                      >
+                        <span style={{ marginRight: 8 }}>
+                          [{inteInfo.method}]
+                        </span>
+                      </Popover>
+                      <EditableText
+                        value={inte.url}
+                        onChange={url => changeInteInfo({ url })}
+                      />
                     </RequestURL>
                   </Callout>
                 </div>

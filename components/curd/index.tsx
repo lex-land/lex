@@ -11,7 +11,6 @@ import { FormikProps } from 'formik';
 import { LexContent } from '@components/layout/container';
 import { QuickForm } from '@components/forms';
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/route';
 
 interface CurdButtonProps {
   action: string;
@@ -24,6 +23,7 @@ interface CurdButtonProps {
   successGoto?: string;
   defaultValue?: any;
   onChange?: any;
+  success?: (values: any, json: any) => any;
   render?: (formik: FormikProps<any>) => any;
   drawerTitle?: string;
   actionRenderer?: (action: { handleClick: any }) => React.ReactNode;
@@ -34,9 +34,8 @@ const CreateButton = ({
   action,
   params,
   onChange,
-  successForceReload,
-  successToast,
   actionRenderer,
+  success,
   render,
   drawerTitle,
 }: CurdButtonProps) => {
@@ -44,13 +43,10 @@ const CreateButton = ({
   const onAddClick = () => {
     setOpen(true);
   };
-  const success = async (newMod: any) => {
+  const onSuccess = async (newMod: any, json: any) => {
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
-    successForceReload &&
-      route()
-        .merge()
-        .replace();
+    success && success(newMod, json);
   };
   return (
     <>
@@ -59,19 +55,19 @@ const CreateButton = ({
         title={drawerTitle}
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
+        position="left"
       >
         <LexContent>
           <QuickForm
             defaultValue={defaultValue}
             action={values => http.post(action, { ...values, ...params })}
-            success={success}
+            success={onSuccess}
             render={render}
             button={
               <Button type="submit" intent="success">
                 Create
               </Button>
             }
-            successToast={successToast || '新增成功'}
           />
         </LexContent>
       </Drawer>
@@ -84,8 +80,6 @@ const EditButton = ({
   params,
   defaultValue,
   onChange,
-  successToast,
-  successForceReload,
   drawerTitle,
   actionRenderer: button,
 }: CurdButtonProps) => {
@@ -98,10 +92,6 @@ const EditButton = ({
     setValue({ ...newMod, ...params });
     setOpen(false);
     onChange && onChange({ ...newMod, ...params });
-    successForceReload &&
-      route()
-        .merge()
-        .replace();
   };
   return (
     <>
@@ -110,13 +100,13 @@ const EditButton = ({
         title={drawerTitle}
         onClose={() => setOpen(false)}
         isOpen={drawerOpen}
+        position="left"
       >
         <LexContent>
           <QuickForm
             defaultValue={value}
             action={values => http.put(action, { ...values, ...params })}
             success={handleSubmit}
-            successToast={successToast}
           />
         </LexContent>
       </Drawer>
@@ -127,33 +117,24 @@ const EditButton = ({
 const DeleteButton = ({
   action,
   successToast,
-  successForceReload,
   alertStrongText,
   alertWhen,
-  successGoto,
+  success,
   actionRenderer,
 }: CurdButtonProps) => {
   const [alertOpen, setOpen] = useState(false);
   const afterDelete = () => {
-    successForceReload &&
-      route()
-        .merge()
-        .replace();
-    successGoto && route(successGoto).replace({});
-    Toaster.create({ position: Position.TOP_RIGHT }).show({
-      intent: Intent.SUCCESS,
+    Toaster.create({ position: Position.TOP }).show({
       message: successToast || '删除成功',
     });
     setOpen(false);
   };
 
-  const deleteEmpty = async () => {
-    await http.delete(action);
-    afterDelete();
-  };
-
-  const deleteCascade = async () => {
-    await http.delete(action);
+  const handleDelete = async () => {
+    try {
+      const result = await http.delete(action);
+      success && success({}, result);
+    } catch (error) {}
     afterDelete();
   };
 
@@ -161,7 +142,7 @@ const DeleteButton = ({
     if (alertWhen) {
       setOpen(true);
     } else {
-      deleteEmpty();
+      handleDelete();
     }
   };
 
@@ -175,7 +156,7 @@ const DeleteButton = ({
         icon="trash"
         intent={Intent.DANGER}
         onCancel={() => setOpen(false)}
-        onConfirm={deleteCascade}
+        onConfirm={handleDelete}
       >
         <p>
           您确定要将<b>{alertStrongText}</b>删除吗？这个动作无法被撤销。

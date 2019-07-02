@@ -1,4 +1,4 @@
-import { H1, MenuItem } from '@blueprintjs/core';
+import { Callout, H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { repo, user } from '@helpers/page-props';
@@ -13,22 +13,28 @@ import { http } from '@helpers/fetch';
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
 export default composePageProps(repo, user.all, user.session)(() => {
-  const { repo, users, user: session } = usePageProps<{
+  const { repo, allUsers: users, session } = usePageProps<{
     repo: Repository;
-    users: User[];
-    user: User;
+    allUsers: User[];
+    session: User;
   }>();
   const [selectedItems, setSelectedItems] = useState(
     repo.members.map(i => ({ ...i, name: i.fullname })),
   );
   return (
-    <Page>
+    <Page backgroundColor="#fff">
       <Page.Navbar />
       <Repo.SubPage>
         <Flex>
           <Repo.Sider />
           <Page.Content>
-            <H1>成员</H1>
+            <Callout intent="primary">
+              {session.id === repo.owner.id
+                ? `You ownered this repository`
+                : `${repo.owner.fullname} ownered this repository`}
+            </Callout>
+            <br />
+            <H1>Members</H1>
             <MemberMultiSelect
               itemRenderer={(item, { handleClick }) => (
                 <MenuItem
