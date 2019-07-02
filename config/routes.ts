@@ -9,7 +9,7 @@ add(
     resources('settings'),
     resources('members'),
     resources('wiki'),
-    resources('codes'),
+    resources('status-codes'),
   ),
 );
 

@@ -8,13 +8,13 @@ import { repo } from '@helpers/page-props';
 
 export default composePageProps(repo)(() => {
   return (
-    <Page>
+    <Page backgroundColor="#fff">
       <Page.Navbar />
       <Repo.SubPage>
         <Flex>
           <Repo.Sider />
           <Page.Content>
-            <H1>公共返回码</H1>
+            <H1>Status Codes</H1>
           </Page.Content>
         </Flex>
       </Repo.SubPage>
