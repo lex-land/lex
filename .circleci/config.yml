@@ -19,6 +19,7 @@ jobs:
           fingerprints:
             - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
       - run: ssh-add -l
+      - run: ssh -v briefguo@lex-land.online
       - run:
           name: Deploy Over SSH
           command: |
