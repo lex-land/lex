@@ -8,7 +8,6 @@ jobs:
       - checkout
       - run: npm -v
       - run: pwd
-      - run: ssh-add -l
   deploy:
     machine:
       enabled: true
@@ -16,10 +15,14 @@ jobs:
       - run: echo 'Hello'
       - run: echo $SSH_USER
       - run: echo $SSH_HOST
+      - add_ssh_keys:
+        fingerprints:
+          - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
+      - run: ssh-add -l
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "echo "Hello" "
+            ssh $SSH_USER@$SSH_HOST "ls"
 
 workflows:
   version: 2
