@@ -124,8 +124,8 @@ const WrappedNavbar = ({
                       <Flex justify="space-between" align="center">
                         <Logo size={24} />
                         <img
-                          src="http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster"
-                          alt="Jenkins"
+                          src="https://circleci.com/gh/lex-land/lex.svg?style=svg"
+                          alt="Circle CI"
                         />
                       </Flex>
                     </h6>
