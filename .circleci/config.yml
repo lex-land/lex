@@ -13,13 +13,13 @@ jobs:
     machine:
       enabled: true
     steps:
-      # - add_ssh_keys:
-      #     fingerprints:
       - run: echo 'Hello'
-      # - run:
-      #     name: Deploy Over SSH
-      #     command: |
-      #       ssh $SSH_USER@$SSH_HOST "echo "Hello" "
+      - run: echo $SSH_USER
+      - run: echo $SSH_HOST
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh $SSH_USER@$SSH_HOST "echo "Hello" "
 
 workflows:
   version: 2
