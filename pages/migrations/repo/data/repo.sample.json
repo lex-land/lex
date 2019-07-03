@@ -30,8 +30,8 @@
     "modules": [
       {
         "id": 455,
-        "name": "商户管理",
-        "description": "商户管理所有TAB切换页",
+        "name": "Sample Module",
+        "description": "Sample module description",
         "priority": 1,
         "creatorId": 100000013,
         "repositoryId": 124,
@@ -41,10 +41,10 @@
         "interfaces": [
           {
             "id": 2511,
-            "name": "GET /stores 获取商户管理列表",
-            "url": "/stores",
+            "name": "Sample Interface",
+            "url": "/<Sample Interface URL>",
             "method": "GET",
-            "description": "GET方式，参数为 ？params1=1&params2=2 格式",
+            "description": "Sample Interface description",
             "priority": 1,
             "creatorId": 100000013,
             "lockerId": 100000013,
@@ -63,10 +63,10 @@
                 "id": 40181,
                 "scope": "request",
                 "type": "String",
-                "name": "store_name",
+                "name": "name",
                 "rule": "",
                 "value": "",
-                "description": "商户名称",
+                "description": "Sample property",
                 "parentId": -1,
                 "priority": 1,
                 "interfaceId": 2511,
