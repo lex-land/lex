@@ -10,6 +10,7 @@ jobs:
       # - run: yarn
       # - run: npm run build:master
       - run: docker
+      - run: rsync
   deploy:
     machine:
       enabled: true
