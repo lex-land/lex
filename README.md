@@ -2,10 +2,6 @@
   <a href="https://lex-land.online" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
 </p>
 
-<p align="center">
-<a href="http://jenkins-hlcx.sunmi.com/job/lex/job/master/" target="_blank"><img src="http://jenkins-hlcx.sunmi.com/buildStatus/icon?job=lex%2Fmaster" alt="Jenkins" /></a>
-</p>
-
 Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的一个产品。相比 Swagger UI、sosoApi、showDoc 等工具，Lex 主要做的不仅仅把接口呈现出来，更多的是提供结构化的接口定义去为前端的 mock 数据、自动化接口测试、批量测试用例覆盖等一系列配合上下游的协作。
 
 ## Environment
