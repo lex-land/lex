@@ -53,11 +53,6 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
-          {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
-          <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-142999296-1"
-          ></script>
         </body>
       </Html>
     );
