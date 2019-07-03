@@ -1,7 +1,9 @@
 import { Intent, Position, Toaster } from '@blueprintjs/core';
 import { cleanToken, setToken } from './secure';
+import { useEffect, useState } from 'react';
 import { http } from './fetch';
 import md5 from 'md5';
+import { throttle } from 'lodash';
 
 const loginValue = {
   username: '',
@@ -38,4 +40,30 @@ export const session = {
       .get(`/api/session`)
       .then(({ statusCode }) => statusCode !== 401)
       .catch(() => false),
+};
+
+export const createThrottled = (fn: any) => throttle(fn, 3000);
+
+export const throttledUpdateMod = createThrottled((modId: number, mod: any) => {
+  http.put(`/api/module/${modId}`, mod);
+});
+
+export const throttledUpdateInte = createThrottled(
+  (inteId: number, inte: any) => {
+    http.put(`/api/interface/${inteId}`, inte);
+  },
+);
+
+export const throttledUpdateRepo = createThrottled((id: number, repo: any) =>
+  http.put(`/api/repository/${id}`, repo),
+);
+
+export const useEntity = (entity: any, curd?: (newValue: any) => any) => {
+  const [entityValue, setEntityValue] = useState(entity);
+  const setValue = (newValue: Partial<any>) => {
+    curd && curd(newValue);
+    setEntityValue({ ...entityValue, ...newValue });
+  };
+  useEffect(() => setEntityValue(entity), [entity, entity.id]);
+  return { value: entityValue, setValue };
 };

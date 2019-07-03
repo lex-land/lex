@@ -1,18 +1,21 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
 import { Link, route } from '@helpers/route';
-import React, { useState } from 'react';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { inte, mod, repo } from '@helpers/page-props';
+import {
+  throttledUpdateInte,
+  throttledUpdateMod,
+  useEntity,
+} from '@helpers/service';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import IntePage from './interface';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
+import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
-import { http } from '@helpers/fetch';
 import styled from 'styled-components';
-import { throttle } from 'lodash';
 import { useQuery } from '@helpers/hooks';
 
 interface PageProps {
@@ -31,22 +34,12 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-const updateMod = throttle((modId: number, mod: any) => {
-  http.put(`/api/module/${modId}`, mod);
-}, 3000);
-
-const updateInte = throttle((inteId: number, inte) => {
-  http.put(`/api/interface/${inteId}`, inte);
-}, 3000);
-
 export default composePageProps(repo, mod, inte)(() => {
   const { repo, mod } = usePageProps<PageProps>();
   const { interface_id: inteId } = useQuery();
-  const [modInfo, setModInfo] = useState(mod);
-  const changeModInfo = (value: Partial<Module>) => {
-    updateMod(mod.id, value);
-    setModInfo({ ...modInfo, ...value });
-  };
+  const { value: modInfo, setValue: changeModInfo } = useEntity(mod, newMod =>
+    throttledUpdateMod(newMod.id, newMod),
+  );
   return inteId ? (
     <IntePage />
   ) : (
@@ -58,12 +51,10 @@ export default composePageProps(repo, mod, inte)(() => {
           <Page.Content>
             <div style={{ marginBottom: 40 }}>
               <H1>
-                <Flex justify="space-between" align="flex-end">
-                  <EditableText
-                    value={modInfo.name}
-                    onChange={name => changeModInfo({ name })}
-                  />
-                </Flex>
+                <EditableText
+                  value={modInfo.name}
+                  onChange={name => changeModInfo({ name })}
+                />
               </H1>
               <EditableText
                 minLines={2}
@@ -97,7 +88,9 @@ export default composePageProps(repo, mod, inte)(() => {
                       </td>
                       <td>
                         <EditableText
-                          onChange={name => updateInte(inte.id, { name })}
+                          onChange={name =>
+                            throttledUpdateInte(inte.id, { name })
+                          }
                           defaultValue={inte.name}
                         />
                       </td>

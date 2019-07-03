@@ -6,32 +6,26 @@ import {
   HTMLSelect,
   Popover,
 } from '@blueprintjs/core';
-import React, { useState } from 'react';
+import { throttledUpdateInte, useEntity } from '@helpers/service';
 import { Flex } from '@components/layout/flex';
 import { Inte } from '@components/domains/inte';
 import { Interface } from '@server/interface/interface.entity';
 import { Page } from '@components/page';
+import React from 'react';
 import { Repo } from '@components/domains/repo';
-import { http } from '@helpers/fetch';
 import styled from 'styled-components';
-import { throttle } from 'lodash';
 import { usePageProps } from '@core/next-compose';
 
 const RequestURL = styled.code`
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
 
-const updateInte = throttle((inteId: number, inte) => {
-  http.put(`/api/interface/${inteId}`, inte);
-}, 3000);
-
 export default () => {
   const { inte } = usePageProps<{ inte: Interface }>();
-  const [inteInfo, setInteInfo] = useState(inte);
-  const changeInteInfo = (value: Partial<Interface>) => {
-    updateInte(inte.id, value);
-    setInteInfo({ ...inteInfo, ...value });
-  };
+  const { value: inteInfo, setValue: changeInteInfo } = useEntity(
+    inte,
+    newMod => throttledUpdateInte(inte.id, newMod),
+  );
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
@@ -85,7 +79,7 @@ export default () => {
                         </span>
                       </Popover>
                       <EditableText
-                        value={inte.url}
+                        value={inteInfo.url}
                         onChange={url => changeInteInfo({ url })}
                       />
                     </RequestURL>

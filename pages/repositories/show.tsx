@@ -1,26 +1,20 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
 import { Link, route } from '@helpers/route';
 import { composePageProps, usePageProps } from '@core/next-compose';
+import { throttledUpdateMod, throttledUpdateRepo } from '@helpers/service';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
-import { http } from '@helpers/fetch';
 import { repo } from '@helpers/page-props';
 import styled from 'styled-components';
-import { throttle } from 'lodash';
 
 const ModDashBoard = styled.div`
-  width: 33.3%;
-  margin: 18px 0;
+  width: 30%;
+  margin-bottom: 36px;
 `;
-
-const updateRepo = throttle(
-  (id, repo) => http.put(`/api/repository/${id}`, repo),
-  3000,
-);
 
 export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
@@ -35,16 +29,18 @@ export default composePageProps(repo)(() => {
               <H1>
                 <EditableText
                   defaultValue={repo.name}
-                  onChange={name => updateRepo(repo.id, { name })}
+                  onChange={name => throttledUpdateRepo(repo.id, { name })}
                 />
               </H1>
               <EditableText
                 multiline
                 defaultValue={repo.description}
-                onChange={description => updateRepo(repo.id, { description })}
+                onChange={description =>
+                  throttledUpdateRepo(repo.id, { description })
+                }
               />
             </div>
-            <Flex>
+            <Flex gutter={24}>
               {repo.modules.map(mod => (
                 <ModDashBoard key={mod.id}>
                   <H5>
@@ -54,7 +50,13 @@ export default composePageProps(repo)(() => {
                       </a>
                     </Link>
                   </H5>
-                  <p>{mod.description}</p>
+                  <EditableText
+                    multiline
+                    defaultValue={mod.description}
+                    onChange={description =>
+                      throttledUpdateMod(mod.id, { description })
+                    }
+                  />
                 </ModDashBoard>
               ))}
             </Flex>

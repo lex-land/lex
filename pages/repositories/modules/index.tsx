@@ -1,4 +1,4 @@
-import { Button, H1, HTMLTable, Tag } from '@blueprintjs/core';
+import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
 import { Link, route } from '@helpers/route';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { mods, repo } from '@helpers/page-props';
@@ -9,6 +9,7 @@ import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import styled from 'styled-components';
+import { throttledUpdateMod } from '@helpers/service';
 import { useQuery } from '@helpers/hooks';
 
 const AlignLeftTable = styled(HTMLTable)`
@@ -87,7 +88,14 @@ export default composePageProps(repo, mods)(() => {
                             </a>
                           </Link>
                         </td>
-                        <td>{mod.description}</td>
+                        <td>
+                          <EditableText
+                            defaultValue={mod.description}
+                            onChange={description =>
+                              throttledUpdateMod(mod.id, { description })
+                            }
+                          />
+                        </td>
                         <td>
                           <Tag>{mod.interfaces.length}个接口</Tag>
                         </td>
