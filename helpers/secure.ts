@@ -1,6 +1,6 @@
 import CONSTANTS from '@config/constants';
 import Cookies from 'universal-cookie';
-import CryptoJS from 'crypto-js';
+import createDes from '@core/createDes';
 import md5 from 'md5';
 
 const ENV = {
@@ -9,31 +9,7 @@ const ENV = {
   md5Key: '666',
 };
 
-const tripledes = CryptoJS.TripleDES;
-const IV = CryptoJS.enc.Utf8.parse(ENV.DES.Iv);
-const KEY = CryptoJS.enc.Utf8.parse(ENV.DES.Key);
-
-export const Des = {
-  encrypt(message: string | null) {
-    const result = tripledes.encrypt(message || '', KEY, {
-      iv: IV,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    });
-    return encodeURIComponent(result as any);
-  },
-  decrypt(message: string | null) {
-    const encryptedMessage: any = {
-      ciphertext: CryptoJS.enc.Base64.parse(decodeURIComponent(message || '')),
-    };
-    const result = tripledes.decrypt(encryptedMessage, KEY, {
-      iv: IV,
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    });
-    return result.toString(CryptoJS.enc.Utf8);
-  },
-};
+export const Des = createDes(ENV.DES);
 
 // admin
 // UDuNlDebtWg=
