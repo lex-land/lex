@@ -5,12 +5,6 @@ import { logger } from '@core/logger';
 export const CATCHED_CODE = Object.keys(ErrorRoute).map(Number);
 export type CatchedCode = keyof typeof ErrorRoute;
 
-export interface ResponseData {
-  code: number;
-  data: any;
-  msg: string;
-}
-
 export class FetchError implements Error {
   name: string;
   message: string;

@@ -14,7 +14,7 @@ export const formDataToJSON = (formData: any) => {
   return obj;
 };
 
-export const initObjectByKeys = <T = string>(keys: T[], value = '') => {
+export const initObjectByStringKeys = <T = string>(keys: T[], value = '') => {
   const obj: any = {};
   keys.forEach(i => {
     obj[i] = value;
