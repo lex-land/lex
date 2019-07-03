@@ -13,7 +13,7 @@ export const LoginForm = () => {
         <>
           <QuickForm.Input large name="username" />
           <QuickForm.Input large name="password" type="password" />
-          <Button intent="primary" type="submit" large text="Log in" />
+          <Button intent="primary" type="submit" large text="Log In" />
         </>
       )}
       success={() =>

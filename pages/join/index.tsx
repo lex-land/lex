@@ -1,4 +1,5 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
+import { Link, route } from '@helpers/route';
 import { Logo } from '@components/vi';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
@@ -7,7 +8,6 @@ import { composePageProps } from '@core/next-compose';
 import { http } from '@helpers/fetch';
 import { login } from '@helpers/service';
 import md5 from 'md5';
-import { route } from '@helpers/route';
 import { signedUser } from '@helpers/page-props';
 
 export default composePageProps(signedUser.redirect('/'))(() => {
@@ -56,6 +56,12 @@ export default composePageProps(signedUser.redirect('/'))(() => {
             route('/').replace();
           }}
         />
+        <Page.Card.Footer>
+          Already have an account?
+          <Link route="/login">
+            <a> Log In</a>
+          </Link>
+        </Page.Card.Footer>
       </Page.Card>
     </Page>
   );
