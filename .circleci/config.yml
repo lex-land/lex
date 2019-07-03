@@ -18,12 +18,10 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
-      - run: cat /home/circleci/.ssh/id_rsa_34997478a0a07678a588f4deb4f4f32a
-      - run: ssh -v briefguo@lex-land.online
-      # - run:
-      #     name: Deploy Over SSH
-      #     command: |
-      #       ssh $SSH_USER@$SSH_HOST "ls"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -i /home/circleci/.ssh/id_rsa_34997478a0a07678a588f4deb4f4f32a $SSH_USER@$SSH_HOST "ls"
 
 workflows:
   version: 2
