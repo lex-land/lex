@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: npx yarn
-      - run: SUNMI_PROD_URL=https://lex-land.online SUNMI_ENV=master npm run build:master
+      - run: npm run build:master
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
