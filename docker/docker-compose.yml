@@ -28,8 +28,8 @@ services:
       - MYSQL_DATABASE=Lex
       - NODE_ENV=production
       - PORT=3000
-      - SUNMI_PROD_URL
-      - SUNMI_ENV
+      - SUNMI_PROD_URL=https://lex-land.online
+      - SUNMI_ENV=master
       - BUILD_TAG
     # volumes:
     #   - ../:/app
