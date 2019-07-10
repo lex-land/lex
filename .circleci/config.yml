@@ -6,20 +6,20 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
       - run:
           name: Copy Files
           command: |
             scp -r docker/** $SSH_USER@$SSH_HOST:/root/lex/docker
-      - run: npx yarn
-      - run: npm run build:master
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
-      - run: docker build --tag lexland/lex:latest .
-      - run: docker push lexland/lex:latest
+      # - run: npx yarn
+      # - run: npm run build:master
+      # - setup_remote_docker:
+      #     docker_layer_caching: true
+      # - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      # - run: docker build --tag lexland/lex:latest .
+      # - run: docker push lexland/lex:latest
   deploy:
     machine:
       enabled: true
