@@ -8,6 +8,7 @@ jobs:
       - checkout
       - run: npx yarn
       - run: npm run build:master
+      - setup_remote_docker
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build --tag lexland/lex:latest .
       - run: docker push lexland/lex:latest
