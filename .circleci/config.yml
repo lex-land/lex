@@ -6,8 +6,7 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      - run: npm i -g yarn
-      - run: yarn
+      - run: npx yarn
       - run: npm run build:master
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
       - run: docker build --tag lexland/lex:latest .
