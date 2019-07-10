@@ -119,17 +119,6 @@ const WrappedNavbar = ({
                     href="https://github.com/lex-land/lex/blob/master/README.md"
                     text="About Lex"
                   />
-                  <li className={Classes.MENU_HEADER}>
-                    <h6 className={Classes.HEADING}>
-                      <Flex justify="space-between" align="center">
-                        <Logo size={24} />
-                        <img
-                          src="https://circleci.com/gh/lex-land/lex.svg?style=svg"
-                          alt="Circle CI"
-                        />
-                      </Flex>
-                    </h6>
-                  </li>
                 </Menu>
               }
               position={Position.BOTTOM_RIGHT}

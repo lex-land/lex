@@ -14,9 +14,11 @@ export const setToken = (t: string) => {
   token = t;
 };
 
+const SUNMI_PROD_URL = process.env.SUNMI_PROD_URL || 'http://localhost:3000';
+
 export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理URL
-  const url = api.startsWith('/') ? `${process.env.SUNMI_PROD_URL}${api}` : api;
+  const url = api.startsWith('/') ? `${SUNMI_PROD_URL}${api}` : api;
   const options = {
     method: 'GET',
     ...opts,

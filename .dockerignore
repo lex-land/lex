@@ -1,18 +1,17 @@
+.circleci
 .git
 .vscode
 .DS_Store
 .editorconfig
-
-# node_modules
-nginx
-test
-scripts
+.stylelintignore
+node_modules
 npm-debug.log
 README.md
-Dockerfile
-Jenkinsfile
 temp
 jest.setup.js
 nest-cli.json
-nodemon-debug.json
-docker/mysql
+docker
+tests
+docs
+logo.png
+Dockerfile

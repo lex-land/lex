@@ -6,11 +6,12 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
-      # - run: npm i -g yarn
-      # - run: yarn
-      # - run: npm run build:master
-      - run: docker
-      - run: rsync
+      - run: npm i -g yarn
+      - run: yarn
+      - run: npm run build:master
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
+      - run: docker build --tag lexland/lex:latest .
+      - run: docker push lexland/lex:latest
   deploy:
     machine:
       enabled: true
@@ -21,7 +22,11 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "ls"
+            scp -f docker $SSH_USER@$SSH_HOST:/root/lex/docker
+            ssh $SSH_USER@$SSH_HOST "cd /root/lex/docker && docker-compose down && docker-compose up -d"
+
+# SUNMI_PROD_URL=https://lex-land.online SUNMI_ENV=master
+# =https://lex-land.online
 
 workflows:
   version: 2
