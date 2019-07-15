@@ -3,14 +3,14 @@
 export const logger = {
   info: (...args: any[]) => {
     if (process.env.NODE_ENV === 'production') {
-      // console.clear();
+      console.info(...args);
     } else {
       console.info(...args);
     }
   },
   error: (...args: any[]) => {
     if (process.env.NODE_ENV === 'production') {
-      // console.clear();
+      console.error(...args);
     } else {
       console.error(...args);
     }

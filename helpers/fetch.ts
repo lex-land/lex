@@ -4,7 +4,6 @@ import { NextContext } from 'next';
 import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
 import { logger } from '@core/logger';
-import path from 'path';
 import qs from 'qs';
 
 let token: string;
@@ -15,6 +14,8 @@ export const setToken = (t: string) => {
 };
 
 const SUNMI_PROD_URL = process.env.SUNMI_PROD_URL || 'http://localhost:3000';
+
+logger.info(SUNMI_PROD_URL, process.env.SUNMI_PROD_URL);
 
 export async function fetch<D = any>(api: string, opts?: RequestInit) {
   // 处理URL
@@ -72,19 +73,3 @@ export const createHttp = (ctx: NextContext) => {
   setToken(token); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
   return http;
 };
-
-export const fetchMock = async (url: string, opts?: RequestInit) => {
-  const SUNMI_RAP_SERVER = `rapserver.sunmi.com/app/mock/data`;
-  const { method = 'GET' } = opts || {};
-  logger.info(`[ Mock GET ] ${url}`);
-  const rapURL = path.join(SUNMI_RAP_SERVER, method, encodeURIComponent(url));
-  const json = await fetch(`http://${rapURL}`, opts as any).then(res =>
-    res.json(),
-  );
-  logger.info(`[ Mock GET ] ${url} }`, json);
-  return json;
-};
-
-export function mock<D = any>(url: string): Promise<D> {
-  return fetchMock(url.replace('/apis', ''), {});
-}
