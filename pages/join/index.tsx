@@ -58,7 +58,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         />
         <Page.Card.Footer>
           Already have an account?
-          <Link route="/login">
+          <Link href="/login">
             <a> Log In</a>
           </Link>
         </Page.Card.Footer>

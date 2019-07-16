@@ -10,10 +10,10 @@ import {
 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
 import { Avator } from '@components/avator';
-import { Link } from '@helpers/route';
+// import { Link } from '@helpers/route';
 import { http } from '@helpers/fetch';
 import styled from 'styled-components';
-import { useAsync } from '@helpers/hooks';
+import { useAsync } from 'react-use';
 
 const defaultUser = {
   fullname: '-',
@@ -111,12 +111,10 @@ export const DashboardNavlist = ({
     <UL style={{ listStyle: 'none', padding: 0 }}>
       {dataSource.map((record: any) => (
         <DashboardNavListItem key={record.id}>
-          <Link route={itemHref(record)}>
-            <a className="link">
-              {icon && <Icon className="icon" icon={icon} />}
-              <span className="name">{record.name}</span>
-            </a>
-          </Link>
+          <a className="link">
+            {icon && <Icon className="icon" icon={icon} />}
+            <span className="name">{record.name}</span>
+          </a>
         </DashboardNavListItem>
       ))}
     </UL>

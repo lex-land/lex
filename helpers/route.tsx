@@ -1,16 +1,17 @@
-export * from '@core/next-routes';
+import NextLink from 'next/link';
+import React from 'react';
+import Router from 'next/router';
 import _ from 'lodash';
-import routes from '@config/routes';
 
-const { Router, Link } = routes;
+const Link = (props: any) => <NextLink {...props} />;
 
 export const route = (route: string = Router.route, params?: any) => {
   const replace = (state: any = {}) => {
-    Router.replaceRoute(route, _.pickBy(state, Boolean));
+    Router.replace(route, _.pickBy(state, Boolean));
   };
 
   const push = (state: any = {}) => {
-    Router.pushRoute(route, _.pickBy(state, Boolean));
+    Router.push(route, _.pickBy(state, Boolean));
   };
 
   const createUtil = (state: any = {}) => ({

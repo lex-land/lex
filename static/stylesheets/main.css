@@ -1,0 +1,18 @@
+/*
+  // main.ts
+  app.useStaticAssets(join(__dirname, '..', 'node_modules'));
+  设置了node_modules为静态资源目录
+  所以下方能用绝对路径引用
+*/
+
+@import 'https://unpkg.com/normalize.css@8.0.0/normalize.css';
+@import 'https://unpkg.com/@blueprintjs/icons@3.9.1/lib/css/blueprint-icons.css';
+@import 'https://unpkg.com/@blueprintjs/core@3.17.1/lib/css/blueprint.css';
+@import 'https://unpkg.com/@blueprintjs/select@3.9.0/lib/css/blueprint-select.css';
+
+/* @import '/highlight.js/styles/github.css'; */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}

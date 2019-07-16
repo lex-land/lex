@@ -3,8 +3,8 @@ import {
   createBoolean,
   createPageProps,
 } from '@core/next-compose';
+import { AppContext } from 'next/app';
 import { Module } from '@server/module/module.entity';
-import { NextAppContext } from 'next/app';
 import { Organization } from '@server/organization/organization.entity';
 import { Repository } from '@server/repository/repository.entity';
 import Router from 'next/router';
@@ -29,7 +29,7 @@ export const createRedirect = createPageProps(ctx => {
   };
 });
 
-export type enhancedAppProps<T = any> = (ctx: NextAppContext) => T;
+export type enhancedAppProps<T = any> = (ctx: AppContext) => T;
 
 export const enhancedCtx = <T>(fn: enhancedAppProps<T>) =>
   createAppProps(async appCtx => {

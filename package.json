@@ -20,8 +20,9 @@
     "database": "docker-compose -f ./docker/docker-compose.database.yml up -d --remove-orphans",
     "prebuild:master": "rimraf build",
     "build:master": "SUNMI_PROD_URL=https://lex-land.online SUNMI_ENV=master npx next build",
-    "start": "node --require ts-node/register --require tsconfig-paths/register --require reflect-metadata server/main.ts",
-    "start:dev": "npx nodemon",
+    "start": "ts-node --project tsconfig.server.json --require tsconfig-paths/register --require reflect-metadata server/main.ts",
+    "start:dev": "npx next dev",
+    "start:server": "npx nodemon",
     "predeploy": "docker-compose -f ./docker/docker-compose.yml down --remove-orphans",
     "deploy": "docker-compose -f ./docker/docker-compose.yml up -d --remove-orphans"
   },
@@ -54,7 +55,7 @@
     "md5": "^2.2.1",
     "moment": "^2.24.0",
     "mysql": "^2.14.1",
-    "next": "^8.1.0",
+    "next": "^9.0.1",
     "next-routes": "^1.4.2",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
@@ -67,7 +68,7 @@
     "react-dom": "^16.8.6",
     "react-scrollspy": "^3.4.0",
     "react-sticky": "^6.0.3",
-    "react-use": "^9.0.0",
+    "react-use": "^9.11.0",
     "redis": "^2.8.0",
     "reflect-metadata": "0.1.12",
     "rxjs": "^6.3.3",
@@ -98,7 +99,7 @@
     "@types/jest": "^23.3.13",
     "@types/lodash": "^4.14.126",
     "@types/md5": "^2.1.33",
-    "@types/next": "^8.0.5",
+    "@types/next": "^8.0.6",
     "@types/node": "^8.0.29",
     "@types/nprogress": "0.0.29",
     "@types/numeral": "0.0.25",
@@ -115,7 +116,6 @@
     "@types/yup": "^0.26.13",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
-    "@zeit/next-typescript": "^1.1.1",
     "babel-plugin-import": "^1.11.0",
     "babel-plugin-module-resolver": "^3.2.0",
     "babel-plugin-styled-components": "^1.10.0",
@@ -150,7 +150,7 @@
     "ts-jest": "^23.10.5",
     "ts-node": "3.3.0",
     "tsconfig-paths": "^3.8.0",
-    "typescript": "3.3.3333",
+    "typescript": "^3.5.3",
     "webpack": "4"
   },
   "eslintConfig": {
@@ -235,8 +235,7 @@
   },
   "babel": {
     "presets": [
-      "next/babel",
-      "@zeit/next-typescript/babel"
+      "next/babel"
     ],
     "plugins": [
       [

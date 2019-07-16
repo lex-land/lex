@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { NextAppContext } from 'next/app';
-import { NextContext } from 'next';
+import { AppContext } from 'next/app';
+import { NextPageContext } from 'next';
 
 export const PagePropsContext = React.createContext({});
 
@@ -12,7 +12,7 @@ export const composePageProps = (...funcs: any[]) => (Component: any) => {
   if (!funcs) return Component;
   const orig = Component.getInitialProps;
   Component.displayName = `ComposedPage`;
-  Component.getInitialProps = async (ctx: NextContext | NextAppContext) => {
+  Component.getInitialProps = async (ctx: NextPageContext | AppContext) => {
     let props = (orig && (await orig(ctx))) || {};
     const promises = funcs.map(async fn => await fn(ctx));
     const newProps = await Promise.all(promises);
@@ -24,8 +24,8 @@ export const composePageProps = (...funcs: any[]) => (Component: any) => {
   return Component;
 };
 
-export const createPageProps = <T>(fn: (ctx: NextContext) => T) => fn;
-export const createAppProps = <T>(fn: (ctx: NextAppContext) => T) => fn;
+export const createPageProps = <T>(fn: (ctx: NextPageContext) => T) => fn;
+export const createAppProps = <T>(fn: (ctx: AppContext) => T) => fn;
 export const createBoolean = (
-  fn: (ctx: NextContext) => boolean | Promise<boolean>,
+  fn: (ctx: NextPageContext) => boolean | Promise<boolean>,
 ) => fn;

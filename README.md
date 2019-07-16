@@ -93,3 +93,11 @@ npm run deploy
   - [x] 支持 CicleCI
 
 ## Troubleshooting
+
+
+```
+ERROR in /Users/briefguo/Public/www/lex/node_modules/react-use/lib/useAsyncRetry.d.ts
+5:72 ',' expected.
+```
+
+https://github.com/streamich/react-use/issues/270

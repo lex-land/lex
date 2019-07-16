@@ -27,7 +27,7 @@ import constants from '@config/constants';
 import { http } from '@helpers/fetch';
 import { logout } from '@helpers/service';
 import styled from 'styled-components';
-import { useAsync } from '@helpers/hooks';
+import { useAsync } from 'react-use';
 
 export interface PageProps {
   className?: string;

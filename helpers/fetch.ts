@@ -1,6 +1,6 @@
 import { CATCHED_CODE, FetchError } from '@config/error';
 import CONSTANTS from '@config/constants';
-import { NextContext } from 'next';
+import { NextPageContext } from 'next';
 import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
 import { logger } from '@core/logger';
@@ -13,7 +13,7 @@ export const setToken = (t: string) => {
   token = t;
 };
 
-const SUNMI_PROD_URL = process.env.SUNMI_PROD_URL || 'http://localhost:3000';
+const SUNMI_PROD_URL = process.env.SUNMI_PROD_URL || 'http://localhost:3001';
 
 logger.info(SUNMI_PROD_URL, process.env.SUNMI_PROD_URL);
 
@@ -68,7 +68,7 @@ export const http = {
   delete: createHttpUtil('DELETE'),
 };
 
-export const createHttp = (ctx: NextContext) => {
+export const createHttp = (ctx: NextPageContext) => {
   const token = ctx.getToken();
   setToken(token); // 在Component.getInitialProps之前执行，为服务端发送http请求时提供身份
   return http;

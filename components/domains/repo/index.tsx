@@ -76,7 +76,7 @@ const RepoSider = () => {
   return (
     <RepoSiderContainer>
       <Flex justify="space-between" align="center">
-        <Link route={`/repositories/${repo.id}`}>
+        <Link href={`/repositories/${repo.id}`}>
           <TextLink
             aria-selected={+query.repository_id === repo.id}
             className="sider-item sider-title"
@@ -89,7 +89,7 @@ const RepoSider = () => {
       <RepoNavList>
         {repo.modules.map(mod => (
           <li key={mod.id}>
-            <Link route={`/repositories/${repo.id}/modules/${mod.id}`}>
+            <Link href={`/repositories/${repo.id}/modules/${mod.id}`}>
               <TextLink aria-selected={+query.module_id === mod.id}>
                 {/* <Icon icon="cube" /> */}
                 {mod.name}
@@ -158,7 +158,7 @@ const RepoSider = () => {
         />
       </RepoNavList>
       <div>
-        <Link route={`/repositories/${repo.id}/modules`}>
+        <Link href={`/repositories/${repo.id}/modules`}>
           <TextLink
             className="sider-item"
             aria-selected={router.asPath === `/repositories/${repo.id}/modules`}
@@ -168,7 +168,7 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link route={`/repositories/${repo.id}/status-codes`}>
+        <Link href={`/repositories/${repo.id}/status-codes`}>
           <TextLink
             className="sider-item"
             aria-selected={
@@ -180,7 +180,7 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link route={`/repositories/${repo.id}/members`}>
+        <Link href={`/repositories/${repo.id}/members`}>
           <TextLink
             className="sider-item"
             aria-selected={router.asPath === `/repositories/${repo.id}/members`}
@@ -190,7 +190,7 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link route={`/repositories/${repo.id}/settings`}>
+        <Link href={`/repositories/${repo.id}/settings`}>
           <TextLink
             className="sider-item"
             aria-selected={

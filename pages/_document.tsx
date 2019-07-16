@@ -4,14 +4,19 @@
 
 // ./pages/_document.js
 
-import Document, { Head, Html, Main, NextScript } from 'next/document';
+import Document, {
+  DocumentContext,
+  Head,
+  Html,
+  Main,
+  NextScript,
+} from 'next/document';
 import React, { Fragment } from 'react';
-import { NextDocumentContext } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
   // https://github.com/zeit/next.js/blob/master/examples/with-styled-components/pages/_document.js
-  static async getInitialProps(ctx: NextDocumentContext) {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -40,7 +45,8 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link href="/stylesheets/main.css" rel="stylesheet" />
+          <link href="/static/stylesheets/main.css" rel="stylesheet" />
+          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <meta
             name="description"
             content="A Collaboration Tool for API documentation"

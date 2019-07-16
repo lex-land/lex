@@ -14,7 +14,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         <Page.Container>
           <NavbarGroup>
             <Logo />
-            <Link route="join">
+            <Link href="join">
               <Button style={{ marginLeft: 8 }} intent="success">
                 Sign Up
               </Button>
@@ -27,7 +27,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         <LoginForm />
         <Page.Card.Footer>
           New to Lex？
-          <Link route="join">
+          <Link href="join">
             <a>Create an account</a>
           </Link>
         </Page.Card.Footer>

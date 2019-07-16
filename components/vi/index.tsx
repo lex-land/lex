@@ -12,7 +12,7 @@ const ViSvg = styled.svg`
 
 export const Logo = ({ size = 45 }: { size?: number }) => {
   return (
-    <Link route="/">
+    <Link href="/">
       <ViSvg
         viewBox="0 0 1119 1024"
         version="1.1"

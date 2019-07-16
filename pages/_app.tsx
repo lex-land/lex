@@ -1,5 +1,5 @@
 import '@config/initializer';
-import { AppProps, Container, DefaultAppIProps } from 'next/app';
+import { AppProps, Container } from 'next/app';
 import { PagePropsContext, composePageProps } from '@core/next-compose';
 import ErrorBoundary from '@config/error';
 import { NProgressContainer } from '@core/nprogress/component';
@@ -8,7 +8,7 @@ import { ThemeProvider } from 'styled-components';
 import { enhancedCtx } from '@helpers/page-props';
 import { lexTheme } from '@config/theme/lex-theme';
 
-type Props = AppProps<any, any> & DefaultAppIProps & { statusCode: any };
+type Props = AppProps<any> & { statusCode: any };
 
 const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
   // 初始化页面参数
@@ -19,6 +19,7 @@ const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
       pageProps = await Component.getInitialProps(ctx);
     } catch (error) {
       // FetchError
+      // console.log(error);
       statusCode = error.code || 500;
     }
   }

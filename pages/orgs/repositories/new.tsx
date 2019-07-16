@@ -24,7 +24,6 @@ export default composePageProps(org)(() => {
           success={(values, json) =>
             route('repositories/show').replace({ repository_id: json.id })
           }
-          successToast="成功创建仓库"
         />
         <Page.EmberedError visible code={503} />
       </Page.Content>
