@@ -57,6 +57,7 @@ export class SessionController {
   @UseGuards(AuthGuard('jwt'))
   public async session(@Token() token: string) {
     const session = await this.sessionService.findUserByToken(token);
+    this.sessionService.setCacheUser(session);
     return session;
   }
 }

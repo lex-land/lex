@@ -7,10 +7,11 @@ import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { repo } from '@helpers/page-props';
-import { route } from '@helpers/route';
+import { useRouter } from 'next/router';
 
 export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
+  const router = useRouter();
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
@@ -30,7 +31,7 @@ export default composePageProps(repo)(() => {
               certain.
               <CURD.Delete
                 alertWhen
-                success={() => route(`/`).replace()}
+                success={() => router.replace(`/`)}
                 action={`/api/repository/${repo.id}`}
                 actionRenderer={({ handleClick }) => (
                   <Button onClick={handleClick}>Delete this repository</Button>

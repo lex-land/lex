@@ -3,9 +3,10 @@ import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/route';
+import { useRouter } from 'next/router';
 
 export default () => {
+  const router = useRouter();
   return (
     <Page>
       <Page.Navbar />
@@ -22,7 +23,7 @@ export default () => {
           )}
           action={newValue => http.post('/api/organization', newValue)}
           success={(values, json) =>
-            route('orgs/show').replace({ org_id: json.name })
+            router.replace(`/orgs/[org_id]`, `/orgs/${json.name}`)
           }
         />
         <Page.EmberedError code={503} />

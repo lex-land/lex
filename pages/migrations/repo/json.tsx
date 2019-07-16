@@ -14,8 +14,8 @@ import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import { http } from '@helpers/fetch';
 import repoSample from './data/repo.sample.json';
-import { route } from '@helpers/route';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const ToastProgressBar = styled(ProgressBar)`
   display: inline-flex;
@@ -24,6 +24,7 @@ const ToastProgressBar = styled(ProgressBar)`
 export default () => {
   const [repo, setRepo] = useState(JSON.stringify(repoSample, null, 2));
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const handleSubmit = async () => {
     const toast = Toaster.create({ position: Position.TOP });
     setLoading(true);
@@ -33,9 +34,10 @@ export default () => {
         message: <ToastProgressBar intent="primary" />,
       });
       const repoRes = await http.post('/api/migration/repo', JSON.parse(repo));
-      route('repositories/show')
-        .merge({ repository_id: repoRes.id })
-        .replace();
+      router.replace(
+        `/repositories/[repository_id]`,
+        `/repositories/${repoRes.id}`,
+      );
       toast.clear();
     } catch (error) {
       toast.show({

@@ -6,6 +6,8 @@ import {
   HTMLSelect,
   Popover,
 } from '@blueprintjs/core';
+import { composePageProps, usePageProps } from '@core/next-compose';
+import { inte, repo } from '@helpers/page-props';
 import { throttledUpdateInte, useEntity } from '@helpers/service';
 import { Flex } from '@components/layout/flex';
 import { Inte } from '@components/domains/inte';
@@ -14,13 +16,12 @@ import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import styled from 'styled-components';
-import { usePageProps } from '@core/next-compose';
 
 const RequestURL = styled.code`
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
 
-export default () => {
+export default composePageProps(repo, inte)(() => {
   const { inte } = usePageProps<{ inte: Interface }>();
   const { value: inteInfo, setValue: changeInteInfo } = useEntity(
     inte,
@@ -130,4 +131,4 @@ export default () => {
       </Repo.SubPage>
     </Page>
   );
-};
+});

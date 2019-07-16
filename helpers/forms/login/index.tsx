@@ -2,9 +2,10 @@ import { Button } from '@blueprintjs/core';
 import { QuickForm } from '@components/forms';
 import React from 'react';
 import { login } from '@helpers/service';
-import { route } from '@helpers/route';
+import { useRouter } from 'next/router';
 
 export const LoginForm = () => {
+  const router = useRouter();
   return (
     <QuickForm
       defaultValue={{ username: '', password: '' }}
@@ -16,11 +17,7 @@ export const LoginForm = () => {
           <Button intent="primary" type="submit" large text="Log In" />
         </>
       )}
-      success={() =>
-        route()
-          .merge()
-          .replace()
-      }
+      success={router.reload}
     />
   );
 };

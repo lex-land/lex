@@ -1,7 +1,6 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
 import { composePageProps, usePageProps } from '@core/next-compose';
-import { inte, mod, repo } from '@helpers/page-props';
+import { mod, repo } from '@helpers/page-props';
 import {
   throttledUpdateInte,
   throttledUpdateMod,
@@ -9,14 +8,14 @@ import {
 } from '@helpers/service';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
-import IntePage from './interface';
+import Link from 'next/link';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
 import styled from 'styled-components';
-import { useQuery } from '@helpers/hooks';
+import { useRouter } from 'next/router';
 
 interface PageProps {
   mod: Module;
@@ -34,15 +33,13 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-export default composePageProps(repo, mod, inte)(() => {
+export default composePageProps(repo, mod)(() => {
+  const router = useRouter();
   const { repo, mod } = usePageProps<PageProps>();
-  const { interface_id: inteId } = useQuery();
   const { value: modInfo, setValue: changeModInfo } = useEntity(mod, newMod =>
     throttledUpdateMod(newMod.id, newMod),
   );
-  return inteId ? (
-    <IntePage />
-  ) : (
+  return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
       <Repo.SubPage>
@@ -78,7 +75,7 @@ export default composePageProps(repo, mod, inte)(() => {
                       <td>
                         <Code>
                           <Link
-                            route={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
+                            href={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
                           >
                             <a>
                               [{inte.method}]{inte.url}
@@ -98,9 +95,10 @@ export default composePageProps(repo, mod, inte)(() => {
                         <CURD.Delete
                           alertWhen
                           success={() =>
-                            route(
+                            router.replace(
+                              `/repositories/[repository_id]/modules/[module_id]`,
                               `/repositories/${repo.id}/modules/${mod.id}`,
-                            ).replace()
+                            )
                           }
                           action={`/api/interface/${inte.id}`}
                           actionRenderer={({ handleClick }) => (
@@ -134,9 +132,10 @@ export default composePageProps(repo, mod, inte)(() => {
                     description: '',
                   }}
                   success={(values, json) =>
-                    route(
-                      `/repositories/${repo.id}/modules/${mod.id}?interface_id=${json.id}`,
-                    ).replace()
+                    router.replace(
+                      `/repositories/[repository_id]/modules/[module_id]/interfaces/[interface_id]`,
+                      `/repositories/${repo.id}/modules/${mod.id}/interfaces/${json.id}`,
+                    )
                   }
                   drawerTitle={`New Interface In ${mod.name}`}
                   params={{ repository: repo, module: mod }}

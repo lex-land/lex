@@ -5,12 +5,13 @@ import { QuickForm } from '@components/forms';
 import React from 'react';
 import { http } from '@helpers/fetch';
 import { org } from '@helpers/page-props';
-import { route } from '@helpers/route';
+import { useRouter } from 'next/router';
 
 const formDefaultValues = { name: '', description: '' };
 
 export default composePageProps(org)(() => {
   const { org } = usePageProps();
+  const router = useRouter();
   return (
     <Page>
       <Page.Navbar />
@@ -22,7 +23,10 @@ export default composePageProps(org)(() => {
             http.post('/api/repository', { ...newValue, organization: org })
           }
           success={(values, json) =>
-            route('repositories/show').replace({ repository_id: json.id })
+            router.replace(
+              '/repositories/[repository_id]',
+              `/repositories/${json.id}`,
+            )
           }
         />
         <Page.EmberedError visible code={503} />

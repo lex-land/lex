@@ -11,16 +11,17 @@ import React, { useState } from 'react';
 import { Flex } from '@components/layout/flex';
 import { Page } from '@components/page';
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/route';
+import { useRouter } from 'next/router';
 
 export default () => {
   const [repo, setRepo] = useState();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
     await http.post('/api/migration/user', JSON.parse(repo));
     await http.post('/api/migration/org', JSON.parse(repo));
-    route('/').replace();
+    router.replace('/');
     Toaster.create({ position: Position.TOP }).show({
       icon: 'tick',
       message: <span>成功迁移组织结构</span>,

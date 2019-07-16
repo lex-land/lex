@@ -1,5 +1,5 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
-import { Link } from '@helpers/route';
+import Link from 'next/link';
 import { LoginForm } from '@helpers/forms/login';
 import { Logo } from '@components/vi';
 import { Page } from '@components/page';
@@ -14,7 +14,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         <Page.Container>
           <NavbarGroup>
             <Logo />
-            <Link href="join">
+            <Link href="/join">
               <Button style={{ marginLeft: 8 }} intent="success">
                 Sign Up
               </Button>
@@ -27,7 +27,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
         <LoginForm />
         <Page.Card.Footer>
           New to Lex？
-          <Link href="join">
+          <Link href="/join">
             <a>Create an account</a>
           </Link>
         </Page.Card.Footer>

@@ -7,8 +7,8 @@ import { Property } from '@server/property/property.entity';
 import _ from 'lodash';
 // TODO: 组件层面去掉HTTP，让此组件保持无状态
 import { http } from '@helpers/fetch';
-import { route } from '@helpers/route';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const AlignLeftTable = styled(HTMLTable)`
   width: 100%;
@@ -95,7 +95,7 @@ const throttledUpdateProp = _.throttle(newRow => {
 
 export const TreeEditor = (props: TreeEditorProps) => {
   const [rows, setRows] = useState(sortTree(props.defaultValue));
-
+  const router = useRouter();
   useEffect(() => {
     setRows(sortTree(props.defaultValue));
   }, [props.defaultValue, props.inte.id]);
@@ -137,9 +137,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
     http.delete(`/api/property/${row.id}`);
     if (row.children && row.children.length > 0) {
       // reload page
-      route()
-        .merge()
-        .replace();
+      router.reload();
     } else {
       setRows(newRows);
     }

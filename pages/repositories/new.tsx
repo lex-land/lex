@@ -1,11 +1,13 @@
 import { Button, Callout, H1 } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
+import Link from 'next/link';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
 import React from 'react';
 import { http } from '@helpers/fetch';
+import { useRouter } from 'next/router';
 
 export default () => {
+  const router = useRouter();
   return (
     <Page>
       <Page.Navbar />
@@ -28,7 +30,10 @@ export default () => {
             </>
           )}
           success={(values, json) =>
-            route('repositories/show').replace({ repository_id: json.id })
+            router.replace(
+              `/repositories/[repository_id]`,
+              `/repositories/${json.id}`,
+            )
           }
         />
       </Page.Content>

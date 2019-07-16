@@ -18,13 +18,17 @@ export class SessionService {
   // 生成Token
   genToken(user: User) {
     // 设置缓存
-    this.cacheService.set('SESSION_USER', user);
+    this.setCacheUser(user);
     return {
       [CONSTANTS.KEYOF_TOKEN]: this.jwtService.sign(
         { email: user.email },
         { expiresIn: constants.TIME['1DAY'] },
       ),
     };
+  }
+
+  setCacheUser(user: any) {
+    this.cacheService.set('SESSION_USER', user);
   }
 
   decodeToken(token: string): Jwt {

@@ -1,41 +1,13 @@
-import { Classes, Icon, Tab, Tabs, UL } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
+import { Classes, Icon, UL } from '@blueprintjs/core';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
+import Link from 'next/link';
 import React from 'react';
 import { Repository } from '@server/repository/repository.entity';
 import styled from 'styled-components';
 import { usePageProps } from '@core/next-compose';
 import { useQuery } from '@helpers/hooks';
 import { useRouter } from 'next/router';
-
-const RepoNav = () => {
-  const router = useRouter();
-  const query: any = router.query;
-  const selectedTabId = router.route
-    .split('/')
-    .slice(1, 3)
-    .join('/');
-  const handleChange = (newId: string) => {
-    route(newId).push({ repository_id: query.repository_id });
-  };
-  return (
-    <div>
-      <Tabs
-        animate={false}
-        large={true}
-        onChange={handleChange}
-        selectedTabId={selectedTabId}
-      >
-        <Tab id="repositories/show" title="总览" />
-        <Tab id="repositories/modules" title="模块" />
-        <Tab disabled id="repositories/wiki" title="Wiki" />
-        <Tab id="repositories/members" title="成员" />
-        <Tab id="repositories/settings" title="设置" />
-      </Tabs>
-    </div>
-  );
-};
 
 const RepoSiderContainer = styled.div`
   width: 20%;
@@ -100,7 +72,7 @@ const RepoSider = () => {
                 {mod.interfaces.map(inte => (
                   <li className={Classes.TEXT_OVERFLOW_ELLIPSIS} key={inte.id}>
                     <Link
-                      route={`/repositories/${repo.id}/modules/${mod.id}?interface_id=${inte.id}`}
+                      href={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
                     >
                       <TextLink
                         style={{ marginLeft: 8 }}
@@ -122,9 +94,10 @@ const RepoSider = () => {
                       description: '',
                     }}
                     success={(values, json) =>
-                      route(
-                        `/repositories/${repo.id}/modules/${mod.id}?interface_id=${json.id}`,
-                      ).replace()
+                      router.replace(
+                        `/repositories/[repository_id]/modules/[module_id]/interfaces/[interface_id]`,
+                        `/repositories/${repo.id}/modules/${mod.id}/interfaces/${json.id}`,
+                      )
                     }
                     drawerTitle={`New Interface In ${mod.name}`}
                     params={{ repository: repo, module: mod }}
@@ -147,7 +120,10 @@ const RepoSider = () => {
           defaultValue={{ name: '', description: '' }}
           params={{ repository: repo }}
           success={(values, json) =>
-            route(`/repositories/${repo.id}/modules/${json.id}`).replace()
+            router.replace(
+              `/repositories/[repository_id]/modules/[module_id]`,
+              `/repositories/${repo.id}/modules/${json.id}`,
+            )
           }
           drawerTitle={`New Module In ${repo.name}`}
           actionRenderer={({ handleClick }) => (
@@ -206,7 +182,6 @@ const RepoSider = () => {
 };
 
 export const Repo = Object.assign(() => null, {
-  Nav: RepoNav,
   Sider: RepoSider,
   SubPage: styled.div`
     width: 1280px;

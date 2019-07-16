@@ -1,9 +1,9 @@
 import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { mods, repo } from '@helpers/page-props';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
+import Link from 'next/link';
 import { Module } from '@server/module/module.entity';
 import { Page } from '@components/page';
 import React from 'react';
@@ -11,6 +11,7 @@ import { Repo } from '@components/domains/repo';
 import styled from 'styled-components';
 import { throttledUpdateMod } from '@helpers/service';
 import { useQuery } from '@helpers/hooks';
+import { useRouter } from 'next/router';
 
 const AlignLeftTable = styled(HTMLTable)`
   width: 100%;
@@ -25,6 +26,7 @@ const AlignLeftTable = styled(HTMLTable)`
 
 export default composePageProps(repo, mods)(() => {
   const { mods } = usePageProps<{ mods: Module[] }>();
+  const router = useRouter();
   const query = useQuery();
   return (
     <Page backgroundColor="#fff">
@@ -46,9 +48,10 @@ export default composePageProps(repo, mods)(() => {
                   defaultValue={{ name: '', description: '' }}
                   drawerTitle="新建模块"
                   success={(values, json) =>
-                    route(
+                    router.replace(
+                      `/repositories/[repository_id]/modules/[module_id]`,
                       `/repositories/${query.repository_id}/modules/${json.id}`,
-                    ).replace()
+                    )
                   }
                   actionRenderer={({ handleClick }) => (
                     <CURD.Button
@@ -77,11 +80,7 @@ export default composePageProps(repo, mods)(() => {
                       <tr key={mod.id}>
                         <td>
                           <Link
-                            route="repositories/modules/show"
-                            params={{
-                              repository_id: query.repository_id,
-                              module_id: mod.id,
-                            }}
+                            href={`repositories/${query.repository_id}/modules/${mod.id}`}
                           >
                             <a>
                               <strong>{mod.name}</strong>
@@ -104,9 +103,10 @@ export default composePageProps(repo, mods)(() => {
                             action={`/api/module/${mod.id}`}
                             alertWhen
                             success={() =>
-                              route(
+                              router.replace(
+                                `/repositories/[repository_id]/modules`,
                                 `/repositories/${query.repository_id}/modules`,
-                              ).replace()
+                              )
                             }
                             actionRenderer={({ handleClick }) => (
                               <Button

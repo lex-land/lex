@@ -1,5 +1,5 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
+import Link from 'next/link';
 import { Logo } from '@components/vi';
 import { Page } from '@components/page';
 import { QuickForm } from '@components/forms';
@@ -9,8 +9,10 @@ import { http } from '@helpers/fetch';
 import { login } from '@helpers/service';
 import md5 from 'md5';
 import { signedUser } from '@helpers/page-props';
+import { useRouter } from 'next/router';
 
 export default composePageProps(signedUser.redirect('/'))(() => {
+  const router = useRouter();
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
@@ -53,7 +55,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
               username: values.fullname,
               password: values.password,
             });
-            route('/').replace();
+            router.replace('/');
           }}
         />
         <Page.Card.Footer>

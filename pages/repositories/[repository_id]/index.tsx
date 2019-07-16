@@ -1,15 +1,16 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
-import { Link, route } from '@helpers/route';
 import { composePageProps, usePageProps } from '@core/next-compose';
 import { throttledUpdateMod, throttledUpdateRepo } from '@helpers/service';
 import { CURD } from '@components/curd';
 import { Flex } from '@components/layout/flex';
+import Link from 'next/link';
 import { Page } from '@components/page';
 import React from 'react';
 import { Repo } from '@components/domains/repo';
 import { Repository } from '@server/repository/repository.entity';
 import { repo } from '@helpers/page-props';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const ModDashBoard = styled.div`
   width: 30%;
@@ -18,6 +19,7 @@ const ModDashBoard = styled.div`
 
 export default composePageProps(repo)(() => {
   const { repo } = usePageProps<{ repo: Repository }>();
+  const router = useRouter();
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
@@ -71,9 +73,10 @@ export default composePageProps(repo)(() => {
                   defaultValue={{ name: '', description: '' }}
                   params={{ repository: repo }}
                   success={(values, json) =>
-                    route(
+                    router.replace(
+                      `/repositories/[repository_id]/modules/[module_id]`,
                       `/repositories/${repo.id}/modules/${json.id}`,
-                    ).replace()
+                    )
                   }
                   drawerTitle={`New Module In ${repo.name}`}
                   actionRenderer={({ handleClick }) => (
