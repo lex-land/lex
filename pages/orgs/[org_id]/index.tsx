@@ -7,9 +7,11 @@ import { Organization } from '@server/organization/organization.entity';
 import { Page } from '@components/page';
 import React from 'react';
 import { org } from '@helpers/page-props';
+import { useRouter } from 'next/router';
 
 export default composePageProps(org)(() => {
   const { org } = usePageProps<{ org: Organization }>();
+  const router = useRouter();
   return (
     <Page>
       <Page.Navbar />
@@ -39,8 +41,8 @@ export default composePageProps(org)(() => {
             </AnchorButton>
             <CURD.Delete
               alertWhen
-              successGoto="/"
               action={`/api/organization/${org.id}`}
+              success={() => router.replace('/')}
               actionRenderer={({ handleClick }) => (
                 <Button
                   onClick={handleClick}

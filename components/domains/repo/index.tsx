@@ -48,7 +48,10 @@ const RepoSider = () => {
   return (
     <RepoSiderContainer>
       <Flex justify="space-between" align="center">
-        <Link href={`/repositories/${repo.id}`}>
+        <Link
+          href={`/repositories/[repository_id]`}
+          as={`/repositories/${repo.id}`}
+        >
           <TextLink
             aria-selected={+query.repository_id === repo.id}
             className="sider-item sider-title"
@@ -61,7 +64,10 @@ const RepoSider = () => {
       <RepoNavList>
         {repo.modules.map(mod => (
           <li key={mod.id}>
-            <Link href={`/repositories/${repo.id}/modules/${mod.id}`}>
+            <Link
+              href={`/repositories/[repository_id]/modules/[module_id]`}
+              as={`/repositories/${repo.id}/modules/${mod.id}`}
+            >
               <TextLink aria-selected={+query.module_id === mod.id}>
                 {/* <Icon icon="cube" /> */}
                 {mod.name}
@@ -72,7 +78,8 @@ const RepoSider = () => {
                 {mod.interfaces.map(inte => (
                   <li className={Classes.TEXT_OVERFLOW_ELLIPSIS} key={inte.id}>
                     <Link
-                      href={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
+                      href={`/repositories/[repository_id]/modules/[module_id]/interfaces/[interface_id]`}
+                      as={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
                     >
                       <TextLink
                         style={{ marginLeft: 8 }}
@@ -134,7 +141,10 @@ const RepoSider = () => {
         />
       </RepoNavList>
       <div>
-        <Link href={`/repositories/${repo.id}/modules`}>
+        <Link
+          href={`/repositories/[repository_id]/modules`}
+          as={`/repositories/${repo.id}/modules`}
+        >
           <TextLink
             className="sider-item"
             aria-selected={router.asPath === `/repositories/${repo.id}/modules`}
@@ -144,7 +154,10 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link href={`/repositories/${repo.id}/status-codes`}>
+        <Link
+          href={`/repositories/[repository_id]/status-codes`}
+          as={`/repositories/${repo.id}/status-codes`}
+        >
           <TextLink
             className="sider-item"
             aria-selected={
@@ -156,7 +169,10 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link href={`/repositories/${repo.id}/members`}>
+        <Link
+          href={`/repositories/[repository_id]/members`}
+          as={`/repositories/${repo.id}/members`}
+        >
           <TextLink
             className="sider-item"
             aria-selected={router.asPath === `/repositories/${repo.id}/members`}
@@ -166,7 +182,10 @@ const RepoSider = () => {
         </Link>
       </div>
       <div>
-        <Link href={`/repositories/${repo.id}/settings`}>
+        <Link
+          href={`/repositories/[repository_id]/settings`}
+          as={`/repositories/${repo.id}/settings`}
+        >
           <TextLink
             className="sider-item"
             aria-selected={
