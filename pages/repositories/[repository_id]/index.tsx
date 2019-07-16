@@ -46,7 +46,10 @@ export default composePageProps(repo)(() => {
               {repo.modules.map(mod => (
                 <ModDashBoard key={mod.id}>
                   <H5>
-                    <Link href={`/repositories/${repo.id}/modules/${mod.id}`}>
+                    <Link
+                      href={`/repositories/[repository_id]/modules/[module_id]`}
+                      as={`/repositories/${repo.id}/modules/${mod.id}`}
+                    >
                       <a>
                         <strong>{mod.name}</strong>
                       </a>

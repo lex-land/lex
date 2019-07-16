@@ -80,7 +80,8 @@ export default composePageProps(repo, mods)(() => {
                       <tr key={mod.id}>
                         <td>
                           <Link
-                            href={`repositories/${query.repository_id}/modules/${mod.id}`}
+                            href={`/repositories/[repository_id]/modules/[module_id]`}
+                            as={`/repositories/${query.repository_id}/modules/${mod.id}`}
                           >
                             <a>
                               <strong>{mod.name}</strong>
