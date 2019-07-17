@@ -1,7 +1,7 @@
 import { Button } from '@blueprintjs/core';
-import { QuickForm } from '@components/forms';
+import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { login } from '@helpers/service';
+import { login } from '@/helpers/service';
 import { useRouter } from 'next/router';
 
 export const LoginForm = () => {

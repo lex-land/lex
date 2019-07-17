@@ -1,16 +1,16 @@
 import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { mods, repo } from '@helpers/page-props';
-import { CURD } from '@components/curd';
-import { Flex } from '@components/layout/flex';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { mods, repo } from '@/helpers/page-props';
+import { CURD } from '@/components/curd';
+import { Flex } from '@/core/layout/flex';
 import Link from 'next/link';
-import { Module } from '@server/module/module.entity';
-import { Page } from '@components/page';
+import { Module } from '@/helpers/interfaces/module';
+import { Page } from '@/components/page';
 import React from 'react';
-import { Repo } from '@components/domains/repo';
+import { Repo } from '@/components/domains/repo';
 import styled from 'styled-components';
-import { throttledUpdateMod } from '@helpers/service';
-import { useQuery } from '@helpers/hooks';
+import { throttledUpdateMod } from '@/helpers/service';
+import { useQuery } from '@/helpers/hooks';
 import { useRouter } from 'next/router';
 
 const AlignLeftTable = styled(HTMLTable)`

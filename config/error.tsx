@@ -1,6 +1,6 @@
 import ErrorRoute from '../pages/expections';
 import React from 'react';
-import { logger } from '@core/logger';
+import { logger } from '@/core/logger';
 
 export const CATCHED_CODE = Object.keys(ErrorRoute).map(Number);
 export type CatchedCode = keyof typeof ErrorRoute;

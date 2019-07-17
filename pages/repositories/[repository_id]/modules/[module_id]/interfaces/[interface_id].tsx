@@ -6,15 +6,15 @@ import {
   HTMLSelect,
   Popover,
 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { inte, repo } from '@helpers/page-props';
-import { throttledUpdateInte, useEntity } from '@helpers/service';
-import { Flex } from '@components/layout/flex';
-import { Inte } from '@components/domains/inte';
-import { Interface } from '@server/interface/interface.entity';
-import { Page } from '@components/page';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { inte, repo } from '@/helpers/page-props';
+import { throttledUpdateInte, useEntity } from '@/helpers/service';
+import { Flex } from '@/core/layout/flex';
+import { Inte } from '@/components/domains/inte';
+import { Interface } from '@/helpers/interfaces/interface';
+import { Page } from '@/components/page';
 import React from 'react';
-import { Repo } from '@components/domains/repo';
+import { Repo } from '@/components/domains/repo';
 import styled from 'styled-components';
 
 const RequestURL = styled.code`

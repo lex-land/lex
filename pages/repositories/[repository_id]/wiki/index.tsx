@@ -1,6 +1,6 @@
-import { Page } from '@components/page';
+import { Page } from '@/components/page';
 import React from 'react';
-import { Repo } from '@components/domains/repo';
+import { Repo } from '@/components/domains/repo';
 
 export default () => {
   return (

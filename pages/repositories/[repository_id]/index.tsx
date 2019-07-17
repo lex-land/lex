@@ -1,14 +1,14 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { throttledUpdateMod, throttledUpdateRepo } from '@helpers/service';
-import { CURD } from '@components/curd';
-import { Flex } from '@components/layout/flex';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { throttledUpdateMod, throttledUpdateRepo } from '@/helpers/service';
+import { CURD } from '@/components/curd';
+import { Flex } from '@/core/layout/flex';
 import Link from 'next/link';
-import { Page } from '@components/page';
+import { Page } from '@/components/page';
 import React from 'react';
-import { Repo } from '@components/domains/repo';
-import { Repository } from '@server/repository/repository.entity';
-import { repo } from '@helpers/page-props';
+import { Repo } from '@/components/domains/repo';
+import { Repository } from '@/helpers/interfaces/repository';
+import { repo } from '@/helpers/page-props';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 

@@ -1,12 +1,12 @@
-import '@config/initializer';
+import '@/config/initializer';
 import { AppProps, Container } from 'next/app';
-import { PagePropsContext, composePageProps } from '@core/next-compose';
-import ErrorBoundary from '@config/error';
-import { NProgressContainer } from '@core/nprogress/component';
+import { PagePropsContext, composePageProps } from '@/core/next-compose';
+import ErrorBoundary from '@/config/error';
+import { NProgressContainer } from '@/core/nprogress/component';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { enhancedCtx } from '@helpers/page-props';
-import { lexTheme } from '@config/theme/lex-theme';
+import { enhancedCtx } from '@/helpers/page-props';
+import { lexTheme } from '@/config/theme/lex-theme';
 
 type Props = AppProps<any> & { statusCode: any };
 

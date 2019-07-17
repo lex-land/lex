@@ -1,5 +1,5 @@
-import { LoginForm } from '@helpers/forms/login';
-import { Page } from '@components/page';
+import { LoginForm } from '@/helpers/forms/login';
+import { Page } from '@/components/page';
 import React from 'react';
 
 export const Error401 = () => {
