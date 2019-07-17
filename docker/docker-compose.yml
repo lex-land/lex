@@ -19,7 +19,7 @@ services:
 
   lex-node:
     container_name: lex-node
-    image: node:latest
+    image: lexland/lex:latest
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -32,7 +32,7 @@ services:
 
   lex-server:
     container_name: lex-server
-    image: lexland/lex:latest
+    image: lexland/lex-server:latest
     environment:
       - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
       - MYSQL_PORT=3306
