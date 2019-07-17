@@ -12,7 +12,7 @@ const config = {
   // https://github.com/zeit/next-plugins/tree/master/packages/next-bundle-analyzer
 };
 
-// README: next-typescript 始终格式化成 ['ts','tsx']
+// TODO: 如果要使用api功能，并让pages里识别.ts文件。必须注释掉这里
 config.pageExtensions = ['tsx'];
 
 module.exports = config;
