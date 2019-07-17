@@ -1,51 +1,18 @@
-import {
-  createAppProps,
-  createBoolean,
-  createPageProps,
-} from '@/core/next-compose';
-import { AppContext } from 'next/app';
-import { Module } from '@/helpers/interfaces/module';
-import { Organization } from '@/helpers/interfaces/organization';
-import { Repository } from '@/helpers/interfaces/repository';
-import Router from 'next/router';
-import { User } from '@/helpers/interfaces/user';
-import { createHttp } from './fetch';
-import { getToken } from './secure';
-import { session } from './service';
-
-export const createRedirect = createPageProps(ctx => {
-  return (path: string) => {
-    // https://github.com/zeit/next.js/wiki/Redirecting-in-%60getInitialProps%60
-    const res = ctx.res;
-    if (res) {
-      res.writeHead(302, {
-        Location: path,
-      });
-      res.end();
-    } else {
-      Router.push(path);
-    }
-    return { statusCode: 302 };
-  };
-});
-
-export type enhancedAppProps<T = any> = (ctx: AppContext) => T;
-
-export const enhancedCtx = <T>(fn: enhancedAppProps<T>) =>
-  createAppProps(async appCtx => {
-    const { ctx } = appCtx;
-    ctx.getToken = () => getToken(ctx); // 必须放在第一个
-    ctx.http = createHttp(ctx);
-    ctx.redirect = createRedirect(ctx);
-    return fn(appCtx);
-  });
-
-export const token = createPageProps(ctx => ({ token: ctx.getToken() }));
+import { createBoolean, createPageProps } from '@/core/PageProps';
+import { Module } from '@/interfaces/Module';
+import { Organization } from '@/interfaces/Organization';
+import { Repository } from '@/interfaces/Repository';
+import { User } from '@/interfaces/User';
 
 // ----------------------------------------------------------------------
 // 角色
-const isNewComer = createBoolean(ctx => !ctx.getToken());
-const isSignedUser = createBoolean(ctx => session.isSigned());
+const isNewComer = createBoolean(ctx => !ctx.tokenUtil.get());
+const isSignedUser = createBoolean(ctx =>
+  ctx.httpUtil
+    .get(`/api/session`)
+    .then(({ statusCode }) => statusCode !== 401)
+    .catch(() => false),
+);
 
 const Roles = { isNewComer, isSignedUser };
 
@@ -70,24 +37,27 @@ export const signedUser = {
 // ----------------------------------------------------------------------
 
 export const user = {
-  session: createPageProps(async () => ({
-    session: await session.user(),
-  })),
+  session: createPageProps(async ctx => {
+    const json = await ctx.httpUtil.get(`/api/session/user`);
+    return {
+      session: json,
+    };
+  }),
   all: createPageProps(async ctx => {
-    return { allUsers: await ctx.http.get<User[]>(`/api/user`) };
+    return { allUsers: await ctx.httpUtil.get<User[]>(`/api/user`) };
   }),
 };
 
 export const repo = createPageProps(async ctx => {
   const repoId = ctx.query.repository_id;
   return {
-    repo: await ctx.http.get<Repository>(`/api/repository/${repoId}`),
+    repo: await ctx.httpUtil.get<Repository>(`/api/repository/${repoId}`),
   };
 });
 
 export const org = createPageProps(async ctx => {
   return {
-    org: await ctx.http.get<Organization>(
+    org: await ctx.httpUtil.get<Organization>(
       `/api/organization/${ctx.query.org_id}`,
     ),
   };
@@ -95,7 +65,7 @@ export const org = createPageProps(async ctx => {
 
 export const mods = createPageProps(async ctx => {
   return {
-    mods: await ctx.http.get<Module[]>(`/api/module`, {
+    mods: await ctx.httpUtil.get<Module[]>(`/api/module`, {
       repository: ctx.query.repository_id,
     }),
   };
@@ -104,13 +74,13 @@ export const mods = createPageProps(async ctx => {
 export const mod = createPageProps(async ctx => {
   const modId = ctx.query.module_id;
   return {
-    mod: await ctx.http.get<Module>(`/api/module/${modId}`),
+    mod: await ctx.httpUtil.get<Module>(`/api/module/${modId}`),
   };
 });
 
 export const inte = createPageProps(async ctx => {
   const inteId = ctx.query.interface_id;
   return {
-    inte: inteId && (await ctx.http.get(`/api/interface/${inteId}`)),
+    inte: await ctx.httpUtil.get(`/api/interface/${inteId}`),
   };
 });

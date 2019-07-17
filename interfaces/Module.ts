@@ -1,6 +1,6 @@
-import { Interface } from './interface';
-import { Repository } from './repository';
-import { User } from './user';
+import { Interface } from './Interface';
+import { Repository } from './Repository';
+import { User } from './User';
 
 export interface Module {
   id: number;

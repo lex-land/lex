@@ -1,15 +1,28 @@
-import { Button } from '@blueprintjs/core';
+import { Button, Intent, Position, Toaster } from '@blueprintjs/core';
 import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { login } from '@/helpers/service';
+import { createTokenUtil } from '@/core/TokenUtil';
+import { login } from '@/helpers/login';
 import { useRouter } from 'next/router';
+
+const tokenHelper = createTokenUtil();
 
 export const LoginForm = () => {
   const router = useRouter();
+
+  const onSuccess = (values: any, json: { accessToken: string }) => {
+    tokenHelper.set(json.accessToken);
+    Toaster.create({ position: Position.TOP_RIGHT }).show({
+      intent: Intent.SUCCESS,
+      message: '登录成功',
+    });
+    router.reload();
+  };
+
   return (
     <QuickForm
       defaultValue={{ username: '', password: '' }}
-      action={values => login(values)}
+      action={login}
       render={() => (
         <>
           <QuickForm.Input large name="username" />
@@ -17,7 +30,7 @@ export const LoginForm = () => {
           <Button intent="primary" type="submit" large text="Log In" />
         </>
       )}
-      success={router.reload}
+      success={onSuccess}
     />
   );
 };

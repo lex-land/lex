@@ -1,5 +1,5 @@
-import { Organization } from './organization';
-import { Repository } from './repository';
+import { Organization } from './Organization';
+import { Repository } from './Repository';
 
 export interface User {
   id: number;

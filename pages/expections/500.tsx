@@ -1,8 +1,8 @@
 import { AnchorButton } from '@blueprintjs/core';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
 
-export const Error500 = () => {
+export default function Error500() {
   return (
     <Page>
       <Page.Error
@@ -16,4 +16,4 @@ export const Error500 = () => {
       />
     </Page>
   );
-};
+}

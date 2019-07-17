@@ -1,10 +1,12 @@
 import { Button, Callout, H1 } from '@blueprintjs/core';
 import Link from 'next/link';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { http } from '@/helpers/fetch';
+import { createEntityFn } from '@/core/EntityUtil';
 import { useRouter } from 'next/router';
+
+const createRepository = createEntityFn('repository');
 
 export default () => {
   const router = useRouter();
@@ -21,7 +23,7 @@ export default () => {
         <br />
         <H1>New Repository</H1>
         <QuickForm
-          action={newValue => http.post('/api/repository', newValue)}
+          action={newValue => createRepository(newValue)}
           render={() => (
             <>
               <QuickForm.Input name="name" />

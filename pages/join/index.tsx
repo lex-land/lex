@@ -1,15 +1,17 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
 import Link from 'next/link';
-import { Logo } from '@/components/vi';
-import { Page } from '@/components/page';
+import { Logo } from '@/components/Logo';
+import { Page } from '@/components/Page';
 import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { composePageProps } from '@/core/next-compose';
-import { http } from '@/helpers/fetch';
-import { login } from '@/helpers/service';
+import { composePageProps } from '@/core/PageProps';
+import { createEntityFn } from '@/core/EntityUtil';
+import { login } from '@/helpers/login';
 import md5 from 'md5';
 import { signedUser } from '@/helpers/page-props';
 import { useRouter } from 'next/router';
+
+const createUser = createEntityFn('user');
 
 export default composePageProps(signedUser.redirect('/'))(() => {
   const router = useRouter();
@@ -45,7 +47,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
             </>
           )}
           action={values =>
-            http.post(`/api/user`, {
+            createUser({
               ...values,
               password: values.password && md5(values.password),
             })

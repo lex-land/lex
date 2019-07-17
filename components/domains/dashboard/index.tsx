@@ -9,17 +9,10 @@ import {
   UL,
 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
-import { Avator } from '@/components/avator';
+import { Avator } from '@/components/Avator';
 import Link from 'next/link';
-import { http } from '@/helpers/fetch';
 import styled from 'styled-components';
-import { useAsync } from 'react-use';
-
-const defaultUser = {
-  fullname: '-',
-  joinedOrganizations: [],
-  ownedOrganizations: [],
-};
+// import { useAsync } from 'react-use';
 
 const NavMenu = styled(Menu)`
   .bp3-menu-divider {
@@ -42,11 +35,15 @@ const Container = styled.div`
   margin: 24px 0;
 `;
 
+// const defaultUser = {
+//   fullname: '-',
+//   joinedOrganizations: [],
+//   ownedOrganizations: [],
+// };
+
 export const DashboardSwitcher = ({ name }: { name: string }) => {
-  const { value: user = defaultUser } = useAsync(() =>
-    http.get(`/api/session/user`),
-  );
-  const orgs = user.joinedOrganizations.concat(user.ownedOrganizations);
+  // const { value: user = defaultUser } = useAsync(getSessionUser);
+  // const orgs = user.joinedOrganizations.concat(user.ownedOrganizations);
   return (
     <Container>
       <Popover
@@ -56,23 +53,23 @@ export const DashboardSwitcher = ({ name }: { name: string }) => {
               <h6 className={Classes.HEADING}>Switch dashboard context</h6>
             </li>
             <Fragment>
-              <MenuItem href="/" icon="user" text={user.fullname} />
-              {orgs.map((org: any) => (
+              {/* <MenuItem href="/" icon="user" text={user.fullname} /> */}
+              {/* {orgs.map((org: any) => (
                 <MenuItem
                   href={`/orgs/${encodeURIComponent(org.name)}`}
                   icon="people"
                   key={org.id}
                   text={org.name}
                 />
-              ))}
+              ))} */}
               <Menu.Divider />
             </Fragment>
-            {orgs.length > 0 && (
+            {/* {orgs.length > 0 && (
               <Fragment>
                 <MenuItem href="/orgs" icon="cog" text="Manage orgnizations" />
                 <Menu.Divider />
               </Fragment>
-            )}
+            )} */}
             <MenuItem href="/orgs/new" icon="plus" text="Create orgnization" />
           </NavMenu>
         }

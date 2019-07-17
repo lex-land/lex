@@ -16,18 +16,17 @@ import {
   Popover,
   Position,
 } from '@blueprintjs/core';
-import { LexContainer, LexContent } from '@/core/layout/container';
+import { LexContainer, LexContent } from '@/components/layout/container';
 import React, { Fragment } from 'react';
-import { Flex } from '../../core/layout/flex';
+import { Flex } from './layout/flex';
 import { GlobalStyle } from '@/config/theme/lex-theme';
 import Head from 'next/head';
-import { Logo } from '@/components/vi';
+import { Logo } from '@/components/Logo';
 import _ from 'lodash';
 import constants from '@/config/constants';
-import { http } from '@/helpers/fetch';
-import { logout } from '@/helpers/service';
+import { logout } from '@/helpers/logout';
 import styled from 'styled-components';
-import { useAsync } from 'react-use';
+// import { useAsync } from 'react-use';
 
 export interface PageProps {
   className?: string;
@@ -92,8 +91,8 @@ const WrappedNavbar = ({
   className?: string;
   children?: React.ReactNode;
 }) => {
-  const { value: session } = useAsync(() => http.get(`/api/session`));
-  const user = Object.assign({ fullname: '-' }, session);
+  // const { value: session } = useAsync(getSessionUser);
+  const user = Object.assign({ fullname: '-' });
   return (
     <Navbar className={Classes.DARK + ' ' + className}>
       {children || (

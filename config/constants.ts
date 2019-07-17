@@ -8,4 +8,5 @@ export default {
   CACHE: {
     SESSION_USER: 'SESSION_USER',
   },
+  CATCHED_CODE: [401, 403, 404, 500, 503],
 };

@@ -1,7 +1,7 @@
-import { Module } from './module';
+import { Module } from './Module';
 import { Property } from './property';
-import { Repository } from './repository';
-import { User } from './user';
+import { Repository } from './Repository';
+import { User } from './User';
 
 export enum InterfaceMethod {
   GET = 'GET',

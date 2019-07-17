@@ -11,7 +11,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
 class MyDocument extends Document {
@@ -30,10 +30,10 @@ class MyDocument extends Document {
       return {
         ...initialProps,
         styles: (
-          <Fragment>
+          <>
             {initialProps.styles}
             {sheet.getStyleElement()}
-          </Fragment>
+          </>
         ),
       };
     } finally {

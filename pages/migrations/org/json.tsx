@@ -8,10 +8,12 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { Flex } from '@/core/layout/flex';
-import { Page } from '@/components/page';
-import { http } from '@/helpers/fetch';
+import { Flex } from '@/components/layout/flex';
+import { Page } from '@/components/Page';
+import { createHttpUtil } from '@/core/HttpUtil';
 import { useRouter } from 'next/router';
+
+const httpUtil = createHttpUtil();
 
 export default () => {
   const [repo, setRepo] = useState();
@@ -19,8 +21,8 @@ export default () => {
   const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
-    await http.post('/api/migration/user', JSON.parse(repo));
-    await http.post('/api/migration/org', JSON.parse(repo));
+    await httpUtil.post('/api/migration/user', JSON.parse(repo));
+    await httpUtil.post('/api/migration/org', JSON.parse(repo));
     router.replace('/');
     Toaster.create({ position: Position.TOP }).show({
       icon: 'tick',

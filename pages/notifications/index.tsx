@@ -1,4 +1,4 @@
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
 
 export default () => {

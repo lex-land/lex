@@ -1,4 +1,4 @@
-import { CURD } from '@/components/curd';
+import { CURD } from '@/components/CURD';
 import React from 'react';
 
 export const ModCURD = {

@@ -8,9 +8,11 @@ import {
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { FormikProps } from 'formik';
-import { LexContent } from '@/core/layout/container';
+import { LexContent } from '@/components/layout/container';
 import { QuickForm } from '@/components/forms';
-import { http } from '@/helpers/fetch';
+import { createHttpUtil } from '@/core/HttpUtil';
+
+const httpUtil = createHttpUtil();
 
 interface CurdButtonProps {
   action: string;
@@ -60,7 +62,7 @@ const CreateButton = ({
         <LexContent>
           <QuickForm
             defaultValue={defaultValue}
-            action={values => http.post(action, { ...values, ...params })}
+            action={values => httpUtil.post(action, { ...values, ...params })}
             success={onSuccess}
             render={render}
             button={
@@ -105,7 +107,7 @@ const EditButton = ({
         <LexContent>
           <QuickForm
             defaultValue={value}
-            action={values => http.put(action, { ...values, ...params })}
+            action={values => httpUtil.put(action, { ...values, ...params })}
             success={handleSubmit}
           />
         </LexContent>
@@ -132,7 +134,7 @@ const DeleteButton = ({
 
   const handleDelete = async () => {
     try {
-      const result = await http.delete(action);
+      const result = await httpUtil.delete(action);
       success && success({}, result);
     } catch (error) {}
     afterDelete();

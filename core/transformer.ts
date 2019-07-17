@@ -6,18 +6,11 @@ export const jsonToFormData = (obj: any) => {
   return formData;
 };
 
-export const formDataToJSON = (formData: any) => {
+// safari 11 上不支持，请谨慎使用
+export const formDataToJSON = (formData: FormData) => {
   const obj: any = {};
   formData.forEach((value: any, key: any) => {
     obj[key] = value;
-  });
-  return obj;
-};
-
-export const initObjectByStringKeys = <T = string>(keys: T[], value = '') => {
-  const obj: any = {};
-  keys.forEach(i => {
-    obj[i] = value;
   });
   return obj;
 };

@@ -10,12 +10,14 @@ import {
   UL,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { Flex } from '@/core/layout/flex';
-import { Page } from '@/components/page';
-import { http } from '@/helpers/fetch';
+import { Flex } from '@/components/layout/flex';
+import { Page } from '@/components/Page';
+import { createHttpUtil } from '@/core/HttpUtil';
 import repoSample from './data/repo.sample.json';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+
+const httpUtil = createHttpUtil();
 
 const ToastProgressBar = styled(ProgressBar)`
   display: inline-flex;
@@ -33,7 +35,10 @@ export default () => {
         icon: 'swap-horizontal',
         message: <ToastProgressBar intent="primary" />,
       });
-      const repoRes = await http.post('/api/migration/repo', JSON.parse(repo));
+      const repoRes = await httpUtil.post(
+        '/api/migration/repo',
+        JSON.parse(repo),
+      );
       router.replace(
         `/repositories/[repository_id]`,
         `/repositories/${repoRes.id}`,

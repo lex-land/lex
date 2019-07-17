@@ -1,10 +1,10 @@
 import { AnchorButton, Button, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { CURD } from '@/components/curd';
+import { composePageProps, usePageProps } from '@/core/PageProps';
+import { CURD } from '@/components/CURD';
 import { Dashboard } from '@/components/domains/dashboard';
-import { Flex } from '@/core/layout/flex';
-import { Organization } from '@/helpers/interfaces/organization';
-import { Page } from '@/components/page';
+import { Flex } from '@/components/layout/flex';
+import { Organization } from '@/interfaces/Organization';
+import { Page } from '@/components/Page';
 import React from 'react';
 import { org } from '@/helpers/page-props';
 import { useRouter } from 'next/router';

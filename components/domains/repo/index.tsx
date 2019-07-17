@@ -1,12 +1,11 @@
 import { Classes, Icon, UL } from '@blueprintjs/core';
-import { CURD } from '@/components/curd';
-import { Flex } from '@/core/layout/flex';
+import { CURD } from '@/components/CURD';
+import { Flex } from '@/components/layout/flex';
 import Link from 'next/link';
 import React from 'react';
-import { Repository } from '@/helpers/interfaces/repository';
+import { Repository } from '@/interfaces/Repository';
 import styled from 'styled-components';
-import { usePageProps } from '@/core/next-compose';
-import { useQuery } from '@/helpers/hooks';
+import { usePageProps } from '@/core/PageProps';
 import { useRouter } from 'next/router';
 
 const RepoSiderContainer = styled.div`
@@ -44,7 +43,6 @@ const RepoNavList = styled(UL)`
 const RepoSider = () => {
   const { repo } = usePageProps<{ repo: Repository }>();
   const router = useRouter();
-  const query = useQuery();
   return (
     <RepoSiderContainer>
       <Flex justify="space-between" align="center">
@@ -53,7 +51,7 @@ const RepoSider = () => {
           as={`/repositories/${repo.id}`}
         >
           <TextLink
-            aria-selected={+query.repository_id === repo.id}
+            aria-selected={+router.query.repository_id === repo.id}
             className="sider-item sider-title"
           >
             {/* <Icon icon="git-repo" /> */}
@@ -68,12 +66,12 @@ const RepoSider = () => {
               href={`/repositories/[repository_id]/modules/[module_id]`}
               as={`/repositories/${repo.id}/modules/${mod.id}`}
             >
-              <TextLink aria-selected={+query.module_id === mod.id}>
+              <TextLink aria-selected={+router.query.module_id === mod.id}>
                 {/* <Icon icon="cube" /> */}
                 {mod.name}
               </TextLink>
             </Link>
-            {+query.module_id === mod.id && (
+            {+router.query.module_id === mod.id && (
               <RepoNavList>
                 {mod.interfaces.map(inte => (
                   <li className={Classes.TEXT_OVERFLOW_ELLIPSIS} key={inte.id}>
@@ -83,7 +81,7 @@ const RepoSider = () => {
                     >
                       <TextLink
                         style={{ marginLeft: 8 }}
-                        aria-selected={+query.interface_id === inte.id}
+                        aria-selected={+router.query.interface_id === inte.id}
                       >
                         {/* <Icon icon="application" /> */}
                         {inte.name}

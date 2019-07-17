@@ -1,16 +1,17 @@
 import '@/config/initializer';
 import { AppProps, Container } from 'next/app';
-import { PagePropsContext, composePageProps } from '@/core/next-compose';
-import ErrorBoundary from '@/config/error';
-import { NProgressContainer } from '@/core/nprogress/component';
+import { PagePropsContext, composePageProps } from '@/core/PageProps';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import { NProgress } from '@/components/NProgress';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { enhancedCtx } from '@/helpers/page-props';
+import { enhancedContext } from '@/core/enhancedContext';
 import { lexTheme } from '@/config/theme/lex-theme';
+import { logger } from '@/core/logger';
 
 type Props = AppProps<any> & { statusCode: any };
 
-const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
+const initialAppProps = enhancedContext(async ({ Component, ctx }) => {
   // 初始化页面参数
   let pageProps = {};
   let statusCode = (ctx.res && ctx.res.statusCode) || 200;
@@ -19,7 +20,7 @@ const initialAppProps = enhancedCtx(async ({ Component, ctx }) => {
       pageProps = await Component.getInitialProps(ctx);
     } catch (error) {
       // FetchError
-      // console.log(error);
+      logger.error(error);
       statusCode = error.code || 500;
     }
   }
@@ -33,7 +34,7 @@ export default composePageProps(initialAppProps)((props: Props) => {
       <PagePropsContext.Provider value={pageProps}>
         <ErrorBoundary statusCode={statusCode}>
           <Container>
-            <NProgressContainer />
+            <NProgress />
             <Component />
           </Container>
         </ErrorBoundary>

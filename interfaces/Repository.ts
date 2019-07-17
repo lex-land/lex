@@ -1,7 +1,7 @@
-import { Interface } from './interface';
-import { Module } from './module';
-import { Organization } from './organization';
-import { User } from './user';
+import { Interface } from './Interface';
+import { Module } from './Module';
+import { Organization } from './Organization';
+import { User } from './User';
 
 export interface Repository {
   id: number;

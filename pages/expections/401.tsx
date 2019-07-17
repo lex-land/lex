@@ -1,8 +1,8 @@
-import { LoginForm } from '@/helpers/forms/login';
-import { Page } from '@/components/page';
+import { LoginForm } from '@/components/LoginForm';
+import { Page } from '@/components/Page';
 import React from 'react';
 
-export const Error401 = () => {
+export default function Error401() {
   return (
     <Page>
       <Page.Error
@@ -14,4 +14,4 @@ export const Error401 = () => {
       </Page.Card>
     </Page>
   );
-};
+}

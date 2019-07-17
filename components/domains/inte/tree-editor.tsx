@@ -1,12 +1,15 @@
 import * as Yup from 'yup';
 import { Button, HTMLTable, ITreeNode } from '@blueprintjs/core';
 import React, { useEffect, useState } from 'react';
+import {
+  createEntityFn,
+  deleteEntityFn,
+  throttledUpdateEntityFn,
+} from '@/core/EntityUtil';
 import { EditableRow } from './editable-row';
-import { Interface } from '@/helpers/interfaces/interface';
-import { Property } from '@/helpers/interfaces/property';
+import { Interface } from '@/interfaces/Interface';
+import { Property } from '@/interfaces/property';
 import _ from 'lodash';
-// TODO: 组件层面去掉HTTP，让此组件保持无状态
-import { http } from '@/helpers/fetch';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -88,10 +91,10 @@ const initialProp = {
   description: '点击我编辑',
   default: '点击我编辑',
 };
-const throttledUpdateProp = _.throttle(newRow => {
-  propSchema.isValidSync(newRow) &&
-    http.put(`/api/property/${newRow.id}`, newRow);
-}, 3000);
+
+const throttledUpdateProp = throttledUpdateEntityFn('property');
+const createProperty = createEntityFn('property');
+const deleteProperty = deleteEntityFn('property');
 
 export const TreeEditor = (props: TreeEditorProps) => {
   const [rows, setRows] = useState(sortTree(props.defaultValue));
@@ -103,7 +106,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
   const onAppendChild = async (row: any, index: number) => {
     const newRows = [...rows];
     row.children = row.children ? row.children : [];
-    const newRow = await http.post(`/api/property`, {
+    const newRow = await createProperty({
       ...initialProp,
       parent: row,
       interface: props.inte,
@@ -119,7 +122,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
 
   const onAppendRootChild = async () => {
     const newRows = [...rows];
-    const newRow = await http.post(`/api/property`, {
+    const newRow = await createProperty({
       ...initialProp,
       interface: props.inte,
       scope: props.scope,
@@ -134,7 +137,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
       row.parent && newRows[newRows.findIndex(r => r.id === row.parent.id)];
     _.remove(newRows, i => i.id === row.id);
     parent && _.remove(parent.children, i => i.id === row.id);
-    http.delete(`/api/property/${row.id}`);
+    deleteProperty(row.id);
     if (row.children && row.children.length > 0) {
       // reload page
       router.reload();
@@ -150,7 +153,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
       depth,
       children,
     };
-    throttledUpdateProp(newRow);
+    propSchema.isValid(newRow) && throttledUpdateProp(newRow);
     setRows(newRows);
   };
 

@@ -1,11 +1,12 @@
-import { AnchorButton, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
+import { Button, Divider, H5 } from '@blueprintjs/core';
+import { composePageProps, usePageProps } from '@/core/PageProps';
 import { newComer, user } from '@/helpers/page-props';
 import { Dashboard } from '@/components/domains/dashboard';
-import { Flex } from '@/core/layout/flex';
-import { Page } from '@/components/page';
+import { Flex } from '@/components/layout/flex';
+import Link from 'next/link';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { User } from '@/helpers/interfaces/user';
+import { User } from '@/interfaces/User';
 
 export default composePageProps(newComer.redirect('/login'), user.session)(
   () => {
@@ -19,12 +20,9 @@ export default composePageProps(newComer.redirect('/login'), user.session)(
             <Divider />
             <Flex align="center" justify="space-between">
               <H5 style={{ marginBottom: 0 }}>Repositories</H5>
-              <AnchorButton
-                icon="git-repo"
-                intent="success"
-                href="/repositories/new"
-                text="New"
-              />
+              <Link href="/repositories/new">
+                <Button icon="git-repo" intent="success" text="New" />
+              </Link>
             </Flex>
             <Dashboard.Navlist
               icon="git-repo"
