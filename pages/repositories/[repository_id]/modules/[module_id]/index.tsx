@@ -74,7 +74,8 @@ export default composePageProps(repo, mod)(() => {
                       <td>
                         <Code>
                           <Link
-                            href={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
+                            href={`/repositories/[repository_id]/modules/[module_id]/interfaces/[interface_id]`}
+                            as={`/repositories/${repo.id}/modules/${mod.id}/interfaces/${inte.id}`}
                           >
                             <a>
                               [{inte.method}]{inte.url}
