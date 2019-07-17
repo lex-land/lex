@@ -20,9 +20,7 @@
     "start:dev": "npx next dev",
     "start": "npx next start",
     "prebuild": "rimraf build",
-    "build": "SUNMI_PROD_URL=https://lex-land.online npx next build",
-    "predeploy": "docker-compose -f ./docker/docker-compose.yml down --remove-orphans",
-    "deploy": "docker-compose -f ./docker/docker-compose.yml up"
+    "build": "SUNMI_PROD_URL=https://lex-land.online npx next build"
   },
   "dependencies": {
     "@blueprintjs/core": "^3.17.1",
