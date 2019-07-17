@@ -10,9 +10,9 @@ import {
   UL,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { Flex } from '@components/layout/flex';
-import { Page } from '@components/page';
-import { http } from '@helpers/fetch';
+import { Flex } from '@/core/layout/flex';
+import { Page } from '@/components/page';
+import { http } from '@/helpers/fetch';
 import repoSample from './data/repo.sample.json';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';

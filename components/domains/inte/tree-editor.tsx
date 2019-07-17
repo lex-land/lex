@@ -2,11 +2,11 @@ import * as Yup from 'yup';
 import { Button, HTMLTable, ITreeNode } from '@blueprintjs/core';
 import React, { useEffect, useState } from 'react';
 import { EditableRow } from './editable-row';
-import { Interface } from '@server/interface/interface.entity';
-import { Property } from '@server/property/property.entity';
+import { Interface } from '@/helpers/interfaces/interface';
+import { Property } from '@/helpers/interfaces/property';
 import _ from 'lodash';
 // TODO: 组件层面去掉HTTP，让此组件保持无状态
-import { http } from '@helpers/fetch';
+import { http } from '@/helpers/fetch';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 

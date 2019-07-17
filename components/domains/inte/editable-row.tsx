@@ -10,7 +10,7 @@ import {
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { ChildLine } from './depth-line';
-import { Flex } from '@components/layout/flex';
+import { Flex } from '@/core/layout/flex';
 import styled from 'styled-components';
 
 const hasChildren = (type: string | undefined) =>

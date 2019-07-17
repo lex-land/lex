@@ -3,16 +3,12 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "paths": {
-      "@core/*": ["core/*"],
-      "@config/*": ["config/*"],
-      "@helpers/*": ["helpers/*"],
-      "@server/*": ["server/*"],
-      "@components/*": ["components/*"]
+      "@/*": ["./*"]
     },
     "removeComments": true,
     "strict": true,
     "alwaysStrict": true,
-    "types": ["react", "node", "jest"],
+    "types": ["react", "node"],
     "typeRoots": ["node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,

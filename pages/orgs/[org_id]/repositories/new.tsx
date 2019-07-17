@@ -1,10 +1,10 @@
-import { composePageProps, usePageProps } from '@core/next-compose';
+import { composePageProps, usePageProps } from '@/core/next-compose';
 import { H1 } from '@blueprintjs/core';
-import { Page } from '@components/page';
-import { QuickForm } from '@components/forms';
+import { Page } from '@/components/page';
+import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { http } from '@helpers/fetch';
-import { org } from '@helpers/page-props';
+import { http } from '@/helpers/fetch';
+import { org } from '@/helpers/page-props';
 import { useRouter } from 'next/router';
 
 const formDefaultValues = { name: '', description: '' };

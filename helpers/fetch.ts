@@ -1,9 +1,9 @@
-import { CATCHED_CODE, FetchError } from '@config/error';
-import CONSTANTS from '@config/constants';
+import { CATCHED_CODE, FetchError } from '@/config/error';
+import CONSTANTS from '@/config/constants';
 import { NextPageContext } from 'next';
 import { getCookie } from './secure';
 import isomorphicFetch from 'isomorphic-fetch';
-import { logger } from '@core/logger';
+import { logger } from '@/core/logger';
 import qs from 'qs';
 
 let token: string;

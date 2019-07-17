@@ -9,9 +9,9 @@ import {
   UL,
 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
-import { Avator } from '@components/avator';
+import { Avator } from '@/components/avator';
 import Link from 'next/link';
-import { http } from '@helpers/fetch';
+import { http } from '@/helpers/fetch';
 import styled from 'styled-components';
 import { useAsync } from 'react-use';
 

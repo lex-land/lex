@@ -16,16 +16,16 @@ import {
   Popover,
   Position,
 } from '@blueprintjs/core';
-import { LexContainer, LexContent } from '@components/layout/container';
+import { LexContainer, LexContent } from '@/core/layout/container';
 import React, { Fragment } from 'react';
-import { Flex } from '../layout/flex';
-import { GlobalStyle } from '@config/theme/lex-theme';
+import { Flex } from '../../core/layout/flex';
+import { GlobalStyle } from '@/config/theme/lex-theme';
 import Head from 'next/head';
-import { Logo } from '@components/vi';
+import { Logo } from '@/components/vi';
 import _ from 'lodash';
-import constants from '@config/constants';
-import { http } from '@helpers/fetch';
-import { logout } from '@helpers/service';
+import constants from '@/config/constants';
+import { http } from '@/helpers/fetch';
+import { logout } from '@/helpers/service';
 import styled from 'styled-components';
 import { useAsync } from 'react-use';
 
