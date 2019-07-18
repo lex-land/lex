@@ -1,5 +1,5 @@
 import { AnchorButton, Button, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
+import { compose, createMany } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
 import { DashboardNavlist } from '@/components/DashboardNavlist';
 import { DashboardSwitcher } from '@/components/DashboardSwitcher';
@@ -7,11 +7,15 @@ import { Flex } from '@/shared/Flex';
 import { Organization } from '@/interfaces/Organization';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { org } from '@/helpers/_to_rm_page-props';
+import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
 
-export default composePageProps(org)(() => {
-  const { org } = usePageProps<{ org: Organization }>();
+const pageProps = createMany({
+  org: entityContext('organization').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const { org } = pageProps.use<{ org: Organization }>();
   const router = useRouter();
   return (
     <Page>
