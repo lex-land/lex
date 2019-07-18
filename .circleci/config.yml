@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run: npx yarn
       # 使用docker内host
-      - run: PROD_API_HOST=lex-server npm run build
+      - run: PROD_API_URL=https://lex-land.cloud npm run build
       - setup_remote_docker:
           docker_layer_caching: true
       - run: docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -25,11 +25,11 @@ jobs:
       - run:
           name: Copy Files
           command: |
-            scp -r docker/** $SSH_USER@$SSH_HOST:/root/lex/docker
+            scp -r docker/** $SSH_USER@$SSH_HOST:/root
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "cd /root/lex/docker && docker-compose pull && docker-compose down --remove-orphans && docker-compose up -d"
+            ssh $SSH_USER@$SSH_HOST "docker-compose pull && docker-compose down --remove-orphans && docker-compose up -d"
 
 workflows:
   version: 2

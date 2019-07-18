@@ -4,9 +4,7 @@ import { logger } from './logger';
 import qs from 'qs';
 
 const defaultOption = {
-  protocol: process.env.PROD_API_PROTOCOL || 'http',
-  host: process.env.PROD_API_HOST || 'localhost',
-  port: process.env.PROD_API_PORT || '3001',
+  url: process.env.PROD_API_URL || 'http://localhost:3001',
   token: '',
 };
 
@@ -15,13 +13,10 @@ type createHttpUtilOption = Partial<typeof defaultOption>;
 export const createHttpUtil = (
   createOption: createHttpUtilOption = defaultOption,
 ) => {
-  const { protocol, host, port, token } = {
-    ...defaultOption,
-    ...createOption,
-  };
+  const { url, token } = { ...defaultOption, ...createOption };
 
   const createFetch = (method: string) =>
-    async function<D = any>(url: string, body: any = {}): Promise<D> {
+    async function<D = any>(api: string, body: any = {}): Promise<D> {
       const opt = {
         method,
         body: JSON.stringify(body),
@@ -40,7 +35,7 @@ export const createHttpUtil = (
         delete opt.body;
       }
 
-      const reqUrl = `${protocol}://${host}:${port}${url}`;
+      const reqUrl = `${url}${api}`;
       const fullUrl = IS_GET ? `${reqUrl}?${qs.stringify(body)}` : reqUrl;
 
       // 处理参数params

@@ -22,56 +22,8 @@ services:
     image: lexland/lex:latest
     environment:
       - NODE_ENV=production
-      - PORT=3000
-      - PROD_API_HOST=lex-server
-      - PROD_API_PORT=3001
-      - PROD_API_PORT=http
+      - PROD_API_URL=https://lex-land.cloud
       - BUILD_TAG
     command: npx next start
     ports:
       - '3000:3000'
-
-  lex-server:
-    container_name: lex-server
-    image: lexland/lex-server:latest
-    environment:
-      - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
-      - MYSQL_PORT=3306
-      - MYSQL_USERNAME=root
-      - MYSQL_PASSWD=123456
-      - MYSQL_DATABASE=Lex
-      - NODE_ENV=production
-      - PORT=3001
-    links:
-      - lex-mysql
-    depends_on:
-      - lex-mysql
-    ports:
-      - '3001:3001'
-
-  lex-mysql:
-    container_name: lex-mysql
-    # 由于ORM一些数据库驱动支持的不够完备，mysql限制在v5.6
-    # https://github.com/typeorm/typeorm/issues/2093
-    # https://github.com/mysqljs/mysql/issues/2013
-    image: mysql:5.6
-    volumes:
-      # 数据库初始化执行的SQL
-      # https://stackoverflow.com/questions/38504257/mysql-scripts-in-docker-entrypoint-initdb-are-not-executed
-      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      # 数据持久化
-      - /data/docker/mysql:/var/lib/mysql
-    # 添加默认排序规则
-    # https://stackoverflow.com/questions/45729326/how-to-change-the-default-character-set-of-mysql-using-docker-compose
-    command:
-      [
-        'mysqld',
-        '--character-set-server=utf8mb4',
-        '--collation-server=utf8mb4_unicode_ci',
-        '--default-authentication-plugin=mysql_native_password',
-      ]
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: '123456'
-    ports:
-      - 3306:3306
