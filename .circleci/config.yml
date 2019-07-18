@@ -21,7 +21,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - '34:99:74:78:a0:a0:76:78:a5:88:f4:de:b4:f4:f3:2a'
+            - 'a6:f7:79:2b:9f:58:f2:db:1e:2e:4d:14:95:29:4c:c3'
       - run:
           name: Copy Files
           command: |
