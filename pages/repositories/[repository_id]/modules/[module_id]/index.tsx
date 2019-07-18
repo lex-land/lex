@@ -41,7 +41,7 @@ export default compose(pageProps)(() => {
   const router = useRouter();
   const { repo, mod } = pageProps.use<PageProps>();
   const { value: modInfo, setValue: changeModInfo } = useEntity(mod, newMod =>
-    throttledUpdateMod(newMod.id, newMod),
+    throttledUpdateMod(mod.id, newMod),
   );
   return (
     <Page backgroundColor="#fff">
