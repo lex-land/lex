@@ -44,11 +44,11 @@ export const createHttpUtil = (
       const fullUrl = IS_GET ? `${reqUrl}?${qs.stringify(body)}` : reqUrl;
 
       // 处理参数params
-      logger.info(`[ ${opt.method} ] fetching...`);
+      logger.info(`[ ${opt.method} ] ${fullUrl} fetching...`);
       const result = await fetch(fullUrl, opt);
       const json = await result.clone().json();
 
-      logger.info(`[ ${opt.method} ]`, json);
+      logger.info(`[ ${opt.method} ] ${fullUrl} fetched`, json);
       return json;
     };
 

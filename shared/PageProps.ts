@@ -2,17 +2,27 @@ import React, { useContext } from 'react';
 import { flatMapDeep, mapValues } from 'lodash';
 import { AppContext } from 'next/app';
 import { NextPageContext } from 'next';
+import { logger } from './logger';
 
 export const PagePropsContext = React.createContext({});
 
 export function usePageProps<T = any>(propName?: string): T {
   const pageProps = useContext<any>(PagePropsContext);
   if (propName) {
+    if (!pageProps[propName]) {
+      logger.error(
+        `[usePageProps] ${propName} not found. Are you forget to compose it?`,
+      );
+    }
     return pageProps[propName];
   } else {
+    // logger.warn(
+    //   `[usePageProps] \`pageProp.use()\` or \`usePageProps()\` is deprecated! Please use \`pageProp.use('some key')\` or \`usePageProps('some key')\` instead`,
+    // );
     return pageProps;
   }
 }
+
 export type createPagePropsFn<T> = (ctx: NextPageContext) => T;
 export type createAppPropsFn<T> = (ctx: AppContext) => T;
 export type createBooleanFn = (
