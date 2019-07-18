@@ -27,11 +27,11 @@ const AlignLeftTable = styled(HTMLTable)`
 
 const pageProps = createMany({
   repo: entityContext('repository').findOne(),
-  mods: entityContext('module').find(),
 });
 
 export default compose(pageProps)(() => {
-  const { mods } = pageProps.use<{ mods: Module[] }>();
+  const repo = pageProps.use('repo');
+  const mods: Module[] = repo.modules;
   const router = useRouter();
   return (
     <Page backgroundColor="#fff">

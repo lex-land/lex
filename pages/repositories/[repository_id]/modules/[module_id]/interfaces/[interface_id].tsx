@@ -25,7 +25,7 @@ const RequestURL = styled.code`
 
 const pageProps = createMany({
   repo: entityContext('repository').findOne(),
-  mods: entityContext('module').find(),
+  inte: entityContext('interface').findOne(),
 });
 
 export default compose(pageProps)(() => {

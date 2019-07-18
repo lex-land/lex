@@ -34,7 +34,7 @@ const AlignLeftTable = styled(HTMLTable)`
 
 const pageProps = createMany({
   repo: entityContext('repository').findOne(),
-  mods: entityContext('module').find(),
+  mod: entityContext('module').findOne(),
 });
 
 export default compose(pageProps)(() => {
