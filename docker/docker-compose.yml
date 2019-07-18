@@ -23,7 +23,9 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - PROD_URL=https://lex-server:3001
+      - PROD_API_HOST=lex-server
+      - PROD_API_PORT=3001
+      - PROD_API_PORT=http
       - BUILD_TAG
     command: npx next start
     ports:

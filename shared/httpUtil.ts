@@ -4,9 +4,9 @@ import { logger } from './logger';
 import qs from 'qs';
 
 const defaultOption = {
-  protocol: 'http',
-  host: 'localhost',
-  port: '3001',
+  protocol: process.env.PROD_API_PROTOCOL || 'http',
+  host: process.env.PROD_API_HOST || 'localhost',
+  port: process.env.PROD_API_PORT || '3001',
   token: '',
 };
 
