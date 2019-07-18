@@ -41,7 +41,9 @@ const RepoNavList = styled(UL)`
 `;
 
 const RepoSider = () => {
-  const { repo } = usePageProps<{ repo: Repository }>();
+  const repo = usePageProps<Repository>('repo') || {
+    modules: [],
+  };
   const router = useRouter();
   return (
     <RepoSiderContainer>
