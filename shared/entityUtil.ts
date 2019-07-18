@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { createHttpUtil } from './HttpUtil';
+import httpUtil from './httpUtil';
 import { throttle } from 'lodash';
-
-const httpUtil = createHttpUtil();
 
 export const createThrottled = (fn: any) => throttle(fn, 3000);
 
@@ -10,7 +8,7 @@ export const updateEntityFn = (entity: string) => (id: number, query: any) => {
   httpUtil.put(`/api/${entity}/${id}`, query);
 };
 
-export const createEntityFn = (entity: string) => (query: any) =>
+export const createEntityFn = <T = any>(entity: string) => (query: T) =>
   httpUtil.post(`/api/${entity}`, query);
 
 export const getEntityFn = (entity: string) => (id: number) =>

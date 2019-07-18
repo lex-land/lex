@@ -5,7 +5,7 @@ import {
   createEntityFn,
   deleteEntityFn,
   throttledUpdateEntityFn,
-} from '@/core/EntityUtil';
+} from '@/shared/entityUtil';
 import { EditableRow } from './editable-row';
 import { Interface } from '@/interfaces/Interface';
 import { Property } from '@/interfaces/property';

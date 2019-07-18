@@ -8,12 +8,10 @@ import {
   Toaster,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import { Page } from '@/components/Page';
-import { createHttpUtil } from '@/core/HttpUtil';
+import httpUtil from '@/shared/httpUtil';
 import { useRouter } from 'next/router';
-
-const httpUtil = createHttpUtil();
 
 export default () => {
   const [repo, setRepo] = useState();

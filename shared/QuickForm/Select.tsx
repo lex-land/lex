@@ -6,7 +6,7 @@ import {
 } from '@blueprintjs/core';
 import { FieldConfig } from 'formik';
 import React from 'react';
-import { createField } from '../createField';
+import { createField } from './createField';
 
 type Props = IHTMLSelectProps & FieldConfig;
 

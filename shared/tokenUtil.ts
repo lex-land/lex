@@ -1,8 +1,8 @@
-import { createCookieUtil } from './CookieUtil';
+import { createCookieUtil } from './cookieUtil';
 
 const KEYOF_TOKEN = 'KEYOF_TOKEN';
 
-export const createTokenUtil = (ctx?: any) => {
+export const createTokenUtil = (ctx: any = {}) => {
   return {
     set: (token: string) => createCookieUtil(ctx).set(KEYOF_TOKEN, token),
     get: () =>

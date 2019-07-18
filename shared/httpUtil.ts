@@ -1,5 +1,4 @@
-import { FetchError } from './FetchError';
-import constants from '@/config/constants';
+import { createTokenUtil } from './tokenUtil';
 import fetch from 'isomorphic-fetch';
 import { logger } from './logger';
 import qs from 'qs';
@@ -41,8 +40,8 @@ export const createHttpUtil = (
         delete opt.body;
       }
 
-      const query = IS_GET && `?${qs.stringify(body)}`;
-      const fullUrl = `${protocol}://${host}:${port}${url}${query}`;
+      const reqUrl = `${protocol}://${host}:${port}${url}`;
+      const fullUrl = IS_GET ? `${reqUrl}?${qs.stringify(body)}` : reqUrl;
 
       // 处理参数params
       logger.info(`[ ${opt.method} ] fetching...`);
@@ -50,9 +49,6 @@ export const createHttpUtil = (
       const json = await result.clone().json();
 
       logger.info(`[ ${opt.method} ]`, json);
-      if (constants.CATCHED_CODE.includes(json.statusCode)) {
-        throw new FetchError(json.statusCode);
-      }
       return json;
     };
 
@@ -63,3 +59,5 @@ export const createHttpUtil = (
     delete: createFetch('DELETE'),
   };
 };
+const httpUtil = createHttpUtil({ token: createTokenUtil().get() });
+export default httpUtil;

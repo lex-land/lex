@@ -1,12 +1,13 @@
 import { AnchorButton, Button, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/PageProps';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
-import { Dashboard } from '@/components/domains/dashboard';
-import { Flex } from '@/components/layout/flex';
+import { DashboardNavlist } from '@/components/DashboardNavlist';
+import { DashboardSwitcher } from '@/components/DashboardSwitcher';
+import { Flex } from '@/shared/Flex';
 import { Organization } from '@/interfaces/Organization';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { org } from '@/helpers/page-props';
+import { org } from '@/helpers/_to_rm_page-props';
 import { useRouter } from 'next/router';
 
 export default composePageProps(org)(() => {
@@ -17,7 +18,7 @@ export default composePageProps(org)(() => {
       <Page.Navbar />
       <Flex>
         <Page.Sider>
-          <Dashboard.Switcher name={org.name} />
+          <DashboardSwitcher name={org.name} />
           <Divider />
           <Flex align="center" justify="space-between">
             <H5 style={{ marginBottom: 0 }}>仓库</H5>
@@ -28,7 +29,7 @@ export default composePageProps(org)(() => {
               text="新增"
             />
           </Flex>
-          <Dashboard.Navlist
+          <DashboardNavlist
             icon="git-repo"
             dataSource={org.repositories}
             itemHref={record => `/repositories/${record.id}`}

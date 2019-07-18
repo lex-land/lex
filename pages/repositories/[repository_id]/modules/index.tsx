@@ -1,15 +1,15 @@
 import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/PageProps';
-import { mods, repo } from '@/helpers/page-props';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
+import { mods, repo } from '@/helpers/_to_rm_page-props';
 import { CURD } from '@/components/CURD';
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import { Module } from '@/interfaces/Module';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
 import styled from 'styled-components';
-import { throttledUpdateEntityFn } from '@/core/EntityUtil';
+import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
 
 const throttledUpdateMod = throttledUpdateEntityFn('module');

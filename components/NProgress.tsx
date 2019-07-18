@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import NProgressStatic from 'nprogress';
 import Router from 'next/router';
 import { createGlobalStyle } from 'styled-components';
+import { lexTheme } from '@/theme/lex-theme';
 
 const routeChangeStart = () => {
   NProgressStatic.start();
@@ -11,9 +12,9 @@ const routeChangeEnd = () => {
   NProgressStatic.done();
 };
 
-const color = '#106ba3';
+const color = lexTheme.colors.main;
 
-export const GlobalStyle = createGlobalStyle`
+const NProgressGlobalStyle = createGlobalStyle`
   #nprogress {
     pointer-events: none;
   }
@@ -62,7 +63,7 @@ export const NProgress = () => {
 
   return (
     <>
-      <GlobalStyle />
+      <NProgressGlobalStyle />
     </>
   );
 };

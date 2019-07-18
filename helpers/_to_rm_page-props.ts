@@ -1,40 +1,40 @@
-import { createBoolean, createPageProps } from '@/core/PageProps';
 import { Module } from '@/interfaces/Module';
 import { Organization } from '@/interfaces/Organization';
 import { Repository } from '@/interfaces/Repository';
 import { User } from '@/interfaces/User';
+import { createPageProps } from '@/shared/PageProps';
 
-// ----------------------------------------------------------------------
-// 角色
-const isNewComer = createBoolean(ctx => !ctx.tokenUtil.get());
-const isSignedUser = createBoolean(ctx =>
-  ctx.httpUtil
-    .get(`/api/session`)
-    .then(({ statusCode }) => statusCode !== 401)
-    .catch(() => false),
-);
+// // ----------------------------------------------------------------------
+// // 角色
+// const isNewComer = createBoolean(ctx => !ctx.tokenUtil.get());
+// const isSignedUser = createBoolean(ctx =>
+//   ctx.httpUtil
+//     .get(`/api/session`)
+//     .then(({ statusCode }) => statusCode !== 401)
+//     .catch(() => false),
+// );
 
-const Roles = { isNewComer, isSignedUser };
+// const Roles = { isNewComer, isSignedUser };
 
-export const redirect = (
-  path: string,
-  { when }: { when: keyof typeof Roles },
-) =>
-  createPageProps(async ctx => {
-    if (await Roles[when](ctx)) ctx.redirect(path);
-    return {};
-  });
+// export const redirect = (
+//   path: string,
+//   { when }: { when: keyof typeof Roles },
+// ) =>
+//   createPageProps(async ctx => {
+//     if (await Roles[when](ctx)) ctx.redirect(path);
+//     return {};
+//   });
 
-export const newComer = {
-  isNewComer,
-  redirect: (path: string) => redirect(path, { when: 'isNewComer' }),
-};
+// export const newComer = {
+//   isNewComer,
+//   redirect: (path: string) => redirect(path, { when: 'isNewComer' }),
+// };
 
-export const signedUser = {
-  isSignedUser,
-  redirect: (path: string) => redirect(path, { when: 'isSignedUser' }),
-};
-// ----------------------------------------------------------------------
+// export const signedUser = {
+//   isSignedUser,
+//   redirect: (path: string) => redirect(path, { when: 'isSignedUser' }),
+// };
+// // ----------------------------------------------------------------------
 
 export const user = {
   session: createPageProps(async ctx => {

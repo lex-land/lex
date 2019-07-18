@@ -1,12 +1,12 @@
 import { Button, H1, H4, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/PageProps';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
-import { repo } from '@/helpers/page-props';
+import { repo } from '@/helpers/_to_rm_page-props';
 import { useRouter } from 'next/router';
 
 export default composePageProps(repo)(() => {

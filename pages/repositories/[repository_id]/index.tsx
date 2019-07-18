@@ -1,15 +1,15 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/PageProps';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
-import { repo } from '@/helpers/page-props';
+import { repo } from '@/helpers/_to_rm_page-props';
 import styled from 'styled-components';
-import { throttledUpdateEntityFn } from '@/core/EntityUtil';
+import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
 
 export const throttledUpdateMod = throttledUpdateEntityFn('module');
@@ -49,7 +49,10 @@ export default composePageProps(repo)(() => {
               {repo.modules.map(mod => (
                 <ModDashBoard key={mod.id}>
                   <H5>
-                    <Link href={`/repositories/${repo.id}/modules/${mod.id}`}>
+                    <Link
+                      href={`/repositories/[repository_id]/modules/[module_id]`}
+                      as={`/repositories/${repo.id}/modules/${mod.id}`}
+                    >
                       <a>
                         <strong>{mod.name}</strong>
                       </a>

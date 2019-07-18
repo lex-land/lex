@@ -8,11 +8,11 @@ interface QuickFormState {
   loading: boolean;
 }
 
-interface QuickFormProps<T> {
-  defaultValue?: object;
-  action: (value: T) => Promise<any>;
-  success?: (value: T, json: any) => any;
-  failure?: (value: T, json: any) => any;
+interface QuickFormProps<Values> {
+  defaultValue?: Values;
+  action: (value: Values) => Promise<any>;
+  success?: (value: Values, json: any) => any;
+  failure?: (value: Values, json: any) => any;
   render?: (formik: FormikProps<any>, state: QuickFormState) => any;
   large?: boolean;
   button?: React.ReactNode;

@@ -1,10 +1,10 @@
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import { H1 } from '@blueprintjs/core';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
-import { composePageProps } from '@/core/PageProps';
-import { repo } from '@/helpers/page-props';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { composePageProps } from '@/shared/PageProps';
+import { repo } from '@/helpers/_to_rm_page-props';
 
 export default composePageProps(repo)(() => {
   return (

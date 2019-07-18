@@ -6,15 +6,15 @@ import {
   HTMLSelect,
   Popover,
 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/PageProps';
-import { inte, repo } from '@/helpers/page-props';
-import { throttledUpdateEntityFn, useEntity } from '@/core/EntityUtil';
-import { Flex } from '@/components/layout/flex';
-import { Inte } from '@/components/domains/inte';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
+import { inte, repo } from '@/helpers/_to_rm_page-props';
+import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
+import { Flex } from '@/shared/Flex';
+import { Inte } from '@/components/_to_rm_domains/inte';
 import { Interface } from '@/interfaces/Interface';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
 import styled from 'styled-components';
 
 export const throttledUpdateInte = throttledUpdateEntityFn('interface');

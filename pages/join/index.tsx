@@ -1,20 +1,34 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
+import { PagePropsMap, compose, redirect } from '@/shared/PageProps';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { Page } from '@/components/Page';
-import { QuickForm } from '@/components/forms';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { composePageProps } from '@/core/PageProps';
-import { createEntityFn } from '@/core/EntityUtil';
 import { login } from '@/helpers/login';
-import md5 from 'md5';
-import { signedUser } from '@/helpers/page-props';
+import { register } from '@/helpers/register';
+import { unauthorized } from '@/helpers/unauthorized';
 import { useRouter } from 'next/router';
 
-const createUser = createEntityFn('user');
+const defaultValue = {
+  fullname: '',
+  email: '',
+  password: '',
+};
 
-export default composePageProps(signedUser.redirect('/'))(() => {
+const pageProps: PagePropsMap = [redirect('/').when(unauthorized)];
+
+export default compose(pageProps)(() => {
   const router = useRouter();
+
+  const onRegisterSuccess = async (values: typeof defaultValue) => {
+    await login({
+      username: values.fullname,
+      password: values.password,
+    });
+    router.replace('/');
+  };
+
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
@@ -27,11 +41,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
       <Page.Card>
         <Page.Card.Title>Create a New Account</Page.Card.Title>
         <QuickForm
-          defaultValue={{
-            fullname: '',
-            email: '',
-            password: '',
-          }}
+          defaultValue={defaultValue}
           render={() => (
             <>
               <QuickForm.Input large name="email" component="input" />
@@ -46,19 +56,8 @@ export default composePageProps(signedUser.redirect('/'))(() => {
               />
             </>
           )}
-          action={values =>
-            createUser({
-              ...values,
-              password: values.password && md5(values.password),
-            })
-          }
-          success={values => {
-            login({
-              username: values.fullname,
-              password: values.password,
-            });
-            router.replace('/');
-          }}
+          action={register}
+          success={onRegisterSuccess}
         />
         <Page.Card.Footer>
           Already have an account?

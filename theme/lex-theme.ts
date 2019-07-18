@@ -5,9 +5,8 @@ const lexTheme = {
   borderRadius: '5px',
   defaultBodyBackground: '#f5f8fa',
   colors: {
-    main: 'cyan',
+    main: '#106ba3',
     secondary: 'rgba(0,0,0,0.45)',
-    // #f5f8fa
   },
 };
 

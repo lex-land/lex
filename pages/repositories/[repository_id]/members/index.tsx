@@ -1,16 +1,15 @@
 import { Callout, H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { composePageProps, usePageProps } from '@/core/PageProps';
-import { repo, user } from '@/helpers/page-props';
-import { Flex } from '@/components/layout/flex';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
+import { repo, user } from '@/helpers/_to_rm_page-props';
+import { Flex } from '@/shared/Flex';
 import { MultiSelect } from '@blueprintjs/select';
 import { Page } from '@/components/Page';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
 import { User } from '@/interfaces/User';
-// import { createHttpUtil } from '@/core/HttpUtil';
+import httpUtil from '@/shared/httpUtil';
 
-// const httpUtil = createHttpUtil();
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
 export default composePageProps(repo, user.all, user.session)(() => {
@@ -61,22 +60,22 @@ export default composePageProps(repo, user.all, user.session)(() => {
                     selectedItems.findIndex(i => i.id === item.id),
                     1,
                   );
-                  // httpUtil.delete(`/api/repository/${repo.id}/members`, item);
+                  httpUtil.delete(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 } else {
                   // add
                   selectedItems.push(item);
-                  // httpUtil.post(`/api/repository/${repo.id}/members`, item);
+                  httpUtil.post(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 }
               }}
               tagRenderer={item => item.name}
               tagInputProps={{
                 onRemove: (item, index) => {
-                  // httpUtil.delete(
-                  //   `/api/repository/${repo.id}/members`,
-                  //   selectedItems[index],
-                  // );
+                  httpUtil.delete(
+                    `/api/repository/${repo.id}/members`,
+                    selectedItems[index],
+                  );
                   selectedItems.splice(
                     selectedItems.findIndex(
                       i => i.id === selectedItems[index].id,

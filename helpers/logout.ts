@@ -1,4 +1,4 @@
-import { createTokenUtil } from '@/core/TokenUtil';
+import { createTokenUtil } from '@/shared/tokenUtil';
 
 const tokenHelper = createTokenUtil();
 

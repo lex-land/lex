@@ -1,10 +1,10 @@
-import { composePageProps, usePageProps } from '@/core/PageProps';
+import { composePageProps, usePageProps } from '@/shared/PageProps';
 import { H1 } from '@blueprintjs/core';
 import { Page } from '@/components/Page';
-import { QuickForm } from '@/components/forms';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { createEntityFn } from '@/core/EntityUtil';
-import { org } from '@/helpers/page-props';
+import { createEntityFn } from '@/shared/entityUtil';
+import { org } from '@/helpers/_to_rm_page-props';
 import { useRouter } from 'next/router';
 
 const formDefaultValues = { name: '', description: '' };

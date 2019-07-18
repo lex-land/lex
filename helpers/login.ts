@@ -1,7 +1,6 @@
-import { createEntityFn } from '@/core/EntityUtil';
-import md5 from 'md5';
-
-const createSession = createEntityFn('session');
+import { createEntityFn } from '@/shared/entityUtil';
+import { flow } from 'lodash';
+import { passwdTransfer } from './passwdTransfer';
 
 const loginValue = {
   username: '',
@@ -10,8 +9,9 @@ const loginValue = {
 
 type LoginValue = typeof loginValue;
 
-export const login = (values: LoginValue) =>
-  createSession({
-    ...values,
-    password: values.password && md5(values.password),
-  });
+const createSession = createEntityFn<LoginValue>('session');
+
+export const login = flow(
+  passwdTransfer,
+  createSession,
+);

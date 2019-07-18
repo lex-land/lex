@@ -1,11 +1,11 @@
 import { Classes, Icon, UL } from '@blueprintjs/core';
 import { CURD } from '@/components/CURD';
-import { Flex } from '@/components/layout/flex';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import React from 'react';
 import { Repository } from '@/interfaces/Repository';
 import styled from 'styled-components';
-import { usePageProps } from '@/core/PageProps';
+import { usePageProps } from '@/shared/PageProps';
 import { useRouter } from 'next/router';
 
 const RepoSiderContainer = styled.div`

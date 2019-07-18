@@ -1,9 +1,9 @@
 import { Button, Callout, H1 } from '@blueprintjs/core';
 import Link from 'next/link';
 import { Page } from '@/components/Page';
-import { QuickForm } from '@/components/forms';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { createEntityFn } from '@/core/EntityUtil';
+import { createEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
 
 const createRepository = createEntityFn('repository');
