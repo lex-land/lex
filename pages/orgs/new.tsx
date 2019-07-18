@@ -1,9 +1,11 @@
 import { Button, H1 } from '@blueprintjs/core';
-import { Page } from '@/components/page';
-import { QuickForm } from '@/components/forms';
+import { Page } from '@/components/Page';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { http } from '@/helpers/fetch';
+import { createEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
+
+const createOrganization = createEntityFn('organization');
 
 export default () => {
   const router = useRouter();
@@ -21,7 +23,7 @@ export default () => {
               <Button intent="success" type="submit" text="Create" />
             </>
           )}
-          action={newValue => http.post('/api/organization', newValue)}
+          action={newValue => createOrganization(newValue)}
           success={(values, json) =>
             router.replace(`/orgs/[org_id]`, `/orgs/${json.name}`)
           }

@@ -1,17 +1,18 @@
 import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { mods, repo } from '@/helpers/page-props';
-import { CURD } from '@/components/curd';
-import { Flex } from '@/core/layout/flex';
+import { compose, createMany } from '@/shared/PageProps';
+import { CURD } from '@/components/CURD';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
-import { Module } from '@/helpers/interfaces/module';
-import { Page } from '@/components/page';
+import { Module } from '@/interfaces/Module';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
-import { throttledUpdateMod } from '@/helpers/service';
-import { useQuery } from '@/helpers/hooks';
+import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
+
+const throttledUpdateMod = throttledUpdateEntityFn('module');
 
 const AlignLeftTable = styled(HTMLTable)`
   width: 100%;
@@ -24,10 +25,14 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-export default composePageProps(repo, mods)(() => {
-  const { mods } = usePageProps<{ mods: Module[] }>();
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const repo = pageProps.use('repo');
+  const mods: Module[] = repo.modules;
   const router = useRouter();
-  const query = useQuery();
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
@@ -44,13 +49,13 @@ export default composePageProps(repo, mods)(() => {
               action={
                 <CURD.Create
                   action={`/api/module`}
-                  params={{ repository: query.repository_id }}
+                  params={{ repository: router.query.repository_id }}
                   defaultValue={{ name: '', description: '' }}
                   drawerTitle="新建模块"
                   success={(values, json) =>
                     router.replace(
                       `/repositories/[repository_id]/modules/[module_id]`,
-                      `/repositories/${query.repository_id}/modules/${json.id}`,
+                      `/repositories/${router.query.repository_id}/modules/${json.id}`,
                     )
                   }
                   actionRenderer={({ handleClick }) => (
@@ -81,7 +86,7 @@ export default composePageProps(repo, mods)(() => {
                         <td>
                           <Link
                             href={`/repositories/[repository_id]/modules/[module_id]`}
-                            as={`/repositories/${query.repository_id}/modules/${mod.id}`}
+                            as={`/repositories/${router.query.repository_id}/modules/${mod.id}`}
                           >
                             <a>
                               <strong>{mod.name}</strong>
@@ -106,7 +111,7 @@ export default composePageProps(repo, mods)(() => {
                             success={() =>
                               router.replace(
                                 `/repositories/[repository_id]/modules`,
-                                `/repositories/${query.repository_id}/modules`,
+                                `/repositories/${router.query.repository_id}/modules`,
                               )
                             }
                             actionRenderer={({ handleClick }) => (

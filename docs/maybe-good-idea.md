@@ -15,3 +15,14 @@
   - [一些想法](https://github.com/zeit/next.js/issues/186)
   - [with-recompose](https://github.com/zeit/next.js/tree/canary/examples/with-recompose)
   - [next-compose-initial-props](https://www.npmjs.com/package/next-compose-initial-props)
+
+```
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const repo = pageProps.use<Repository>('repo') || defaultRepo;
+  ...
+}
+```

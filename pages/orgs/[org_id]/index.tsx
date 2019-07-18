@@ -1,23 +1,28 @@
 import { AnchorButton, Button, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { CURD } from '@/components/curd';
-import { Dashboard } from '@/components/domains/dashboard';
-import { Flex } from '@/core/layout/flex';
-import { Organization } from '@/helpers/interfaces/organization';
-import { Page } from '@/components/page';
+import { compose, createMany } from '@/shared/PageProps';
+import { CURD } from '@/components/CURD';
+import { DashboardNavlist } from '@/components/DashboardNavlist';
+import { DashboardSwitcher } from '@/components/DashboardSwitcher';
+import { Flex } from '@/shared/Flex';
+import { Organization } from '@/interfaces/Organization';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { org } from '@/helpers/page-props';
+import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
 
-export default composePageProps(org)(() => {
-  const { org } = usePageProps<{ org: Organization }>();
+const pageProps = createMany({
+  org: entityContext('organization').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const { org } = pageProps.use<{ org: Organization }>();
   const router = useRouter();
   return (
     <Page>
       <Page.Navbar />
       <Flex>
         <Page.Sider>
-          <Dashboard.Switcher name={org.name} />
+          <DashboardSwitcher name={org.name} />
           <Divider />
           <Flex align="center" justify="space-between">
             <H5 style={{ marginBottom: 0 }}>仓库</H5>
@@ -28,7 +33,7 @@ export default composePageProps(org)(() => {
               text="新增"
             />
           </Flex>
-          <Dashboard.Navlist
+          <DashboardNavlist
             icon="git-repo"
             dataSource={org.repositories}
             itemHref={record => `/repositories/${record.id}`}

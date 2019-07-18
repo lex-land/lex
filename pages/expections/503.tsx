@@ -1,9 +1,9 @@
 import { AnchorButton } from '@blueprintjs/core';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
 import { useRouter } from 'next/router';
 
-export const Error503 = () => {
+export default function Error503() {
   const router = useRouter();
   return (
     <Page>
@@ -18,4 +18,4 @@ export const Error503 = () => {
       />
     </Page>
   );
-};
+}

@@ -3,7 +3,12 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY . .
+COPY ./build ./build
+COPY ./static ./static
+COPY ./package.json ./package.json
+COPY ./next.config.js ./next.config.js
+COPY ./next-env.d.ts ./next-env.d.ts
+COPY ./tsconfig.json ./tsconfig.json
 
 RUN npx yarn
 

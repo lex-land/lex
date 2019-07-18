@@ -10,9 +10,9 @@ import {
   UL,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { Flex } from '@/core/layout/flex';
-import { Page } from '@/components/page';
-import { http } from '@/helpers/fetch';
+import { Flex } from '@/shared/Flex';
+import { Page } from '@/components/Page';
+import httpUtil from '@/shared/httpUtil';
 import repoSample from './data/repo.sample.json';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -33,7 +33,10 @@ export default () => {
         icon: 'swap-horizontal',
         message: <ToastProgressBar intent="primary" />,
       });
-      const repoRes = await http.post('/api/migration/repo', JSON.parse(repo));
+      const repoRes = await httpUtil.post(
+        '/api/migration/repo',
+        JSON.parse(repo),
+      );
       router.replace(
         `/repositories/[repository_id]`,
         `/repositories/${repoRes.id}`,

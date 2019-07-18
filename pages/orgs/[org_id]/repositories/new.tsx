@@ -1,16 +1,21 @@
-import { composePageProps, usePageProps } from '@/core/next-compose';
+import { compose, createMany } from '@/shared/PageProps';
 import { H1 } from '@blueprintjs/core';
-import { Page } from '@/components/page';
-import { QuickForm } from '@/components/forms';
+import { Page } from '@/components/Page';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { http } from '@/helpers/fetch';
-import { org } from '@/helpers/page-props';
+import { createEntityFn } from '@/shared/entityUtil';
+import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
 
 const formDefaultValues = { name: '', description: '' };
+const createRepository = createEntityFn('repository');
 
-export default composePageProps(org)(() => {
-  const { org } = usePageProps();
+const pageProps = createMany({
+  org: entityContext('organization').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const { org } = pageProps.use();
   const router = useRouter();
   return (
     <Page>
@@ -20,7 +25,10 @@ export default composePageProps(org)(() => {
         <QuickForm
           defaultValue={formDefaultValues}
           action={newValue =>
-            http.post('/api/repository', { ...newValue, organization: org })
+            createRepository({
+              ...newValue,
+              organization: org,
+            })
           }
           success={(values, json) =>
             router.replace(

@@ -1,18 +1,34 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
+import { compose, redirect } from '@/shared/PageProps';
 import Link from 'next/link';
-import { Logo } from '@/components/vi';
-import { Page } from '@/components/page';
-import { QuickForm } from '@/components/forms';
+import { Logo } from '@/components/Logo';
+import { Page } from '@/components/Page';
+import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { composePageProps } from '@/core/next-compose';
-import { http } from '@/helpers/fetch';
-import { login } from '@/helpers/service';
-import md5 from 'md5';
-import { signedUser } from '@/helpers/page-props';
+import { login } from '@/helpers/login';
+import { register } from '@/helpers/register';
+import { unauthorized } from '@/helpers/unauthorized';
 import { useRouter } from 'next/router';
 
-export default composePageProps(signedUser.redirect('/'))(() => {
+const defaultValue = {
+  fullname: '',
+  email: '',
+  password: '',
+};
+
+const guard = [redirect('/').when(unauthorized)];
+
+export default compose(guard)(() => {
   const router = useRouter();
+
+  const onRegisterSuccess = async (values: typeof defaultValue) => {
+    await login({
+      username: values.fullname,
+      password: values.password,
+    });
+    router.replace('/');
+  };
+
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>
@@ -25,11 +41,7 @@ export default composePageProps(signedUser.redirect('/'))(() => {
       <Page.Card>
         <Page.Card.Title>Create a New Account</Page.Card.Title>
         <QuickForm
-          defaultValue={{
-            fullname: '',
-            email: '',
-            password: '',
-          }}
+          defaultValue={defaultValue}
           render={() => (
             <>
               <QuickForm.Input large name="email" component="input" />
@@ -44,19 +56,8 @@ export default composePageProps(signedUser.redirect('/'))(() => {
               />
             </>
           )}
-          action={values =>
-            http.post(`/api/user`, {
-              ...values,
-              password: values.password && md5(values.password),
-            })
-          }
-          success={values => {
-            login({
-              username: values.fullname,
-              password: values.password,
-            });
-            router.replace('/');
-          }}
+          action={register}
+          success={onRegisterSuccess}
         />
         <Page.Card.Footer>
           Already have an account?

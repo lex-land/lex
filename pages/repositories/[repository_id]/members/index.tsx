@@ -1,19 +1,25 @@
 import { Callout, H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { repo, user } from '@/helpers/page-props';
-import { Flex } from '@/core/layout/flex';
+import { compose, createMany } from '@/shared/PageProps';
+import { Flex } from '@/shared/Flex';
 import { MultiSelect } from '@blueprintjs/select';
-import { Page } from '@/components/page';
-import { Repo } from '@/components/domains/repo';
-import { Repository } from '@/helpers/interfaces/repository';
-import { User } from '@/helpers/interfaces/user';
-import { http } from '@/helpers/fetch';
+import { Page } from '@/components/Page';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { Repository } from '@/interfaces/Repository';
+import { User } from '@/interfaces/User';
+import { entityContext } from '@/helpers/entityContext';
+import httpUtil from '@/shared/httpUtil';
 
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
-export default composePageProps(repo, user.all, user.session)(() => {
-  const { repo, allUsers: users, session } = usePageProps<{
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  allUsers: entityContext('user').find(),
+  session: entityContext('session').find('user'),
+});
+
+export default compose(pageProps)(() => {
+  const { repo, allUsers: users, session } = pageProps.use<{
     repo: Repository;
     allUsers: User[];
     session: User;
@@ -60,19 +66,19 @@ export default composePageProps(repo, user.all, user.session)(() => {
                     selectedItems.findIndex(i => i.id === item.id),
                     1,
                   );
-                  http.delete(`/api/repository/${repo.id}/members`, item);
+                  httpUtil.delete(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 } else {
                   // add
                   selectedItems.push(item);
-                  http.post(`/api/repository/${repo.id}/members`, item);
+                  httpUtil.post(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 }
               }}
               tagRenderer={item => item.name}
               tagInputProps={{
                 onRemove: (item, index) => {
-                  http.delete(
+                  httpUtil.delete(
                     `/api/repository/${repo.id}/members`,
                     selectedItems[index],
                   );

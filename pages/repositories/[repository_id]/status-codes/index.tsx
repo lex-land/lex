@@ -1,12 +1,16 @@
-import { Flex } from '@/core/layout/flex';
+import { compose, createMany } from '@/shared/PageProps';
+import { Flex } from '@/shared/Flex';
 import { H1 } from '@blueprintjs/core';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
-import { composePageProps } from '@/core/next-compose';
-import { repo } from '@/helpers/page-props';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { entityContext } from '@/helpers/entityContext';
 
-export default composePageProps(repo)(() => {
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+});
+
+export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />

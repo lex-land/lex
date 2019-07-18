@@ -1,24 +1,35 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { throttledUpdateMod, throttledUpdateRepo } from '@/helpers/service';
-import { CURD } from '@/components/curd';
-import { Flex } from '@/core/layout/flex';
+import { compose, createMany } from '@/shared/PageProps';
+import { CURD } from '@/components/CURD';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
-import { Repository } from '@/helpers/interfaces/repository';
-import { repo } from '@/helpers/page-props';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { Repository } from '@/interfaces/Repository';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
+import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
+
+export const throttledUpdateMod = throttledUpdateEntityFn('module');
+export const throttledUpdateRepo = throttledUpdateEntityFn('repository');
 
 const ModDashBoard = styled.div`
   width: 30%;
   margin-bottom: 36px;
 `;
 
-export default composePageProps(repo)(() => {
-  const { repo } = usePageProps<{ repo: Repository }>();
+const defaultRepo = {
+  modules: [],
+};
+
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const repo = pageProps.use<Repository>('repo') || defaultRepo;
   const router = useRouter();
   return (
     <Page backgroundColor="#fff">

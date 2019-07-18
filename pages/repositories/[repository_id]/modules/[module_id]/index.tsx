@@ -1,21 +1,20 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/core/next-compose';
-import { mod, repo } from '@/helpers/page-props';
-import {
-  throttledUpdateInte,
-  throttledUpdateMod,
-  useEntity,
-} from '@/helpers/service';
-import { CURD } from '@/components/curd';
-import { Flex } from '@/core/layout/flex';
+import { compose, createMany } from '@/shared/PageProps';
+import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
+import { CURD } from '@/components/CURD';
+import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
-import { Module } from '@/helpers/interfaces/module';
-import { Page } from '@/components/page';
+import { Module } from '@/interfaces/Module';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/domains/repo';
-import { Repository } from '@/helpers/interfaces/repository';
+import { Repo } from '@/components/_to_rm_domains/repo';
+import { Repository } from '@/interfaces/Repository';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+
+const throttledUpdateMod = throttledUpdateEntityFn('module');
+const throttledUpdateInte = throttledUpdateEntityFn('interface');
 
 interface PageProps {
   mod: Module;
@@ -33,9 +32,14 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-export default composePageProps(repo, mod)(() => {
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  mod: entityContext('module').findOne(),
+});
+
+export default compose(pageProps)(() => {
   const router = useRouter();
-  const { repo, mod } = usePageProps<PageProps>();
+  const { repo, mod } = pageProps.use<PageProps>();
   const { value: modInfo, setValue: changeModInfo } = useEntity(mod, newMod =>
     throttledUpdateMod(newMod.id, newMod),
   );

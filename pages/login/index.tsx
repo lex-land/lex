@@ -1,13 +1,15 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
+import { compose, redirect } from '@/shared/PageProps';
 import Link from 'next/link';
-import { LoginForm } from '@/helpers/forms/login';
-import { Logo } from '@/components/vi';
-import { Page } from '@/components/page';
+import { LoginForm } from '@/components/LoginForm';
+import { Logo } from '@/components/Logo';
+import { Page } from '@/components/Page';
 import React from 'react';
-import { composePageProps } from '@/core/next-compose';
-import { signedUser } from '@/helpers/page-props';
+import { unauthorized } from '@/helpers/unauthorized';
 
-export default composePageProps(signedUser.redirect('/'))(() => {
+const guard = [redirect('/').when(unauthorized)];
+
+export default compose(guard)(() => {
   return (
     <Page backgroundColor="#e9ebee">
       <Page.UnlogedNavbar>

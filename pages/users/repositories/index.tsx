@@ -1,5 +1,5 @@
 import { H1 } from '@blueprintjs/core';
-import { Page } from '@/components/page';
+import { Page } from '@/components/Page';
 import React from 'react';
 
 export default () => {
