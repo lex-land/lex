@@ -5,6 +5,6 @@ export const entityContext = (entity: string) => ({
     createPageProps(ctx =>
       ctx.httpUtil.get(`/api/${entity}/${ctx.query[`${entity}_id`]}`),
     ),
-  find: (path?: string) =>
+  find: (path: string = '') =>
     createPageProps(ctx => ctx.httpUtil.get(`/api/${entity}/${path}`)),
 });

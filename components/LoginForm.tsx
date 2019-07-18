@@ -7,10 +7,15 @@ import { useRouter } from 'next/router';
 
 const tokenHelper = createTokenUtil();
 
+const defaultValue = { username: '', password: '' };
+
 export const LoginForm = () => {
   const router = useRouter();
 
-  const onSuccess = (values: any, json: { accessToken: string }) => {
+  const onSuccess = (
+    values: typeof defaultValue,
+    json: { accessToken: string },
+  ) => {
     tokenHelper.set(json.accessToken);
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,
@@ -21,7 +26,7 @@ export const LoginForm = () => {
 
   return (
     <QuickForm
-      defaultValue={{ username: '', password: '' }}
+      defaultValue={defaultValue}
       action={login}
       render={() => (
         <>
