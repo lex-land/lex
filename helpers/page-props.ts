@@ -2,13 +2,13 @@ import {
   createAppProps,
   createBoolean,
   createPageProps,
-} from '@core/next-compose';
+} from '@/core/next-compose';
 import { AppContext } from 'next/app';
-import { Module } from '@server/module/module.entity';
-import { Organization } from '@server/organization/organization.entity';
-import { Repository } from '@server/repository/repository.entity';
+import { Module } from '@/helpers/interfaces/module';
+import { Organization } from '@/helpers/interfaces/organization';
+import { Repository } from '@/helpers/interfaces/repository';
 import Router from 'next/router';
-import { User } from '@server/user/user.entity';
+import { User } from '@/helpers/interfaces/user';
 import { createHttp } from './fetch';
 import { getToken } from './secure';
 import { session } from './service';

@@ -8,9 +8,9 @@ import {
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
 import { FormikProps } from 'formik';
-import { LexContent } from '@components/layout/container';
-import { QuickForm } from '@components/forms';
-import { http } from '@helpers/fetch';
+import { LexContent } from '@/core/layout/container';
+import { QuickForm } from '@/components/forms';
+import { http } from '@/helpers/fetch';
 
 interface CurdButtonProps {
   action: string;

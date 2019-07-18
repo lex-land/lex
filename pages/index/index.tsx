@@ -1,11 +1,11 @@
 import { AnchorButton, Divider, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { newComer, user } from '@helpers/page-props';
-import { Dashboard } from '@components/domains/dashboard';
-import { Flex } from '@components/layout/flex';
-import { Page } from '@components/page';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { newComer, user } from '@/helpers/page-props';
+import { Dashboard } from '@/components/domains/dashboard';
+import { Flex } from '@/core/layout/flex';
+import { Page } from '@/components/page';
 import React from 'react';
-import { User } from '@server/user/user.entity';
+import { User } from '@/helpers/interfaces/user';
 
 export default composePageProps(newComer.redirect('/login'), user.session)(
   () => {

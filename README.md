@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://lex-land.online" target="blank"><img src="./public/images/logo.svg" width="150" alt="Lex Logo" /></a>
+  <a href="https://lex-land.online" target="blank"><img src="./static/images/logo.svg" width="150" alt="Lex Logo" /></a>
 </p>
 
 <p align="center">
@@ -19,16 +19,13 @@ Lex 是一个接口文档管理工具，是在 Rap2 的想法上重新架构的�
 ## Start
 
 ```shell
-# 安装yarn
-npm i -g yarn
-
 # 安装依赖
-yarn
+npx yarn
 
 # 使用server/migration/sql/init-db.sql进行数据库初始化并启动两个容器
 # 一个是mysql5.6，它会把数据挂载在cache目录做持久化存储
 # 另一个是phpmyadmin，会启动一个数据库管理工具
-npm run database
+npm run start:server
 
 # 运行开发环境，使用本地docker内的mysql
 npm run start:dev

@@ -1,5 +1,5 @@
 import { AnchorButton } from '@blueprintjs/core';
-import { Page } from '@components/page';
+import { Page } from '@/components/page';
 import React from 'react';
 
 export const Error500 = () => {

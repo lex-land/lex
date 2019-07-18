@@ -1,12 +1,12 @@
 import { Classes, Icon, UL } from '@blueprintjs/core';
-import { CURD } from '@components/curd';
-import { Flex } from '@components/layout/flex';
+import { CURD } from '@/components/curd';
+import { Flex } from '@/core/layout/flex';
 import Link from 'next/link';
 import React from 'react';
-import { Repository } from '@server/repository/repository.entity';
+import { Repository } from '@/helpers/interfaces/repository';
 import styled from 'styled-components';
-import { usePageProps } from '@core/next-compose';
-import { useQuery } from '@helpers/hooks';
+import { usePageProps } from '@/core/next-compose';
+import { useQuery } from '@/helpers/hooks';
 import { useRouter } from 'next/router';
 
 const RepoSiderContainer = styled.div`

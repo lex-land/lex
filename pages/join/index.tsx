@@ -1,14 +1,14 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
 import Link from 'next/link';
-import { Logo } from '@components/vi';
-import { Page } from '@components/page';
-import { QuickForm } from '@components/forms';
+import { Logo } from '@/components/vi';
+import { Page } from '@/components/page';
+import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { composePageProps } from '@core/next-compose';
-import { http } from '@helpers/fetch';
-import { login } from '@helpers/service';
+import { composePageProps } from '@/core/next-compose';
+import { http } from '@/helpers/fetch';
+import { login } from '@/helpers/service';
 import md5 from 'md5';
-import { signedUser } from '@helpers/page-props';
+import { signedUser } from '@/helpers/page-props';
 import { useRouter } from 'next/router';
 
 export default composePageProps(signedUser.redirect('/'))(() => {

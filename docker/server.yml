@@ -1,9 +1,29 @@
-version: '2'
+version: '3.1'
+
 services:
-  mysql:
+  lex-server:
+    container_name: lex-server
+    image: lexland/lex-server:latest
+    environment:
+      - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
+      - MYSQL_PORT=3306
+      - MYSQL_USERNAME=root
+      - MYSQL_PASSWD=123456
+      - MYSQL_DATABASE=Lex
+      # - NODE_ENV=production
+      - PORT=3001
+      # - SUNMI_PROD_URL=https://lex-land.online
+      - SUNMI_ENV=master
+    links:
+      - lex-mysql
+    depends_on:
+      - lex-mysql
+    ports:
+      - '3001:3001'
+
+  lex-mysql:
     image: mysql:5.6
-    container_name: test-mysql
-    restart: always
+    container_name: lex-mysql
     ports:
       - '3306:3306'
     environment:
@@ -22,13 +42,10 @@ services:
         '--collation-server=utf8mb4_unicode_ci',
         '--default-authentication-plugin=mysql_native_password',
       ]
-    networks:
-      - net-mysql
-
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
-    container_name: test-phpmyadmin
+    container_name: lex-phpmyadmin
     ports:
       - '8080:80'
     environment:
@@ -36,9 +53,4 @@ services:
       MYSQL_PASSWORD: '123456'
       MYSQL_ROOT_PASSWORD: '123456'
       MYSQL_DATABASE: 'Lex'
-      PMA_HOST: test-mysql
-    networks:
-      - net-mysql
-
-networks:
-  net-mysql:
+      PMA_HOST: lex-mysql

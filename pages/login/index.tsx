@@ -1,11 +1,11 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
 import Link from 'next/link';
-import { LoginForm } from '@helpers/forms/login';
-import { Logo } from '@components/vi';
-import { Page } from '@components/page';
+import { LoginForm } from '@/helpers/forms/login';
+import { Logo } from '@/components/vi';
+import { Page } from '@/components/page';
 import React from 'react';
-import { composePageProps } from '@core/next-compose';
-import { signedUser } from '@helpers/page-props';
+import { composePageProps } from '@/core/next-compose';
+import { signedUser } from '@/helpers/page-props';
 
 export default composePageProps(signedUser.redirect('/'))(() => {
   return (

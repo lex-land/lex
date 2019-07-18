@@ -21,26 +21,34 @@ services:
     container_name: lex-node
     image: lexland/lex:latest
     environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SUNMI_PROD_URL=https://lex-server:3001
+      - SUNMI_ENV=master
+      - BUILD_TAG
+    command: npx next start
+    ports:
+      - '3000:3000'
+
+  lex-server:
+    container_name: lex-server
+    image: lexland/lex-server:latest
+    environment:
       - MYSQL_URL=lex-mysql # links will maintain /etc/hosts, just use 'container_name'
       - MYSQL_PORT=3306
       - MYSQL_USERNAME=root
       - MYSQL_PASSWD=123456
       - MYSQL_DATABASE=Lex
       - NODE_ENV=production
-      - PORT=3000
+      - PORT=3001
       - SUNMI_PROD_URL=https://lex-land.online
       - SUNMI_ENV=master
-      - BUILD_TAG
-    # volumes:
-    #   - ../:/app
-    # working_dir: /app
-    # command: 'npm start'
     links:
       - lex-mysql
     depends_on:
       - lex-mysql
     ports:
-      - '3000:3000'
+      - '3001:3001'
 
   lex-mysql:
     container_name: lex-mysql

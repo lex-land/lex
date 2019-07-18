@@ -1,8 +1,8 @@
 import { Button, H1 } from '@blueprintjs/core';
-import { Page } from '@components/page';
-import { QuickForm } from '@components/forms';
+import { Page } from '@/components/page';
+import { QuickForm } from '@/components/forms';
 import React from 'react';
-import { http } from '@helpers/fetch';
+import { http } from '@/helpers/fetch';
 import { useRouter } from 'next/router';
 
 export default () => {

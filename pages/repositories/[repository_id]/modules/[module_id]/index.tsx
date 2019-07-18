@@ -1,19 +1,19 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { mod, repo } from '@helpers/page-props';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { mod, repo } from '@/helpers/page-props';
 import {
   throttledUpdateInte,
   throttledUpdateMod,
   useEntity,
-} from '@helpers/service';
-import { CURD } from '@components/curd';
-import { Flex } from '@components/layout/flex';
+} from '@/helpers/service';
+import { CURD } from '@/components/curd';
+import { Flex } from '@/core/layout/flex';
 import Link from 'next/link';
-import { Module } from '@server/module/module.entity';
-import { Page } from '@components/page';
+import { Module } from '@/helpers/interfaces/module';
+import { Page } from '@/components/page';
 import React from 'react';
-import { Repo } from '@components/domains/repo';
-import { Repository } from '@server/repository/repository.entity';
+import { Repo } from '@/components/domains/repo';
+import { Repository } from '@/helpers/interfaces/repository';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 

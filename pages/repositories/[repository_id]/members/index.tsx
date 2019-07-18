@@ -1,14 +1,14 @@
 import { Callout, H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { composePageProps, usePageProps } from '@core/next-compose';
-import { repo, user } from '@helpers/page-props';
-import { Flex } from '@components/layout/flex';
+import { composePageProps, usePageProps } from '@/core/next-compose';
+import { repo, user } from '@/helpers/page-props';
+import { Flex } from '@/core/layout/flex';
 import { MultiSelect } from '@blueprintjs/select';
-import { Page } from '@components/page';
-import { Repo } from '@components/domains/repo';
-import { Repository } from '@server/repository/repository.entity';
-import { User } from '@server/user/user.entity';
-import { http } from '@helpers/fetch';
+import { Page } from '@/components/page';
+import { Repo } from '@/components/domains/repo';
+import { Repository } from '@/helpers/interfaces/repository';
+import { User } from '@/helpers/interfaces/user';
+import { http } from '@/helpers/fetch';
 
 const MemberMultiSelect = MultiSelect.ofType<any>();
 

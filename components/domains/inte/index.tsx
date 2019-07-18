@@ -1,4 +1,4 @@
-import { CURD } from '@components/curd';
+import { CURD } from '@/components/curd';
 import { InteScrollspy } from './scrollspy';
 import React from 'react';
 import { TreeEditor } from './tree-editor';

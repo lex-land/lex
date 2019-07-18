@@ -1,6 +1,6 @@
-import CONSTANTS from '@config/constants';
+import CONSTANTS from '@/config/constants';
 import Cookies from 'universal-cookie';
-import createDes from '@core/createDes';
+import createDes from '@/core/createDes';
 import md5 from 'md5';
 
 const ENV = {
