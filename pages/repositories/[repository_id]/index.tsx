@@ -1,5 +1,5 @@
 import { Button, EditableText, H1, H5 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
+import { compose, createMany } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
@@ -7,7 +7,7 @@ import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
-import { repo } from '@/helpers/_to_rm_page-props';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
@@ -20,8 +20,16 @@ const ModDashBoard = styled.div`
   margin-bottom: 36px;
 `;
 
-export default composePageProps(repo)(() => {
-  const { repo } = usePageProps<{ repo: Repository }>();
+const defaultRepo = {
+  modules: [],
+};
+
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+});
+
+export default compose(pageProps)(() => {
+  const repo = pageProps.use<Repository>('repo') || defaultRepo;
   const router = useRouter();
   return (
     <Page backgroundColor="#fff">

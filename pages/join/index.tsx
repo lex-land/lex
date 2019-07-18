@@ -1,5 +1,5 @@
 import { Button, NavbarGroup } from '@blueprintjs/core';
-import { PagePropsMap, compose, redirect } from '@/shared/PageProps';
+import { compose, redirect } from '@/shared/PageProps';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { Page } from '@/components/Page';
@@ -16,9 +16,9 @@ const defaultValue = {
   password: '',
 };
 
-const pageProps: PagePropsMap = [redirect('/').when(unauthorized)];
+const guard = [redirect('/').when(unauthorized)];
 
-export default compose(pageProps)(() => {
+export default compose(guard)(() => {
   const router = useRouter();
 
   const onRegisterSuccess = async (values: typeof defaultValue) => {

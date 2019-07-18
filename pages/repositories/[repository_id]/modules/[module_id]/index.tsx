@@ -1,6 +1,5 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
-import { mod, repo } from '@/helpers/_to_rm_page-props';
+import { compose, createMany } from '@/shared/PageProps';
 import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
@@ -10,6 +9,7 @@ import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
@@ -32,9 +32,14 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-export default composePageProps(repo, mod)(() => {
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  mods: entityContext('module').find(),
+});
+
+export default compose(pageProps)(() => {
   const router = useRouter();
-  const { repo, mod } = usePageProps<PageProps>();
+  const { repo, mod } = pageProps.use<PageProps>();
   const { value: modInfo, setValue: changeModInfo } = useEntity(mod, newMod =>
     throttledUpdateMod(newMod.id, newMod),
   );

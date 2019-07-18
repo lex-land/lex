@@ -1,19 +1,25 @@
 import { Callout, H1, MenuItem } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
-import { repo, user } from '@/helpers/_to_rm_page-props';
+import { compose, createMany } from '@/shared/PageProps';
 import { Flex } from '@/shared/Flex';
 import { MultiSelect } from '@blueprintjs/select';
 import { Page } from '@/components/Page';
 import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
 import { User } from '@/interfaces/User';
+import { entityContext } from '@/helpers/entityContext';
 import httpUtil from '@/shared/httpUtil';
 
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
-export default composePageProps(repo, user.all, user.session)(() => {
-  const { repo, allUsers: users, session } = usePageProps<{
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  allUsers: entityContext('user').find(),
+  session: entityContext('session').find('user'),
+});
+
+export default compose(pageProps)(() => {
+  const { repo, allUsers: users, session } = pageProps.use<{
     repo: Repository;
     allUsers: User[];
     session: User;

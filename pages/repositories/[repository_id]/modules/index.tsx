@@ -1,6 +1,5 @@
 import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
-import { mods, repo } from '@/helpers/_to_rm_page-props';
+import { compose, createMany } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
@@ -8,6 +7,7 @@ import { Module } from '@/interfaces/Module';
 import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 import { throttledUpdateEntityFn } from '@/shared/entityUtil';
 import { useRouter } from 'next/router';
@@ -25,8 +25,13 @@ const AlignLeftTable = styled(HTMLTable)`
   }
 `;
 
-export default composePageProps(repo, mods)(() => {
-  const { mods } = usePageProps<{ mods: Module[] }>();
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  mods: entityContext('module').find(),
+});
+
+export default compose(pageProps)(() => {
+  const { mods } = pageProps.use<{ mods: Module[] }>();
   const router = useRouter();
   return (
     <Page backgroundColor="#fff">

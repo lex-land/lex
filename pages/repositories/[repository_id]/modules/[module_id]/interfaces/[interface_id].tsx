@@ -6,8 +6,7 @@ import {
   HTMLSelect,
   Popover,
 } from '@blueprintjs/core';
-import { composePageProps, usePageProps } from '@/shared/PageProps';
-import { inte, repo } from '@/helpers/_to_rm_page-props';
+import { compose, createMany } from '@/shared/PageProps';
 import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
 import { Flex } from '@/shared/Flex';
 import { Inte } from '@/components/_to_rm_domains/inte';
@@ -15,6 +14,7 @@ import { Interface } from '@/interfaces/Interface';
 import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
+import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 
 export const throttledUpdateInte = throttledUpdateEntityFn('interface');
@@ -23,8 +23,13 @@ const RequestURL = styled.code`
   font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 `;
 
-export default composePageProps(repo, inte)(() => {
-  const { inte } = usePageProps<{ inte: Interface }>();
+const pageProps = createMany({
+  repo: entityContext('repository').findOne(),
+  mods: entityContext('module').find(),
+});
+
+export default compose(pageProps)(() => {
+  const { inte } = pageProps.use<{ inte: Interface }>();
   const { value: inteInfo, setValue: changeInteInfo } = useEntity(
     inte,
     newMod => throttledUpdateInte(inte.id, newMod),

@@ -1,15 +1,17 @@
 import { Button, Divider, H5 } from '@blueprintjs/core';
-import { PagePropsMap, compose, redirect } from '@/shared/PageProps';
+import { compose, createMany, redirect } from '@/shared/PageProps';
 import { DashboardNavlist } from '@/components/DashboardNavlist';
 import { DashboardSwitcher } from '@/components/DashboardSwitcher';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import { Page } from '@/components/Page';
 import React from 'react';
+import { entityContext } from '@/helpers/entityContext';
 
-const pageProps: PagePropsMap = [
-  redirect('/login').whenNot(ctx => ctx.tokenUtil.get()),
-];
+const guard = [redirect('/login').whenNot(ctx => ctx.tokenUtil.get())];
+const pageProps = createMany({
+  session: entityContext('session').find('user'),
+});
 
 const defaultUser = {
   fullname: '-',
@@ -19,8 +21,11 @@ const defaultUser = {
   joinedRepositories: [],
 };
 
-export default compose(pageProps)(() => {
-  const session = defaultUser;
+export default compose(
+  guard,
+  pageProps,
+)(() => {
+  const session = pageProps.use('session') || defaultUser;
   const name = session.fullname;
   const repos = session.ownedRepositories.concat(session.joinedRepositories);
 

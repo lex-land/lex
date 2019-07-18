@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { flatMapDeep, mapValues } from 'lodash';
 import { AppContext } from 'next/app';
 import { NextPageContext } from 'next';
 
@@ -28,7 +29,7 @@ export const composePageProps = (...funcs: any[]) => (Component: any) => {
   Component.displayName = `ComposedPage`;
   Component.getInitialProps = async (ctx: NextPageContext | AppContext) => {
     let props = (orig && (await orig(ctx))) || {};
-    const promises = funcs.map(async fn => await fn(ctx));
+    const promises = flatMapDeep(funcs).map(async fn => await fn(ctx));
     const newProps = await Promise.all(promises);
     newProps.forEach(prop => {
       props = { ...props, ...prop };
@@ -41,8 +42,7 @@ export const composePageProps = (...funcs: any[]) => (Component: any) => {
 export type PagePropsMap<T = any> = createPagePropsFn<T>[];
 export type AppPropsMap<T = any> = createAppPropsFn<T>[];
 
-export const compose = <T>(fns: PagePropsMap<T> | AppPropsMap<T>) =>
-  composePageProps(...fns);
+export const compose = composePageProps;
 
 export const redirect = (path: string) => ({
   when: (condition: createBooleanFn) => async (ctx: any) => {
@@ -54,3 +54,21 @@ export const redirect = (path: string) => ({
     return {};
   },
 });
+
+// TODO: 类型定义
+export const createMany = (obj: any) => {
+  return Object.assign(
+    async (ctx: NextPageContext) => {
+      const values = await Promise.all(
+        Object.values(obj).map((fn: any) => fn(ctx)),
+      );
+      return mapValues(obj, (fn, key) => {
+        const index = Object.keys(obj).findIndex(i => i === key);
+        return values[index];
+      });
+    },
+    {
+      use: usePageProps,
+    },
+  );
+};
