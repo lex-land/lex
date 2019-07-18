@@ -9,14 +9,14 @@ function reportError(_error: any) {
 
 // fetch异常
 const onUnhandledrejection = (e: any) => {
-  if (process.env.SUNMI_ENV === 'pub') {
+  if (process.env.NODE_ENV === 'production') {
     reportError(e);
     e.preventDefault();
   }
 };
 
 const onWindowError = (e: any) => {
-  if (process.env.SUNMI_ENV === 'pub') {
+  if (process.env.NODE_ENV === 'production') {
     reportError(e);
     e.preventDefault();
   }

@@ -23,8 +23,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - SUNMI_PROD_URL=https://lex-server:3001
-      - SUNMI_ENV=master
+      - PROD_URL=https://lex-server:3001
       - BUILD_TAG
     command: npx next start
     ports:
@@ -41,8 +40,6 @@ services:
       - MYSQL_DATABASE=Lex
       - NODE_ENV=production
       - PORT=3001
-      - SUNMI_PROD_URL=https://lex-land.online
-      - SUNMI_ENV=master
     links:
       - lex-mysql
     depends_on:
