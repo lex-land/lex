@@ -49,7 +49,7 @@ class MyDocument extends Document {
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <meta
             httpEquiv="Content-Security-Policy"
-            content="default-src 'self' 'unsafe-inline'; img-src *; style-src-elem 'unsafe-inline' https://unpkg.com; font-src *; connect-src localhost:3000 localhost:3001 https://lex-land.cloud"
+            content="default-src 'self' 'unsafe-inline'; img-src *; style-src-elem 'self' 'unsafe-inline' https://unpkg.com; font-src *; connect-src 'self' localhost:3001 https://lex-land.cloud"
           />
           <meta
             name="description"
