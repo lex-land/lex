@@ -34,17 +34,13 @@ npm run start:dev
 成功运行开发环境后
 
 - 查看 [http://localhost:3000](http://localhost:3000)
+- 查看 [http://localhost:3001](http://localhost:3001)，可以访问 API
 - 查看 [http://localhost:8080](http://localhost:8080)，可以进入 phpmyadmin 进行数据库管理
 
-## Deploy
+## Docker
 
-```shell
-
-# 目标机器按照nodejs
-# https://github.com/nodesource/distributions/blob/master/README.md
-
-npm run deploy
-```
+- [lexland/lex](https://cloud.docker.com/u/lexland/repository/docker/lexland/lex)
+- [lexland/lex-server](https://cloud.docker.com/u/lexland/repository/docker/lexland/lex-server)
 
 ## Roadmap
 
@@ -53,11 +49,12 @@ npm run deploy
   - [x] 使用一个更酷的名字代替 rap, 它叫[Lex](https://zh.wikipedia.org/wiki/%E9%9B%B7%E5%85%8B%E6%96%AF%C2%B7%E8%B7%AF%E7%91%9F)
   - [x] 重新设计 logo
 - [ ] Tech/Arch
-  - [x] 使用 nestjs 代替 koa
+  - [x] 使用 nestjs 代替 koa, 使用 Next 9
   - [x] 使用 nextjs 作为写 React 的姿势，代替 create-react-app
   - [x] 使用 typeorm 代替 sequelize-typescript
   - [x] 轻状态管理，使用 hooks 进行状态逻辑复用
   - [x] 使用 styled-component 进行组件样式重构，移除已有 less
+  - [x] 前后端拆分， 服务端项目为[lex-server](https://github.com/lex-land/lex-server) 
   - [ ] 不断优化 helpers、components、core、pages 之间的关系
 - [ ] Pruduct
   - [ ] 完成与 Rap 的功能
@@ -70,10 +67,12 @@ npm run deploy
       - [x] repo/new 页
         - [ ] 添加从 Rap2 迁移功能，方便用户从 Rap2 迁移至 Lex
           - [x] 新增从 JSON 创建仓库
-      - [x] repo/show 页
+      - [x] repo/[repo_id] 页
       - [x] repo/modules 页
       - [ ] repo/settings 页
+        - [x] 仓库删除功能
       - [ ] repo/members 页
+        - [x] 成员的新增和删除
       - [ ] 添加仓库 Wiki
         - [ ] 添加接口操作日志
         - [ ] 添加 mock 数据和接口数据的匹配
@@ -84,6 +83,7 @@ npm run deploy
       - [ ] 添加用户角色，前端、后端、测试
     - [ ] orgs 页
     - [ ] settings 页
+    - [ ] 权限
 - [ ] CI/CD
   - [x] 使用 docker 运行项目的开发环境，为部署做无缝衔接
   - [x] 使用 docker 运行项目的生产环境
