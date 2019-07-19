@@ -11,14 +11,14 @@ import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
 import { Flex } from '@/shared/Flex';
 import { Inte } from '@/components/_to_rm_domains/inte';
 import { Interface } from '@/interfaces/Interface';
+import { LogList } from '@/components/LogList';
 import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
+import { StatusCodeTable } from '@/components/StatusCodeTable';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 
-// TODO:
-// console.log(1);
 export const throttledUpdateInte = throttledUpdateEntityFn('interface');
 
 const RequestURL = styled.code`
@@ -120,9 +120,11 @@ export default compose(pageProps)(() => {
                 </div>
                 <div id="错误码" style={{ padding: '40px 0' }}>
                   <H4>错误码</H4>
+                  <StatusCodeTable />
                 </div>
                 <div id="操作日志" style={{ padding: '40px 0' }}>
                   <H4>操作日志</H4>
+                  <LogList />
                 </div>
               </Flex.Auto>
               <Inte.Scrollspy
