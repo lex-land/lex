@@ -13,6 +13,7 @@ import {
   Position,
 } from '@blueprintjs/core';
 import React, { Fragment } from 'react';
+import Link from 'next/link';
 import { Logo } from './Logo';
 import { logout } from '@/helpers/logout';
 
@@ -55,7 +56,9 @@ export const PageNavbar = ({
             >
               <Button minimal icon="help" />
             </Popover>
-            <AnchorButton href="/notifications" minimal icon="notifications" />
+            <Link href="/notifications">
+              <AnchorButton minimal icon="notifications" />
+            </Link>
             <Popover
               content={
                 <Menu>
@@ -64,17 +67,25 @@ export const PageNavbar = ({
                       Signed in as {user.fullname}
                     </h6>
                   </li>
-                  <MenuItem
-                    text="Your profile"
-                    href={`/users/${user.fullname}`}
-                  />
-                  <MenuItem
-                    text="Your repositories"
-                    href={`/users/${user.fullname}/repositories`}
-                  />
+                  <Link
+                    href={`/users/[user_id]`}
+                    as={`/users/${user.fullname}`}
+                  >
+                    <MenuItem text="Your profile" />
+                  </Link>
+                  <Link
+                    href={`/users/[user_id]/repositories`}
+                    as={`/users/${user.fullname}/repositories`}
+                  >
+                    <MenuItem text="Your repositories" />
+                  </Link>
                   <MenuDivider />
-                  <MenuItem text="Settings" href={`/settings`} />
-                  <MenuItem text="Sign out" onClick={logout} href="/login" />
+                  <Link href={`/settings`}>
+                    <MenuItem text="Settings" />
+                  </Link>
+                  <Link href="/login">
+                    <MenuItem text="Sign out" onClick={logout} />
+                  </Link>
                 </Menu>
               }
               position={Position.BOTTOM_RIGHT}
