@@ -29,7 +29,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            ssh $SSH_USER@$SSH_HOST "docker-compose pull && docker-compose down --remove-orphans && docker-compose up -d"
+            ssh $SSH_USER@$SSH_HOST "docker-compose pull && docker stack deploy --compose-file docker-compose.yml lex"
 
 workflows:
   version: 2
