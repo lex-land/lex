@@ -11,7 +11,7 @@ export function usePageProps<T = any>(propName?: string): T {
   if (propName) {
     if (!pageProps[propName]) {
       logger.error(
-        `[usePageProps] ${propName} not found. Are you forget to compose it?`,
+        `[usePageProps] '${propName}' not found. Are you forget to compose it?`,
       );
     }
     return pageProps[propName];
