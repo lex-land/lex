@@ -1,8 +1,11 @@
 import { createAppProps, createPageProps } from '@/shared/PageProps';
 import { API_URL } from '@/config/apiUrl';
+import { Des } from './secureHelper';
 import Router from 'next/router';
+import { catchedCode } from '@/config/catchedCode';
+import { createCookieHelper } from './cookieHelper';
 import { createHttpUtil } from '@/shared/httpUtil';
-import { createTokenUtil } from '@/helpers/tokenHelper';
+import { createTokenUtil } from './tokenHelper';
 import { logger } from '@/shared/logger';
 
 export const createRedirect = createPageProps(ctx => {
@@ -23,9 +26,14 @@ export const enhancedContext = createAppProps(async appCtx => {
   const { ctx, Component } = appCtx;
   ctx.tokenUtil = createTokenUtil(ctx); // 必须放在第一个
   ctx.redirect = createRedirect(ctx);
+  ctx.cookieHelper = createCookieHelper(ctx);
   ctx.httpHelper = createHttpUtil({
     url: API_URL,
     token: ctx.tokenUtil.get(),
+    catchedCode,
+    csrfTokenFrom: async () => {
+      return Des.encrypt('lex');
+    },
   });
 
   // 初始化页面参数

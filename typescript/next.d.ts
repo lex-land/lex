@@ -18,5 +18,9 @@ declare module 'next' {
       put: <D = any>(url: string, query?: any) => Promise<D>;
       delete: <D = any>(url: string, query?: any) => Promise<D>;
     };
+    cookieHelper: {
+      get: (key: string) => any;
+      set: (key: string, value: any) => void;
+    };
   }
 }

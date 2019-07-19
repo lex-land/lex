@@ -1,7 +1,7 @@
 import { Button, Intent, Position, Toaster } from '@blueprintjs/core';
+import { KEYOF_TOKEN, createTokenUtil } from '@/helpers/tokenHelper';
 import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { createTokenUtil } from '@/helpers/tokenHelper';
 import { login } from '@/helpers/login';
 import { useRouter } from 'next/router';
 
@@ -12,11 +12,8 @@ const defaultValue = { username: '', password: '' };
 export const LoginForm = () => {
   const router = useRouter();
 
-  const onSuccess = (
-    values: typeof defaultValue,
-    json: { accessToken: string },
-  ) => {
-    tokenHelper.set(json.accessToken);
+  const onSuccess = (values: typeof defaultValue, json: any) => {
+    tokenHelper.set(json[KEYOF_TOKEN]);
     Toaster.create({ position: Position.TOP_RIGHT }).show({
       intent: Intent.SUCCESS,
       message: '登录成功',
