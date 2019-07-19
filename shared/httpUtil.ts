@@ -11,12 +11,13 @@ const defaultHttpHelperOption = {
   url: '',
   token: '',
   catchedCode: [404],
+  csrfTokenFrom: async () => '',
 };
 
 type createHttpHelperOption = Partial<typeof defaultHttpHelperOption>;
 
 export const createHttpUtil = (createOption: createHttpHelperOption) => {
-  const { url, token, catchedCode } = {
+  const { url, token, catchedCode, csrfTokenFrom } = {
     ...defaultHttpHelperOption,
     ...createOption,
   };
@@ -26,6 +27,7 @@ export const createHttpUtil = (createOption: createHttpHelperOption) => {
       const { fullUrl, opt } = resolve(api, {
         headers: {
           'Content-Type': 'application/json',
+          'CSRF-Token': await csrfTokenFrom(),
           Authorization: token,
         },
         body: JSON.stringify(body),
