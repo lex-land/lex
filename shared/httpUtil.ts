@@ -20,7 +20,7 @@ const createFetch = (resolve: createFetchResolver) => {
     }
 
     logger.info(`[ ${opt.method} ] ${fullUrl} fetching...`);
-    const result = await fetch(fullUrl, opt);
+    const result = await fetch(encodeURI(fullUrl), opt);
 
     const json = await result.clone().json();
     logger.info(`[ ${opt.method} ] ${fullUrl} fetched`, json);
