@@ -48,6 +48,10 @@ class MyDocument extends Document {
           <link href="/static/stylesheets/main.css" rel="stylesheet" />
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <meta
+            httpEquiv="Content-Security-Policy"
+            content="default-src 'self' 'unsafe-inline'; img-src *; style-src-elem 'unsafe-inline' https://unpkg.com; font-src *; connect-src localhost:3000 localhost:3001 https://lex-land.cloud"
+          />
+          <meta
             name="description"
             content="A Collaboration Tool for API documentation"
           />
