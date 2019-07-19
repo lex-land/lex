@@ -10,6 +10,7 @@ services:
       - MYSQL_USERNAME=root
       - MYSQL_PASSWD=123456
       - MYSQL_DATABASE=Lex
+      - NODE_ENV=development
       - PORT=3001
     links:
       - lex-mysql
