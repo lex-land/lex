@@ -1,7 +1,7 @@
 import { NextPageContext } from 'next';
 import { createCookieHelper } from './cookieHelper';
 
-const KEYOF_TOKEN = 'KEYOF_TOKEN';
+export const KEYOF_TOKEN = process.env.KEYOF_TOKEN || 'ACCESS_TOKEN';
 
 export const createTokenUtil = (ctx?: NextPageContext) => {
   return {

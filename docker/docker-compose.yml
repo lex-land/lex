@@ -22,6 +22,8 @@ services:
     image: lexland/lex:latest
     environment:
       - NODE_ENV=production
+      # 必须和lex-server内环境变量设置为一致的名称
+      - KEYOF_TOKEN=ACCESS_TOKEN
       - PROD_API_URL=https://lex-land.cloud
       - BUILD_TAG
     command: npx next start
