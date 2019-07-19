@@ -45,7 +45,8 @@ export default compose(
           <DashboardNavlist
             icon="git-repo"
             dataSource={repos}
-            itemHref={record => `/repositories/${record.id}`}
+            itemHref="/repositories/[repository_id]"
+            itemAs={record => `/repositories/${record.id}`}
           />
         </Page.Sider>
         <Page.Content>

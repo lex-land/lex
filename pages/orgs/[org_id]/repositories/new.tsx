@@ -11,7 +11,7 @@ const formDefaultValues = { name: '', description: '' };
 const createRepository = createEntityFn('repository');
 
 const pageProps = createMany({
-  org: entityContext('organization').findOne(),
+  org: entityContext('organization').findOne('org_id'),
 });
 
 export default compose(pageProps)(() => {

@@ -4,6 +4,7 @@ import { CURD } from '@/components/CURD';
 import { DashboardNavlist } from '@/components/DashboardNavlist';
 import { DashboardSwitcher } from '@/components/DashboardSwitcher';
 import { Flex } from '@/shared/Flex';
+import Link from 'next/link';
 import { Organization } from '@/interfaces/Organization';
 import { Page } from '@/components/Page';
 import React from 'react';
@@ -11,11 +12,11 @@ import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
 
 const pageProps = createMany({
-  org: entityContext('organization').findOne(),
+  org: entityContext('organization').findOne('org_id'),
 });
 
 export default compose(pageProps)(() => {
-  const { org } = pageProps.use<{ org: Organization }>();
+  const org = pageProps.use<Organization>('org');
   const router = useRouter();
   return (
     <Page>
@@ -26,17 +27,18 @@ export default compose(pageProps)(() => {
           <Divider />
           <Flex align="center" justify="space-between">
             <H5 style={{ marginBottom: 0 }}>仓库</H5>
-            <AnchorButton
-              icon="git-repo"
-              intent="success"
-              href={`/orgs/${org.name}/repositories/new`}
-              text="新增"
-            />
+            <Link
+              href={`/orgs/[org_id]/repositories/new`}
+              as={`/orgs/${org.name}/repositories/new`}
+            >
+              <Button icon="git-repo" intent="success" text="新增" />
+            </Link>
           </Flex>
           <DashboardNavlist
             icon="git-repo"
             dataSource={org.repositories}
-            itemHref={record => `/repositories/${record.id}`}
+            itemHref="/repositories/[repository_id]"
+            itemAs={record => `/repositories/${record.id}`}
           />
         </Page.Sider>
         <Flex.Auto>
