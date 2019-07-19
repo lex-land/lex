@@ -12,10 +12,13 @@ import {
   Popover,
   Position,
 } from '@blueprintjs/core';
-import React, { Fragment } from 'react';
 import Link from 'next/link';
 import { Logo } from './Logo';
+import React from 'react';
+import { User } from '@/interfaces/User';
+import httpHelper from '@/helpers/httpHelper';
 import { logout } from '@/helpers/logout';
+import { useAsyncFn } from 'react-use';
 
 export const PageNavbar = ({
   children,
@@ -24,11 +27,15 @@ export const PageNavbar = ({
   className?: string;
   children?: React.ReactNode;
 }) => {
-  const user = Object.assign({ fullname: '-' });
+  const [{ value: sessionUser, loading }, fetchSession] = useAsyncFn(() =>
+    httpHelper.get<User>(`/api/session`),
+  );
+  const user = sessionUser || { fullname: '' };
+  const info = user.fullname ? `Signed in as ${user.fullname}` : `checking...`;
   return (
-    <Navbar className={Classes.DARK + ' ' + className}>
+    <Navbar className={`${Classes.DARK} ${className}`}>
       {children || (
-        <Fragment>
+        <>
           <NavbarGroup align={Alignment.LEFT}>
             <NavbarHeading>
               <Logo size={36} />
@@ -63,37 +70,40 @@ export const PageNavbar = ({
               content={
                 <Menu>
                   <li className={Classes.MENU_HEADER}>
-                    <h6 className={Classes.HEADING}>
-                      Signed in as {user.fullname}
-                    </h6>
+                    <h6 className={Classes.HEADING}>{info}</h6>
                   </li>
                   <Link
                     href={`/users/[user_id]`}
                     as={`/users/${user.fullname}`}
                   >
-                    <MenuItem text="Your profile" />
+                    <MenuItem disabled={loading} text="Your profile" />
                   </Link>
                   <Link
                     href={`/users/[user_id]/repositories`}
                     as={`/users/${user.fullname}/repositories`}
                   >
-                    <MenuItem text="Your repositories" />
+                    <MenuItem disabled={loading} text="Your repositories" />
                   </Link>
                   <MenuDivider />
                   <Link href={`/settings`}>
-                    <MenuItem text="Settings" />
+                    <MenuItem disabled={loading} text="Settings" />
                   </Link>
                   <Link href="/login">
-                    <MenuItem text="Sign out" onClick={logout} />
+                    <MenuItem
+                      disabled={loading}
+                      text="Sign out"
+                      onClick={logout}
+                    />
                   </Link>
                 </Menu>
               }
+              onOpened={fetchSession}
               position={Position.BOTTOM_RIGHT}
             >
               <Button minimal icon="user" rightIcon="caret-down" />
             </Popover>
           </NavbarGroup>
-        </Fragment>
+        </>
       )}
     </Navbar>
   );
