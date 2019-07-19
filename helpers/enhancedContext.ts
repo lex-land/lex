@@ -1,6 +1,7 @@
 import { createAppProps, createPageProps } from '@/shared/PageProps';
 import { API_URL } from '@/config/apiUrl';
 import Router from 'next/router';
+import { catchedCode } from '@/config/catchedCode';
 import { createHttpUtil } from '@/shared/httpUtil';
 import { createTokenUtil } from '@/helpers/tokenHelper';
 import { logger } from '@/shared/logger';
@@ -26,6 +27,7 @@ export const enhancedContext = createAppProps(async appCtx => {
   ctx.httpHelper = createHttpUtil({
     url: API_URL,
     token: ctx.tokenUtil.get(),
+    catchedCode,
   });
 
   // 初始化页面参数
