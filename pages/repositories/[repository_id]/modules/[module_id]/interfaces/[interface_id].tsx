@@ -7,7 +7,7 @@ import {
   Popover,
 } from '@blueprintjs/core';
 import { compose, createMany } from '@/shared/PageProps';
-import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
+import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
 import { Flex } from '@/shared/Flex';
 import { Inte } from '@/components/_to_rm_domains/inte';
 import { Interface } from '@/interfaces/Interface';
@@ -17,6 +17,8 @@ import { Repo } from '@/components/_to_rm_domains/repo';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 
+// TODO:
+// console.log(1);
 export const throttledUpdateInte = throttledUpdateEntityFn('interface');
 
 const RequestURL = styled.code`
@@ -32,7 +34,7 @@ export default compose(pageProps)(() => {
   const { inte } = pageProps.use<{ inte: Interface }>();
   const { value: inteInfo, setValue: changeInteInfo } = useEntity(
     inte,
-    newMod => throttledUpdateInte(inte.id, newMod),
+    newValue => throttledUpdateInte(inte.id, newValue),
   );
   return (
     <Page backgroundColor="#fff">

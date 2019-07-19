@@ -1,8 +1,8 @@
 // import 'moment/locale/zh-cn';
 // import moment from 'moment';
-// moment.locale('zh-cn');
 import { logger } from '@/shared/logger';
 
+// moment.locale('zh-cn');
 function reportError(_error: any) {
   logger.error(_error);
 }

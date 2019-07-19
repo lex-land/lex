@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 import { FormikProps } from 'formik';
 import { LexContent } from '@/components/Layout';
 import { QuickForm } from '@/shared/QuickForm';
-import httpUtil from '@/shared/httpUtil';
+import httpHelper from '@/helpers/httpHelper';
 
 interface CurdButtonProps {
   action: string;
@@ -60,7 +60,7 @@ const CreateButton = ({
         <LexContent>
           <QuickForm
             defaultValue={defaultValue}
-            action={values => httpUtil.post(action, { ...values, ...params })}
+            action={values => httpHelper.post(action, { ...values, ...params })}
             success={onSuccess}
             render={render}
             button={
@@ -105,7 +105,7 @@ const EditButton = ({
         <LexContent>
           <QuickForm
             defaultValue={value}
-            action={values => httpUtil.put(action, { ...values, ...params })}
+            action={values => httpHelper.put(action, { ...values, ...params })}
             success={handleSubmit}
           />
         </LexContent>
@@ -132,7 +132,7 @@ const DeleteButton = ({
 
   const handleDelete = async () => {
     try {
-      const result = await httpUtil.delete(action);
+      const result = await httpHelper.delete(action);
       success && success({}, result);
     } catch (error) {}
     afterDelete();

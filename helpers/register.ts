@@ -1,4 +1,4 @@
-import { createEntityFn } from '@/shared/entityUtil';
+import { createEntityFn } from '@/helpers/entityHelper';
 import { flow } from 'lodash';
 import { passwdTransfer } from './passwdTransfer';
 

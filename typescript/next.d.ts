@@ -12,7 +12,7 @@ declare module 'next' {
       get: () => any;
       clear: () => void;
     };
-    httpUtil: {
+    httpHelper: {
       get: <D = any>(url: string, query?: any) => Promise<D>;
       post: <D = any>(url: string, query?: any) => Promise<D>;
       put: <D = any>(url: string, query?: any) => Promise<D>;

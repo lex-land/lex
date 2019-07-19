@@ -5,7 +5,7 @@ import {
   createEntityFn,
   deleteEntityFn,
   throttledUpdateEntityFn,
-} from '@/shared/entityUtil';
+} from '@/helpers/entityHelper';
 import { EditableRow } from './editable-row';
 import { Interface } from '@/interfaces/Interface';
 import { Property } from '@/interfaces/property';
@@ -92,6 +92,7 @@ const initialProp = {
   default: '点击我编辑',
 };
 
+// console.log(2);
 const throttledUpdateProp = throttledUpdateEntityFn('property');
 const createProperty = createEntityFn('property');
 const deleteProperty = deleteEntityFn('property');
@@ -153,7 +154,7 @@ export const TreeEditor = (props: TreeEditorProps) => {
       depth,
       children,
     };
-    propSchema.isValid(newRow) && throttledUpdateProp(newRow);
+    propSchema.isValid(newRow) && throttledUpdateProp(newRow.id, newRow);
     setRows(newRows);
   };
 

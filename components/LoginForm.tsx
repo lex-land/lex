@@ -1,7 +1,7 @@
 import { Button, Intent, Position, Toaster } from '@blueprintjs/core';
 import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { createTokenUtil } from '@/shared/tokenUtil';
+import { createTokenUtil } from '@/helpers/tokenHelper';
 import { login } from '@/helpers/login';
 import { useRouter } from 'next/router';
 

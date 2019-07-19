@@ -10,7 +10,7 @@ import {
 import React, { useState } from 'react';
 import { Flex } from '@/shared/Flex';
 import { Page } from '@/components/Page';
-import httpUtil from '@/shared/httpUtil';
+import httpHelper from '@/helpers/httpHelper';
 import { useRouter } from 'next/router';
 
 export default () => {
@@ -19,8 +19,8 @@ export default () => {
   const router = useRouter();
   const handleSubmit = async () => {
     setLoading(true);
-    await httpUtil.post('/api/migration/user', JSON.parse(repo));
-    await httpUtil.post('/api/migration/org', JSON.parse(repo));
+    await httpHelper.post('/api/migration/user', JSON.parse(repo));
+    await httpHelper.post('/api/migration/org', JSON.parse(repo));
     router.replace('/');
     Toaster.create({ position: Position.TOP }).show({
       icon: 'tick',

@@ -1,6 +1,6 @@
 import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
 import { compose, createMany } from '@/shared/PageProps';
-import { throttledUpdateEntityFn, useEntity } from '@/shared/entityUtil';
+import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';

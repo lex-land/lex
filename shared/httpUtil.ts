@@ -1,58 +1,67 @@
-import { createTokenUtil } from './tokenUtil';
 import fetch from 'isomorphic-fetch';
 import { logger } from './logger';
-import qs from 'qs';
 
-const defaultOption = {
-  url: process.env.PROD_API_URL || 'http://localhost:3001',
+type createFetchResolver = (
+  api: string,
+  requestInit: any,
+) => { fullUrl: string; opt: any };
+
+const createFetch = (resolve: createFetchResolver) => {
+  return async function<D = any>(api: string, body: any = {}): Promise<D> {
+    const { fullUrl, opt } = resolve(api, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!opt.headers.Authorization) {
+      delete opt.headers.Authorization;
+    }
+
+    logger.info(`[ ${opt.method} ] ${fullUrl} fetching...`);
+    const result = await fetch(fullUrl, opt);
+
+    const json = await result.clone().json();
+    logger.info(`[ ${opt.method} ] ${fullUrl} fetched`, json);
+    return json;
+  };
+};
+
+const defaultHttpHelperOption = {
+  url: '',
   token: '',
 };
 
-type createHttpUtilOption = Partial<typeof defaultOption>;
+type createHttpHelperOption = Partial<typeof defaultHttpHelperOption>;
 
-export const createHttpUtil = (
-  createOption: createHttpUtilOption = defaultOption,
-) => {
-  const { url, token } = { ...defaultOption, ...createOption };
-
-  const createFetch = (method: string) =>
-    async function<D = any>(api: string, body: any = {}): Promise<D> {
-      const opt = {
-        method,
-        body: JSON.stringify(body),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        } as any,
-      };
-
-      const IS_GET = method === 'GET';
-
-      if (!opt.headers.Authorization) {
-        delete opt.headers.Authorization;
-      }
-      if (IS_GET) {
-        delete opt.body;
-      }
-
-      const reqUrl = `${url}${api}`;
-      const fullUrl = IS_GET ? `${reqUrl}?${qs.stringify(body)}` : reqUrl;
-
-      // 处理参数params
-      logger.info(`[ ${opt.method} ] ${fullUrl} fetching...`);
-      const result = await fetch(fullUrl, opt);
-      const json = await result.clone().json();
-
-      logger.info(`[ ${opt.method} ] ${fullUrl} fetched`, json);
-      return json;
-    };
-
+export const createHttpUtil = (createOption: createHttpHelperOption) => {
+  const { url, token } = { ...defaultHttpHelperOption, ...createOption };
   return {
-    get: createFetch('GET'),
-    post: createFetch('POST'),
-    put: createFetch('PUT'),
-    delete: createFetch('DELETE'),
+    get: createFetch((fullUrl, opt) => {
+      delete opt.body;
+      opt.method = 'GET';
+      opt.headers.Authorization = token;
+      fullUrl = `${url}${fullUrl}`;
+      return { fullUrl, opt };
+    }),
+    post: createFetch((fullUrl, opt) => {
+      opt.method = 'POST';
+      fullUrl = `${url}${fullUrl}`;
+      opt.headers.Authorization = token;
+      return { fullUrl, opt };
+    }),
+    put: createFetch((fullUrl, opt) => {
+      opt.method = 'PUT';
+      opt.headers.Authorization = token;
+      fullUrl = `${url}${fullUrl}`;
+      return { fullUrl, opt };
+    }),
+    delete: createFetch((fullUrl, opt) => {
+      opt.method = 'DELETE';
+      fullUrl = `${url}${fullUrl}`;
+      opt.headers.Authorization = token;
+      return { fullUrl, opt };
+    }),
   };
 };
-const httpUtil = createHttpUtil({ token: createTokenUtil().get() });
-export default httpUtil;

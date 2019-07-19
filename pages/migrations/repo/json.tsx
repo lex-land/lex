@@ -12,7 +12,7 @@ import {
 import React, { useState } from 'react';
 import { Flex } from '@/shared/Flex';
 import { Page } from '@/components/Page';
-import httpUtil from '@/shared/httpUtil';
+import httpHelper from '@/helpers/httpHelper';
 import repoSample from './data/repo.sample.json';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -33,7 +33,7 @@ export default () => {
         icon: 'swap-horizontal',
         message: <ToastProgressBar intent="primary" />,
       });
-      const repoRes = await httpUtil.post(
+      const repoRes = await httpHelper.post(
         '/api/migration/repo',
         JSON.parse(repo),
       );

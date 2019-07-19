@@ -3,7 +3,7 @@ import { H1 } from '@blueprintjs/core';
 import { Page } from '@/components/Page';
 import { QuickForm } from '@/shared/QuickForm';
 import React from 'react';
-import { createEntityFn } from '@/shared/entityUtil';
+import { createEntityFn } from '@/helpers/entityHelper';
 import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
 

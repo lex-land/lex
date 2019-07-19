@@ -9,7 +9,7 @@ import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
-import { throttledUpdateEntityFn } from '@/shared/entityUtil';
+import { throttledUpdateEntityFn } from '@/helpers/entityHelper';
 import { useRouter } from 'next/router';
 
 const throttledUpdateMod = throttledUpdateEntityFn('module');

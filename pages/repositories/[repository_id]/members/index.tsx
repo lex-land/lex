@@ -8,7 +8,7 @@ import { Repo } from '@/components/_to_rm_domains/repo';
 import { Repository } from '@/interfaces/Repository';
 import { User } from '@/interfaces/User';
 import { entityContext } from '@/helpers/entityContext';
-import httpUtil from '@/shared/httpUtil';
+import httpHelper from '@/helpers/httpHelper';
 
 const MemberMultiSelect = MultiSelect.ofType<any>();
 
@@ -66,19 +66,19 @@ export default compose(pageProps)(() => {
                     selectedItems.findIndex(i => i.id === item.id),
                     1,
                   );
-                  httpUtil.delete(`/api/repository/${repo.id}/members`, item);
+                  httpHelper.delete(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 } else {
                   // add
                   selectedItems.push(item);
-                  httpUtil.post(`/api/repository/${repo.id}/members`, item);
+                  httpHelper.post(`/api/repository/${repo.id}/members`, item);
                   setSelectedItems([...selectedItems]);
                 }
               }}
               tagRenderer={item => item.name}
               tagInputProps={{
                 onRemove: (item, index) => {
-                  httpUtil.delete(
+                  httpHelper.delete(
                     `/api/repository/${repo.id}/members`,
                     selectedItems[index],
                   );

@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
-import { Des } from './Des';
+import { Des } from './secureHelper';
 
-export const createCookieUtil = (ctx: any = {}) => {
+export const createCookieHelper = (ctx: any = {}) => {
   const cookie = ctx.req ? new Cookies(ctx.req.headers.cookie) : new Cookies();
   return {
     get: (key: string) => {
