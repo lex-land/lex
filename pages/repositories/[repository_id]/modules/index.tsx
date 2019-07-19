@@ -1,5 +1,6 @@
-import { Button, EditableText, H1, HTMLTable, Tag } from '@blueprintjs/core';
+import { Button, EditableText, H1, Tag } from '@blueprintjs/core';
 import { compose, createMany } from '@/shared/PageProps';
+import { AlignLeftTable } from '@/components/AlignLeftTable';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
@@ -8,22 +9,10 @@ import { Page } from '@/components/Page';
 import React from 'react';
 import { Repo } from '@/components/_to_rm_domains/repo';
 import { entityContext } from '@/helpers/entityContext';
-import styled from 'styled-components';
 import { throttledUpdateEntityFn } from '@/helpers/entityHelper';
 import { useRouter } from 'next/router';
 
 const throttledUpdateMod = throttledUpdateEntityFn('module');
-
-const AlignLeftTable = styled(HTMLTable)`
-  width: 100%;
-  &.bp3-html-table td {
-    vertical-align: middle;
-  }
-  &.bp3-html-table td:first-child,
-  &.bp3-html-table th:first-child {
-    padding-left: 0;
-  }
-`;
 
 const pageProps = createMany({
   repo: entityContext('repository').findOne(),

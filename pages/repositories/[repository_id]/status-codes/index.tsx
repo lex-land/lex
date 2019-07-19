@@ -1,4 +1,5 @@
 import { compose, createMany } from '@/shared/PageProps';
+import { AlignLeftTable } from '@/components/AlignLeftTable';
 import { Flex } from '@/shared/Flex';
 import { H1 } from '@blueprintjs/core';
 import { Page } from '@/components/Page';
@@ -19,6 +20,20 @@ export default compose(pageProps)(() => {
           <Repo.Sider />
           <Page.Content>
             <H1>Status Codes</H1>
+            <AlignLeftTable>
+              <thead>
+                <tr>
+                  <th>StatusCode</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>404</td>
+                  <td>Not Found</td>
+                </tr>
+              </tbody>
+            </AlignLeftTable>
           </Page.Content>
         </Flex>
       </Repo.SubPage>
