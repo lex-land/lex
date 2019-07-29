@@ -3,7 +3,7 @@ import { Flex } from '@/shared/Flex';
 import { H1 } from '@blueprintjs/core';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { StatusCodeTable } from '@/components/StatusCodeTable';
 import { entityContext } from '@/helpers/entityContext';
 
@@ -15,15 +15,15 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <H1>Status Codes</H1>
             <StatusCodeTable />
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

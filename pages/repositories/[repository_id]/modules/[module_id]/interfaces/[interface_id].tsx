@@ -1,4 +1,5 @@
 import {
+  Button,
   Callout,
   EditableText,
   H1,
@@ -14,7 +15,7 @@ import { Interface } from '@/interfaces/Interface';
 import { LogList } from '@/components/LogList';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { StatusCodeTable } from '@/components/StatusCodeTable';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
@@ -39,9 +40,9 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <div>
               <H1>
@@ -94,6 +95,12 @@ export default compose(pageProps)(() => {
                       />
                     </RequestURL>
                   </Callout>
+                  <br />
+                  <div>
+                    <Button>
+                      <strong>Test</strong>
+                    </Button>
+                  </div>
                 </div>
                 <div id="请求参数" style={{ padding: '40px 0' }}>
                   <H4>请求参数</H4>
@@ -139,7 +146,7 @@ export default compose(pageProps)(() => {
             </Flex>
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

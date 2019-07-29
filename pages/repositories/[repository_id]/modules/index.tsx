@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Module } from '@/interfaces/Module';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { entityContext } from '@/helpers/entityContext';
 import { throttledUpdateEntityFn } from '@/helpers/entityHelper';
 import { useRouter } from 'next/router';
@@ -25,9 +25,9 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <H1>Modules</H1>
             <Page.EmberedError
@@ -65,7 +65,6 @@ export default compose(pageProps)(() => {
                     <tr>
                       <th>Name</th>
                       <th>Description</th>
-                      <th>Interfaces Num</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -73,14 +72,19 @@ export default compose(pageProps)(() => {
                     {mods.map(mod => (
                       <tr key={mod.id}>
                         <td>
-                          <Link
-                            href={`/repositories/[repository_id]/modules/[module_id]`}
-                            as={`/repositories/${router.query.repository_id}/modules/${mod.id}`}
-                          >
-                            <a>
-                              <strong>{mod.name}</strong>
-                            </a>
-                          </Link>
+                          <Flex gutter={8}>
+                            <Tag icon="application">
+                              {mod.interfaces.length}
+                            </Tag>
+                            <Link
+                              href={`/repositories/[repository_id]/modules/[module_id]`}
+                              as={`/repositories/${router.query.repository_id}/modules/${mod.id}`}
+                            >
+                              <a>
+                                <strong>{mod.name}</strong>
+                              </a>
+                            </Link>
+                          </Flex>
                         </td>
                         <td>
                           <EditableText
@@ -89,9 +93,6 @@ export default compose(pageProps)(() => {
                               throttledUpdateMod(mod.id, { description })
                             }
                           />
-                        </td>
-                        <td>
-                          <Tag>{mod.interfaces.length}个接口</Tag>
                         </td>
                         <td>
                           <CURD.Delete
@@ -122,7 +123,7 @@ export default compose(pageProps)(() => {
             </div>
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

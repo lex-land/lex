@@ -9,9 +9,13 @@ import {
   Tag,
 } from '@blueprintjs/core';
 import React, { useState } from 'react';
-import { ChildLine } from './depth-line';
 import { Flex } from '@/shared/Flex';
 import styled from 'styled-components';
+
+const ChildLine = (row: any) =>
+  row.parent ? (
+    <span style={{ color: '#ddd', marginLeft: (row.depth - 1) * 14 }}>└</span>
+  ) : null;
 
 const hasChildren = (type: string | undefined) =>
   ['Array', 'Object'].includes(type || '');
@@ -79,8 +83,8 @@ export const EditableRow = (props: any) => {
                         mergeRow({ required: e.currentTarget.checked })
                       }
                       large
-                      innerLabelChecked="必填"
-                      innerLabel="可选"
+                      innerLabelChecked="Required"
+                      innerLabel="Optional"
                     />
                   </div>
                 }
@@ -91,7 +95,7 @@ export const EditableRow = (props: any) => {
                   style={{ marginBottom: 4 }}
                   intent={row.required ? 'success' : 'none'}
                 >
-                  {row.required ? '必填' : '可选'}
+                  {row.required ? 'Required' : 'Optional'}
                 </Tag>
               </Popover>
             )}
@@ -120,7 +124,6 @@ export const EditableRow = (props: any) => {
               <EditableText
                 className="default"
                 selectAllOnFocus
-                placeholder="初始值"
                 value={row.default}
                 onChange={d => mergeRow({ default: d })}
               />
@@ -128,7 +131,7 @@ export const EditableRow = (props: any) => {
             <div>
               <Description
                 multiline
-                placeholder="描述"
+                placeholder="Description"
                 value={row.description}
                 maxLength={1000}
                 onChange={description => mergeRow({ description })}

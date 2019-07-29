@@ -4,7 +4,7 @@ import { compose, createMany } from '@/shared/PageProps';
 import { Flex } from '@/shared/Flex';
 import { MultiSelect } from '@blueprintjs/select';
 import { Page } from '@/components/Page';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { Repository } from '@/interfaces/Repository';
 import { User } from '@/interfaces/User';
 import { entityContext } from '@/helpers/entityContext';
@@ -30,9 +30,9 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <Callout intent="primary">
               {session.id === repo.owner.id
@@ -95,7 +95,7 @@ export default compose(pageProps)(() => {
             />
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

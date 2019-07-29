@@ -5,7 +5,7 @@ import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { Repository } from '@/interfaces/Repository';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
@@ -16,7 +16,7 @@ export const throttledUpdateMod = throttledUpdateEntityFn('module');
 export const throttledUpdateRepo = throttledUpdateEntityFn('repository');
 
 const ModDashBoard = styled.div`
-  width: 30%;
+  width: 33%;
   margin-bottom: 36px;
 `;
 
@@ -34,9 +34,9 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <div style={{ marginBottom: 40 }}>
               <H1>
@@ -53,7 +53,7 @@ export default compose(pageProps)(() => {
                 }
               />
             </div>
-            <Flex gutter={24}>
+            <Flex>
               {repo.modules.map(mod => (
                 <ModDashBoard key={mod.id}>
                   <H5>
@@ -106,7 +106,7 @@ export default compose(pageProps)(() => {
             />
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

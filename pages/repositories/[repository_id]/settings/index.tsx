@@ -1,10 +1,10 @@
-import { Button, H1, H4, H5 } from '@blueprintjs/core';
+import { Button, FormGroup, H3, H5, InputGroup } from '@blueprintjs/core';
 import { compose, createMany } from '@/shared/PageProps';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { Repository } from '@/interfaces/Repository';
 import { entityContext } from '@/helpers/entityContext';
 import { useRouter } from 'next/router';
@@ -19,32 +19,50 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
-            <H1>Settings</H1>
             <div style={{ marginTop: 40 }}>
-              <H4>Danger Zone</H4>
-              <H5>Transfer ownership</H5>
-              Transfer this repository to another user or to an organization
-              where you have the ability to create repositories.
-              <Button>Transfer</Button>
-              <H5>Delete this repository</H5>
-              Once you delete a repository, there is no going back. Please be
-              certain.
-              <CURD.Delete
-                alertWhen
-                success={() => router.replace(`/`)}
-                action={`/api/repository/${repo.id}`}
-                actionRenderer={({ handleClick }) => (
-                  <Button onClick={handleClick}>Delete this repository</Button>
-                )}
-              />
+              <div>
+                <H3>Settings</H3>
+                <FormGroup
+                  label="Prod URL"
+                  helperText="例如：[GET] /api/user，实际请求地址就会变成:[GET] https://<Prod URL>/api/user"
+                >
+                  <Flex gutter={8}>
+                    <InputGroup />
+                    <Button>
+                      <strong>Save</strong>
+                    </Button>
+                  </Flex>
+                </FormGroup>
+              </div>
+              <br />
+              <div>
+                <H3>Danger Zone</H3>
+                <H5>Transfer ownership</H5>
+                Transfer this repository to another user or to an organization
+                where you have the ability to create repositories.
+                <Button>Transfer</Button>
+                <H5>Delete this repository</H5>
+                Once you delete a repository, there is no going back. Please be
+                certain.
+                <CURD.Delete
+                  alertWhen
+                  success={() => router.replace(`/`)}
+                  action={`/api/repository/${repo.id}`}
+                  actionRenderer={({ handleClick }) => (
+                    <Button onClick={handleClick}>
+                      Delete this repository
+                    </Button>
+                  )}
+                />
+              </div>
             </div>
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

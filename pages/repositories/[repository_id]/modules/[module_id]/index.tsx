@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Module } from '@/interfaces/Module';
 import { Page } from '@/components/Page';
 import React from 'react';
-import { Repo } from '@/components/_to_rm_domains/repo';
+import { RepoSider } from '@/components/RepoSider';
 import { Repository } from '@/interfaces/Repository';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
@@ -46,9 +46,9 @@ export default compose(pageProps)(() => {
   return (
     <Page backgroundColor="#fff">
       <Page.Navbar />
-      <Repo.SubPage>
+      <Page.SubPage>
         <Flex>
-          <Repo.Sider />
+          <RepoSider />
           <Page.Content>
             <div style={{ marginBottom: 40 }}>
               <H1>
@@ -69,6 +69,7 @@ export default compose(pageProps)(() => {
                 <thead>
                   <tr>
                     <th>URL</th>
+                    <th>Name</th>
                     <th>Description</th>
                     <th>Actions</th>
                   </tr>
@@ -94,6 +95,14 @@ export default compose(pageProps)(() => {
                             throttledUpdateInte(inte.id, { name })
                           }
                           defaultValue={inte.name}
+                        />
+                      </td>
+                      <td>
+                        <EditableText
+                          onChange={description =>
+                            throttledUpdateInte(inte.id, { description })
+                          }
+                          defaultValue={inte.description}
                         />
                       </td>
                       <td style={{ width: 150 }}>
@@ -158,7 +167,7 @@ export default compose(pageProps)(() => {
             />
           </Page.Content>
         </Flex>
-      </Repo.SubPage>
+      </Page.SubPage>
     </Page>
   );
 });

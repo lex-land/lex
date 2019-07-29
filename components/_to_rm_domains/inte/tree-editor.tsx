@@ -1,28 +1,17 @@
 import * as Yup from 'yup';
-import { Button, HTMLTable, ITreeNode } from '@blueprintjs/core';
+import { Button, ITreeNode } from '@blueprintjs/core';
 import React, { useEffect, useState } from 'react';
 import {
   createEntityFn,
   deleteEntityFn,
   throttledUpdateEntityFn,
 } from '@/helpers/entityHelper';
+import { AlignLeftTable } from '@/components/AlignLeftTable';
 import { EditableRow } from './editable-row';
 import { Interface } from '@/interfaces/Interface';
 import { Property } from '@/interfaces/property';
 import _ from 'lodash';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
-
-const AlignLeftTable = styled(HTMLTable)`
-  width: 100%;
-  &.bp3-html-table td {
-    vertical-align: top;
-  }
-  &.bp3-html-table td:first-child,
-  &.bp3-html-table th:first-child {
-    padding-left: 0;
-  }
-`;
 
 export interface TreeState {
   nodes: ITreeNode<any>[];
@@ -92,7 +81,6 @@ const initialProp = {
   default: '点击我编辑',
 };
 
-// console.log(2);
 const throttledUpdateProp = throttledUpdateEntityFn('property');
 const createProperty = createEntityFn('property');
 const deleteProperty = deleteEntityFn('property');
@@ -100,6 +88,7 @@ const deleteProperty = deleteEntityFn('property');
 export const TreeEditor = (props: TreeEditorProps) => {
   const [rows, setRows] = useState(sortTree(props.defaultValue));
   const router = useRouter();
+
   useEffect(() => {
     setRows(sortTree(props.defaultValue));
   }, [props.defaultValue, props.inte.id]);
@@ -158,14 +147,8 @@ export const TreeEditor = (props: TreeEditorProps) => {
     setRows(newRows);
   };
 
-  const treeUtil = {
-    onAppendRootChild,
-    setRows,
-  };
-
   return (
     <div>
-      {props.header && <div>{props.header(treeUtil)}</div>}
       <AlignLeftTable>
         <thead>
           <tr>
@@ -192,13 +175,12 @@ export const TreeEditor = (props: TreeEditorProps) => {
         <Button
           minimal
           fill
-          onClick={() => treeUtil.onAppendRootChild()}
+          onClick={onAppendRootChild}
           icon="plus"
           intent="success"
           text="新增"
         />
       </div>
-      {props.footer && <div>{props.footer(treeUtil)}</div>}
     </div>
   );
 };

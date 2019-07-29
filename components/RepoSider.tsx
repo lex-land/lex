@@ -40,7 +40,7 @@ const RepoNavList = styled(UL)`
   list-style: none;
 `;
 
-const RepoSider = () => {
+export const RepoSider = () => {
   const repo = usePageProps<Repository>('repo') || {
     modules: [],
   };
@@ -199,11 +199,3 @@ const RepoSider = () => {
     </RepoSiderContainer>
   );
 };
-
-export const Repo = Object.assign(() => null, {
-  Sider: RepoSider,
-  SubPage: styled.div`
-    width: 1280px;
-    margin: 0 auto;
-  `,
-});

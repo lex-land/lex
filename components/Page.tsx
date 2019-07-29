@@ -61,6 +61,10 @@ export const Page = _.merge(
         height: 64px;
       }
     `,
+    SubPage: styled.div`
+      width: 1280px;
+      margin: 0 auto;
+    `,
     // 内容块
     Content: LexContent,
     Card: Object.assign(
