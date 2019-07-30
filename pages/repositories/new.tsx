@@ -6,10 +6,23 @@ import React from 'react';
 import { createEntityFn } from '@/helpers/entityHelper';
 import { useRouter } from 'next/router';
 
+const defaultValue = { name: '', description: '' };
+type Values = typeof defaultValue;
+
+const defaultResponse = {
+  id: '',
+};
+
+type Res = typeof defaultResponse;
+
 const createRepository = createEntityFn('repository');
+const createRepositoryFn = (value: Values) => createRepository(value);
 
 export default () => {
   const router = useRouter();
+  const onCreateRepositorySuccess = (values: Values, json: Res) =>
+    router.replace(`/repositories/[repository_id]`, `/repositories/${json.id}`);
+
   return (
     <Page>
       <Page.Navbar />
@@ -23,7 +36,8 @@ export default () => {
         <br />
         <H1>New Repository</H1>
         <QuickForm
-          action={newValue => createRepository(newValue)}
+          defaultValue={defaultValue}
+          action={createRepositoryFn}
           render={() => (
             <>
               <QuickForm.Input name="name" />
@@ -31,12 +45,7 @@ export default () => {
               <Button type="submit" intent="success" text="Create" />
             </>
           )}
-          success={(values, json) =>
-            router.replace(
-              `/repositories/[repository_id]`,
-              `/repositories/${json.id}`,
-            )
-          }
+          success={onCreateRepositorySuccess}
         />
       </Page.Content>
     </Page>

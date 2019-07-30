@@ -8,11 +8,6 @@ import { Page } from '@/components/Page';
 import React from 'react';
 import { entityContext } from '@/helpers/entityContext';
 
-const guard = [redirect('/login').whenNot(ctx => ctx.tokenUtil.get())];
-const pageProps = createMany({
-  session: entityContext('session').find('user'),
-});
-
 const defaultUser = {
   fullname: '-',
   joinedOrganizations: [],
@@ -21,13 +16,18 @@ const defaultUser = {
   joinedRepositories: [],
 };
 
+const guard = [redirect('/login').whenNot(ctx => ctx.tokenUtil.get())];
+const pageProps = createMany({
+  session: entityContext('session').find('user'),
+});
+
 export default compose(
   guard,
   pageProps,
 )(() => {
   const session = pageProps.use('session') || defaultUser;
   const name = session.fullname;
-  const repos = session.ownedRepositories.concat(session.joinedRepositories);
+  const repos = [...session.ownedRepositories, ...session.joinedRepositories];
 
   return (
     <Page>
