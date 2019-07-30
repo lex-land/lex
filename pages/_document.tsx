@@ -11,6 +11,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
+import { CSP } from '@/config/csp';
 import React from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -47,10 +48,7 @@ class MyDocument extends Document {
         <Head>
           <link href="/static/stylesheets/main.css" rel="stylesheet" />
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
-          <meta
-            httpEquiv="Content-Security-Policy"
-            content="default-src 'self' 'unsafe-inline'; img-src *; style-src-elem 'self' 'unsafe-inline' https://unpkg.com; font-src *; connect-src 'self' localhost:3001 https://lex-land.cloud"
-          />
+          <meta httpEquiv="Content-Security-Policy" content={CSP} />
           <meta
             name="description"
             content="A Collaboration Tool for API documentation"
