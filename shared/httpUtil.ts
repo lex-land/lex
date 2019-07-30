@@ -63,6 +63,10 @@ export const createHttpUtil = (createOption: createHttpHelperOption) => {
       opt.method = 'PUT';
       return { fullUrl, opt };
     }),
+    patch: createFetch((fullUrl, opt) => {
+      opt.method = 'PATCH';
+      return { fullUrl, opt };
+    }),
     delete: createFetch((fullUrl, opt) => {
       opt.method = 'DELETE';
       return { fullUrl, opt };
