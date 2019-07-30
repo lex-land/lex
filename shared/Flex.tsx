@@ -9,16 +9,18 @@ interface StyledFlexProps {
     | 'space-between'
     | 'space-around';
   gutter?: number;
+  direction?: 'row' | 'column';
 }
 
 const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
   align-items: ${props => props.align};
   justify-content: ${props => props.justify};
+  flex-direction: ${props => props.direction};
   flex-wrap: wrap;
-  margin: ${props => (props.gutter ? `0 -${props.gutter / 2}px` : 'inherit')};
+  margin: ${props => (props.gutter ? `0 -${props.gutter / 2}px` : '')};
   & > * {
-    margin: ${props => (props.gutter ? `0 ${props.gutter / 2}px` : 'inherit')};
+    margin: ${props => (props.gutter ? `0 ${props.gutter / 2}px` : '')};
   }
 `;
 
