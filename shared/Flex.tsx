@@ -10,6 +10,7 @@ interface StyledFlexProps {
     | 'space-around';
   gutter?: number;
   direction?: 'row' | 'column';
+  wrap?: 'wrap' | 'nowrap';
 }
 
 const StyledFlex = styled.div<StyledFlexProps>`
@@ -17,7 +18,7 @@ const StyledFlex = styled.div<StyledFlexProps>`
   align-items: ${props => props.align};
   justify-content: ${props => props.justify};
   flex-direction: ${props => props.direction};
-  flex-wrap: wrap;
+  flex-wrap: ${props => (props.wrap ? props.wrap : 'nowrap')};
   margin: ${props => (props.gutter ? `0 -${props.gutter / 2}px` : '')};
   & > * {
     margin: ${props => (props.gutter ? `0 ${props.gutter / 2}px` : '')};

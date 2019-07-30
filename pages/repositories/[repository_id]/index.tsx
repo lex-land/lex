@@ -53,7 +53,7 @@ export default compose(pageProps)(() => {
                 }
               />
             </div>
-            <Flex>
+            <Flex wrap="wrap">
               {repo.modules.map(mod => (
                 <ModDashBoard key={mod.id}>
                   <H5>
