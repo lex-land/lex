@@ -153,7 +153,7 @@ export const RepoSider = () => {
           </TextLink>
         </Link>
       </div>
-      <div>
+      {/* <div>
         <Link
           href={`/repositories/[repository_id]/status-codes`}
           as={`/repositories/${repo.id}/status-codes`}
@@ -167,7 +167,7 @@ export const RepoSider = () => {
             <span>Status Codes</span>
           </TextLink>
         </Link>
-      </div>
+      </div> */}
       <div>
         <Link
           href={`/repositories/[repository_id]/members`}
