@@ -1,5 +1,4 @@
 import {
-  Button,
   Callout,
   EditableText,
   H1,
@@ -12,11 +11,11 @@ import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
 import { Flex } from '@/shared/Flex';
 import { Inte } from '@/components/_to_rm_domains/inte';
 import { Interface } from '@/interfaces/Interface';
-import { LogList } from '@/components/LogList';
+// import { LogList } from '@/components/LogList';
 import { Page } from '@/components/Page';
 import React from 'react';
 import { RepoSider } from '@/components/RepoSider';
-import { StatusCodeTable } from '@/components/StatusCodeTable';
+// import { StatusCodeTable } from '@/components/StatusCodeTable';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 
@@ -96,11 +95,11 @@ export default compose(pageProps)(() => {
                     </RequestURL>
                   </Callout>
                   <br />
-                  <div>
+                  {/* <div>
                     <Button>
                       <strong>Test</strong>
                     </Button>
-                  </div>
+                  </div> */}
                 </div>
                 <div id="请求参数" style={{ padding: '40px 0' }}>
                   <H4>请求参数</H4>
@@ -127,11 +126,11 @@ export default compose(pageProps)(() => {
                 </div>
                 <div id="错误码" style={{ padding: '40px 0' }}>
                   <H4>错误码</H4>
-                  <StatusCodeTable />
+                  {/* <StatusCodeTable /> */}
                 </div>
                 <div id="操作日志" style={{ padding: '40px 0' }}>
                   <H4>操作日志</H4>
-                  <LogList />
+                  {/* <LogList /> */}
                 </div>
               </Flex.Auto>
               <Inte.Scrollspy
