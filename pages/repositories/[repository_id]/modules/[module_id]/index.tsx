@@ -1,6 +1,7 @@
-import { Button, Code, EditableText, H1, HTMLTable } from '@blueprintjs/core';
+import { Button, Code, EditableText, H1 } from '@blueprintjs/core';
 import { compose, createMany } from '@/shared/PageProps';
 import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
+import { AlignLeftTable } from '@/components/AlignLeftTable';
 import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
@@ -10,7 +11,6 @@ import React from 'react';
 import { RepoSider } from '@/components/RepoSider';
 import { Repository } from '@/interfaces/Repository';
 import { entityContext } from '@/helpers/entityContext';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 const throttledUpdateMod = throttledUpdateEntityFn('module');
@@ -20,17 +20,6 @@ interface PageProps {
   mod: Module;
   repo: Repository;
 }
-
-const AlignLeftTable = styled(HTMLTable)`
-  width: 100%;
-  &.bp3-html-table td {
-    vertical-align: middle;
-  }
-  &.bp3-html-table td:first-child,
-  &.bp3-html-table th:first-child {
-    padding-left: 0;
-  }
-`;
 
 const pageProps = createMany({
   repo: entityContext('repository').findOne(),
@@ -97,15 +86,16 @@ export default compose(pageProps)(() => {
                           defaultValue={inte.name}
                         />
                       </td>
-                      <td>
+                      <td style={{ width: 350 }}>
                         <EditableText
                           onChange={description =>
                             throttledUpdateInte(inte.id, { description })
                           }
+                          multiline
                           defaultValue={inte.description}
                         />
                       </td>
-                      <td style={{ width: 150 }}>
+                      <td>
                         <CURD.Delete
                           alertWhen
                           success={() =>
