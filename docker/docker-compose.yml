@@ -26,6 +26,5 @@ services:
       - KEYOF_TOKEN=ACCESS_TOKEN
       - PROD_API_URL=https://lex-land.cloud
       - BUILD_TAG
-    command: npx next start
     ports:
       - '3000:3000'

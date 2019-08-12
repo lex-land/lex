@@ -17,6 +17,8 @@
   "scripts": {
     "prestart:server": "docker-compose -f ./docker/server.yml down --remove-orphans",
     "start:server": "docker-compose -f ./docker/server.yml up -d",
+    "docker:build": "docker build --tag lexland/lex:latest .",
+    "docker:push": "docker push lexland/lex:latest",
     "start:dev": "npx next dev",
     "start": "npx next start",
     "prebuild": "rimraf build",
