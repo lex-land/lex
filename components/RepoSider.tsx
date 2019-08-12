@@ -1,5 +1,5 @@
-import { Classes, Icon, UL } from '@blueprintjs/core';
-import { CURD } from '@/components/CURD';
+import { Classes, UL } from '@blueprintjs/core';
+// import { CURD } from '@/components/CURD';
 import { Flex } from '@/shared/Flex';
 import Link from 'next/link';
 import React from 'react';
@@ -33,7 +33,7 @@ const TextLink = styled.a`
   }
 `;
 
-const ActionLink = styled(TextLink)``;
+// const ActionLink = styled(TextLink)``;
 
 const RepoNavList = styled(UL)`
   padding-left: 0;
@@ -91,7 +91,7 @@ export const RepoSider = () => {
                     </Link>
                   </li>
                 ))}
-                <li key="create-interface">
+                {/* <li key="create-interface">
                   <CURD.Create
                     action="/api/interface"
                     defaultValue={{
@@ -117,12 +117,12 @@ export const RepoSider = () => {
                       </ActionLink>
                     )}
                   />
-                </li>
+                </li> */}
               </RepoNavList>
             )}
           </li>
         ))}
-        <CURD.Create
+        {/* <CURD.Create
           action="/api/module"
           defaultValue={{ name: '', description: '' }}
           params={{ repository: repo }}
@@ -138,7 +138,7 @@ export const RepoSider = () => {
               <Icon intent="success" icon="plus" />
             </ActionLink>
           )}
-        />
+        /> */}
       </RepoNavList>
       <div>
         <Link
@@ -181,7 +181,7 @@ export const RepoSider = () => {
           </TextLink>
         </Link>
       </div>
-      <div>
+      {/* <div>
         <Link
           href={`/repositories/[repository_id]/settings`}
           as={`/repositories/${repo.id}/settings`}
@@ -195,7 +195,7 @@ export const RepoSider = () => {
             <span>Settings</span>
           </TextLink>
         </Link>
-      </div>
+      </div> */}
     </RepoSiderContainer>
   );
 };

@@ -54,7 +54,7 @@ npm run start:dev
   - [x] 使用 typeorm 代替 sequelize-typescript
   - [x] 轻状态管理，使用 hooks 进行状态逻辑复用
   - [x] 使用 styled-component 进行组件样式重构，移除已有 less
-  - [x] 前后端拆分， 服务端项目为[lex-server](https://github.com/lex-land/lex-server) 
+  - [x] 前后端拆分， 服务端项目为[lex-server](https://github.com/lex-land/lex-server)
   - [ ] 不断优化 helpers、components、core、pages 之间的关系
 - [ ] Pruduct
   - [ ] 完成与 Rap 的功能
@@ -90,7 +90,6 @@ npm run start:dev
   - [x] 支持 CicleCI
 
 ## Troubleshooting
-
 
 ```
 ERROR in /Users/briefguo/Public/www/lex/node_modules/react-use/lib/useAsyncRetry.d.ts
