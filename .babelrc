@@ -1,0 +1,47 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "ssr": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ],
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "lodash",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      },
+      "lodash"
+    ],
+    [
+      "import",
+      {
+        "libraryName": "react-use",
+        "libraryDirectory": "lib",
+        "camel2DashComponentName": false
+      },
+      "react-use"
+    ],
+    [
+      "module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@": "./"
+        },
+        "extensions": [".ts", ".tsx"]
+      }
+    ]
+  ]
+}
