@@ -127,8 +127,7 @@
   "lint-staged": {
     "**/*.ts?(x)": [
       "stylelint",
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "jest": {
