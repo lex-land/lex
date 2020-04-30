@@ -50,7 +50,6 @@
     "react-use": "^14.2.0",
     "rxjs": "^6.5.5",
     "styled-components": "^5.1.0",
-    "typeorm": "0.2.24",
     "universal-cookie": "^4.0.3",
     "xlsx": "^0.15.6",
     "yup": "^0.28.4"
