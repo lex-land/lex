@@ -1,6 +1,6 @@
 import '@/config/initializer';
-import { AppProps, Container } from 'next/app';
 import { AppPropsMap, PagePropsContext, compose } from '@/shared/PageProps';
+import { AppProps } from 'next/app';
 import ErrorBoundary from '@/config/ErrorBoundary';
 import { NProgress } from '@/components/NProgress';
 import React from 'react';
@@ -18,10 +18,8 @@ export default compose(appProps)((props: Props) => {
     <ThemeProvider theme={lexTheme}>
       <PagePropsContext.Provider value={pageProps}>
         <ErrorBoundary statusCode={statusCode}>
-          <Container>
-            <NProgress />
-            <Component />
-          </Container>
+          <NProgress />
+          <Component />
         </ErrorBoundary>
       </PagePropsContext.Provider>
     </ThemeProvider>

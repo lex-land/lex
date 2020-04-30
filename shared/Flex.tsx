@@ -15,13 +15,13 @@ interface StyledFlexProps {
 
 const StyledFlex = styled.div<StyledFlexProps>`
   display: flex;
-  align-items: ${props => props.align};
-  justify-content: ${props => props.justify};
-  flex-direction: ${props => props.direction};
-  flex-wrap: ${props => (props.wrap ? props.wrap : 'nowrap')};
-  margin: ${props => (props.gutter ? `0 -${props.gutter / 2}px` : '')};
+  align-items: ${(props) => props.align};
+  justify-content: ${(props) => props.justify};
+  flex-direction: ${(props) => props.direction};
+  flex-wrap: ${(props) => (props.wrap ? props.wrap : 'nowrap')};
+  margin: ${(props) => (props.gutter ? `0 -${props.gutter / 2}px` : '')};
   & > * {
-    margin: ${props => (props.gutter ? `0 ${props.gutter / 2}px` : '')};
+    margin: ${(props) => (props.gutter ? `0 ${props.gutter / 2}px` : '')};
   }
 `;
 

@@ -10,7 +10,4 @@ const defaultValue = {
 
 const createUser = createEntityFn<typeof defaultValue>('user');
 
-export const register = flow(
-  passwdTransfer,
-  createUser,
-);
+export const register = flow(passwdTransfer, createUser);

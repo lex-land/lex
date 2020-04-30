@@ -11,11 +11,9 @@ import { throttledUpdateEntityFn, useEntity } from '@/helpers/entityHelper';
 import { Flex } from '@/shared/Flex';
 import { Inte } from '@/components/_to_rm_domains/inte';
 import { Interface } from '@/interfaces/Interface';
-// import { LogList } from '@/components/LogList';
 import { Page } from '@/components/Page';
 import React from 'react';
 import { RepoSider } from '@/components/RepoSider';
-// import { StatusCodeTable } from '@/components/StatusCodeTable';
 import { entityContext } from '@/helpers/entityContext';
 import styled from 'styled-components';
 
@@ -34,7 +32,7 @@ export default compose(pageProps)(() => {
   const { inte } = pageProps.use<{ inte: Interface }>();
   const { value: inteInfo, setValue: changeInteInfo } = useEntity(
     inte,
-    newValue => throttledUpdateInte(inte.id, newValue),
+    (newValue) => throttledUpdateInte(inte.id, newValue),
   );
   return (
     <Page backgroundColor="#fff">
@@ -47,14 +45,14 @@ export default compose(pageProps)(() => {
               <H1>
                 <EditableText
                   value={inteInfo.name}
-                  onChange={name => changeInteInfo({ name })}
+                  onChange={(name) => changeInteInfo({ name })}
                 />
               </H1>
               <EditableText
                 minLines={2}
                 placeholder="Click to add description"
                 multiline
-                onChange={description => changeInteInfo({ description })}
+                onChange={(description) => changeInteInfo({ description })}
                 value={inteInfo.description}
               />
             </div>
@@ -70,7 +68,7 @@ export default compose(pageProps)(() => {
                             value={inteInfo.method}
                             minimal
                             large
-                            onChange={e =>
+                            onChange={(e) =>
                               changeInteInfo({ method: e.target.value })
                             }
                           >
@@ -90,7 +88,7 @@ export default compose(pageProps)(() => {
                       </Popover>
                       <EditableText
                         value={inteInfo.url}
-                        onChange={url => changeInteInfo({ url })}
+                        onChange={(url) => changeInteInfo({ url })}
                       />
                     </RequestURL>
                   </Callout>
@@ -109,7 +107,7 @@ export default compose(pageProps)(() => {
                     maxDepth={1}
                     editable={false}
                     defaultValue={inte.properties.filter(
-                      p => p.scope === 'request',
+                      (p) => p.scope === 'request',
                     )}
                   />
                 </div>
@@ -120,7 +118,7 @@ export default compose(pageProps)(() => {
                     scope="response"
                     editable={true}
                     defaultValue={inte.properties.filter(
-                      p => p.scope === 'response',
+                      (p) => p.scope === 'response',
                     )}
                   />
                 </div>

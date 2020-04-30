@@ -1,14 +1,14 @@
 import { createAppProps, createPageProps } from '@/shared/PageProps';
 import { API_URL } from '@/config/apiUrl';
-import { Des } from './secureHelper';
 import Router from 'next/router';
 import { catchedCode } from '@/config/catchedCode';
 import { createCookieHelper } from './cookieHelper';
 import { createHttpUtil } from '@/shared/httpUtil';
 import { createTokenUtil } from './tokenHelper';
 import { logger } from '@/shared/logger';
+import md5 from 'md5';
 
-export const createRedirect = createPageProps(ctx => {
+export const createRedirect = createPageProps((ctx) => {
   return (path: string) => {
     // https://github.com/zeit/next.js/wiki/Redirecting-in-%60getInitialProps%60
     const res = ctx.res;
@@ -22,7 +22,7 @@ export const createRedirect = createPageProps(ctx => {
   };
 });
 
-export const enhancedContext = createAppProps(async appCtx => {
+export const enhancedContext = createAppProps(async (appCtx) => {
   const { ctx, Component } = appCtx;
   ctx.tokenUtil = createTokenUtil(ctx); // 必须放在第一个
   ctx.redirect = createRedirect(ctx);
@@ -32,7 +32,7 @@ export const enhancedContext = createAppProps(async appCtx => {
     token: ctx.tokenUtil.get(),
     catchedCode,
     csrfTokenFrom: async () => {
-      return Des.encrypt('lex');
+      return md5('lex');
     },
   });
 

@@ -16,7 +16,7 @@ export function createValidationResponse(property: string, message: string) {
 export function createValidationError(obj: { [key: string]: string }) {
   return {
     error: 'ValidationError',
-    message: Object.keys(obj).map(prop =>
+    message: Object.keys(obj).map((prop) =>
       createValidationResponse(prop, obj[prop]),
     ),
   };

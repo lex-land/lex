@@ -1,4 +1,4 @@
-import { Form, Formik, FormikActions, FormikProps } from 'formik';
+import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import React, { useState } from 'react';
 import { InputItem } from './InputItem';
 import { Select } from './Select';
@@ -27,18 +27,18 @@ export const QuickForm = Object.assign(
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (
       values: any,
-      formikActions: FormikActions<any>,
+      formikActions: FormikHelpers<any>,
     ) => {
       setLoading(true);
       const { error = '', message, ...json } = await props.action(values);
       setLoading(false);
       if (error) {
         const errorMsg: ValidationError[] = message;
-        errorMsg.forEach(e => {
-          formikActions.setFieldError(
-            e.property,
-            Object.values(e.constraints)[0],
-          );
+        errorMsg.forEach((e) => {
+          const msgMap = e.constraints;
+          if (msgMap) {
+            formikActions.setFieldError(e.property, Object.values(msgMap)[0]);
+          }
         });
       } else {
         props.success && props.success(values, json);
@@ -49,7 +49,7 @@ export const QuickForm = Object.assign(
       <Formik
         initialValues={defaultValue}
         onSubmit={handleSubmit}
-        render={formik => (
+        render={(formik) => (
           <Form>
             {render ? (
               render(formik, { loading })

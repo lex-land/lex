@@ -11,7 +11,4 @@ type LoginValue = typeof loginValue;
 
 const createSession = createEntityFn<LoginValue>('session');
 
-export const login = flow(
-  passwdTransfer,
-  createSession,
-);
+export const login = flow(passwdTransfer, createSession);

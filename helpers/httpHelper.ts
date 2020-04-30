@@ -1,8 +1,8 @@
 import { API_URL } from '@/config/apiUrl';
-import { Des } from './secureHelper';
 import { catchedCode } from '@/config/catchedCode';
 import { createHttpUtil } from '@/shared/httpUtil';
 import { createTokenUtil } from './tokenHelper';
+import md5 from 'md5';
 
 const httpHelper = createHttpUtil({
   url: API_URL,
@@ -10,8 +10,7 @@ const httpHelper = createHttpUtil({
   catchedCode: catchedCode,
   csrfTokenFrom: async () => {
     // https://zhuanlan.zhihu.com/p/22521378
-    // return sessionStorage.getItem(Des.encrypt('csrfToken')) || '';
-    return Des.encrypt('lex');
+    return md5('lex');
   },
   // 来自session
 });

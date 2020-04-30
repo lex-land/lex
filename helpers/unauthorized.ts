@@ -1,6 +1,6 @@
 import { createBoolean } from '@/shared/PageProps';
 
-export const unauthorized = createBoolean(ctx =>
+export const unauthorized = createBoolean((ctx) =>
   ctx.httpHelper
     .get(`/api/session`)
     .then(({ statusCode }) => statusCode !== 401)

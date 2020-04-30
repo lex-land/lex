@@ -23,7 +23,7 @@ export const createHttpUtil = (createOption: createHttpHelperOption) => {
   };
 
   const createFetch = (resolve: createFetchResolver) => {
-    return async function<D = any>(api: string, body: any = {}): Promise<D> {
+    return async function <D = any>(api: string, body: any = {}): Promise<D> {
       const { fullUrl, opt } = resolve(api, {
         headers: {
           'Content-Type': 'application/json',

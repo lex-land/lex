@@ -39,9 +39,9 @@ export const composePageProps = (...funcs: any[]) => (Component: any) => {
   Component.displayName = `ComposedPage`;
   Component.getInitialProps = async (ctx: NextPageContext | AppContext) => {
     let props = (orig && (await orig(ctx))) || {};
-    const promises = flatMapDeep(funcs).map(async fn => await fn(ctx));
+    const promises = flatMapDeep(funcs).map(async (fn) => await fn(ctx));
     const newProps = await Promise.all(promises);
-    newProps.forEach(prop => {
+    newProps.forEach((prop) => {
       props = { ...props, ...prop };
     });
     return props;
@@ -73,7 +73,7 @@ export const createMany = (obj: any) => {
         Object.values(obj).map((fn: any) => fn(ctx)),
       );
       return mapValues(obj, (fn, key) => {
-        const index = Object.keys(obj).findIndex(i => i === key);
+        const index = Object.keys(obj).findIndex((i) => i === key);
         return values[index];
       });
     },

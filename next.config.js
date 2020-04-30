@@ -5,6 +5,7 @@ const { pick } = require('lodash');
 
 const config = {
   distDir: 'build',
+  // webpack(config){},
 
   // 注入到next的环境变量、跟node环境的变量不同，这些会随build打到page里去
   // https://nextjs.org/blog/next-8/#build-time-environment-configuration
