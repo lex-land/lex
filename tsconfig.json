@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "paths": {
       "@/*": ["./*"]
     },
@@ -25,10 +25,9 @@
     "outDir": "build",
     "baseUrl": ".",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true
   },
   "exclude": ["node_modules"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next.config.js", "next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
